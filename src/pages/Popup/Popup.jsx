@@ -1,35 +1,28 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import './Popup.css';
 
 const Popup = () => {
-  const coins = useState([
-    {
-      symbol: 'DOGE',
-      korean_name: '도지코인',
-      price: 394,
-      change: -0.76,
-      change_price: -3.0,
-      volume: 1783783,
-    },
-    {
-      symbol: 'XRP',
-      korean_name: '리플',
-      price: 444,
-      change: -0.56,
-      change_price: -1.0,
-      volume: 1159312,
-    },
-    {
-      symbol: '이더리움클래식',
-      korean_name: 'ETC',
-      price: 444,
-      change: -0.56,
-      change_price: -1.0,
-      volume: 9933497,
-    },
-  ]);
+  const [cryptos, setCryptos] = useState([]);
+
+  const updateTickers = async () => {
+    return await axios.get(
+      'https://api.upbit.com/v1/market/all?isDetails=false'
+    );
+  };
+
+  updateTickers();
+
+  useEffect(async () => {
+    try {
+      const markets = await updateTickers();
+      console.log(markets);
+    } catch (err) {
+      throw err;
+    }
+  }, []);
 
   return (
     <div className="App">
@@ -46,7 +39,7 @@ const Popup = () => {
             </tr>
           </thead>
           <tbody>
-            {coins.map((ele, idx) => {
+            {/* {crypto.map((ele, idx) => {
               return (
                 <tr key={`coins${idx}`}>
                   <td>
@@ -63,7 +56,7 @@ const Popup = () => {
                   <td>{ele.volume}백만</td>
                 </tr>
               );
-            })}
+            })} */}
           </tbody>
         </table>
       </main>
