@@ -31,17 +31,38 @@ const Popup = () => {
             <tr key={`coins${idx}`}>
               <td>
                 <div>{ele.korean_name}</div>
-                <div>{ele.market}</div>
+                <div>
+                  {ele.market.replace('-', '').substring(3, 6) +
+                    '/' +
+                    ele.market.replace('-', '').substring(0, 3)}
+                </div>
               </td>
-              <td>
+              <td
+                className={
+                  ele.change === 'RISE' ? 'fontColorRED' : 'fontColorBlue'
+                }
+              >
                 <div>{ele.trade_price.toLocaleString('ko')}</div>
               </td>
-              <td>
-                <div>{(ele.change_rate * 100).toFixed(2)}</div>
-                <div>{ele.change_price}</div>
+              <td
+                className={
+                  ele.change === 'RISE' ? 'fontColorRED' : 'fontColorBlue'
+                }
+              >
+                <div>
+                  {ele.change === 'RISE' ? '+' : '-'}
+                  {(ele.change_rate * 100).toFixed(2) + '%'}
+                </div>
+                <div>
+                  {ele.change === 'RISE' ? '+' : '-'}
+                  {ele.change_price}
+                </div>
               </td>
               <td>
-                <div>{(ele.acc_trade_price_24h / 100000000).toFixed()}억</div>
+                <div>
+                  {(ele.acc_trade_price_24h / 1000000).toFixed()}
+                  백만
+                </div>
               </td>
             </tr>
           );
@@ -51,17 +72,39 @@ const Popup = () => {
             <tr key={`coins${idx}`}>
               <td>
                 <div>{ele.korean_name}</div>
-                <div>{ele.market}</div>
+                <div>
+                  {' '}
+                  {ele.market.replace('-', '').substring(3, 6) +
+                    '/' +
+                    ele.market.replace('-', '').substring(0, 3)}
+                </div>
               </td>
-              <td>
-                <div>{ele.price.toLocaleString('ko')}</div>
+              <td
+                className={
+                  ele.change === 'RISE' ? 'fontColorRED' : 'fontColorBlue'
+                }
+              >
+                <div>
+                  {ele.change === 'RISE' ? '+' : '-'}
+                  {ele.price.toLocaleString('ko')}
+                </div>
               </td>
-              <td>
-                <div>{(ele.change_rate * 100).toFixed(2)}</div>
+              <td
+                className={
+                  ele.change === 'RISE' ? 'fontColorRED' : 'fontColorBlue'
+                }
+              >
+                <div>
+                  {ele.change === 'RISE' ? '+' : '-'}
+                  {(ele.change_rate * 100).toFixed(2) + '%'}
+                </div>
                 <div>{ele.change_price.toLocaleString('ko')}</div>
               </td>
               <td>
-                <div>{(ele.acc_trade_price_24h / 100000000).toFixed()}억</div>
+                <div>
+                  {(ele.acc_trade_price_24h / 1000000).toFixed()}
+                  백만
+                </div>
               </td>
             </tr>
           );
@@ -114,7 +157,7 @@ const Popup = () => {
         <table>
           <thead>
             <tr>
-              <th>코인명</th>
+              <th>코인</th>
               <th>현재가</th>
               <th>전일대비</th>
               <th>거래대금</th>
