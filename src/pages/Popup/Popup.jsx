@@ -40,7 +40,7 @@ const Popup = () => {
                 <div>{(ele.change_rate * 100).toFixed(2)}</div>
                 <div>{ele.change_price}</div>
               </td>
-              <td>{ele.acc_trade_price_24h}백만</td>
+              <td>{(ele.acc_trade_price_24h / 100000000).toFixed()}억</td>
             </tr>
           );
         })
@@ -58,7 +58,7 @@ const Popup = () => {
                 <div>{(ele.change_rate * 100).toFixed(2)}</div>
                 <div>{ele.change_price.toLocaleString('ko')}</div>
               </td>
-              <td>{ele.acc_trade_price_24h}백만</td>
+              <td>{(ele.acc_trade_price_24h / 100000000).toFixed()}억</td>
             </tr>
           );
         });
