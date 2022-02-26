@@ -40,7 +40,9 @@ const Popup = () => {
                 <div>{(ele.change_rate * 100).toFixed(2)}</div>
                 <div>{ele.change_price}</div>
               </td>
-              <td>{(ele.acc_trade_price_24h / 100000000).toFixed()}억</td>
+              <td>
+                <div>{(ele.acc_trade_price_24h / 100000000).toFixed()}억</div>
+              </td>
             </tr>
           );
         })
@@ -58,7 +60,9 @@ const Popup = () => {
                 <div>{(ele.change_rate * 100).toFixed(2)}</div>
                 <div>{ele.change_price.toLocaleString('ko')}</div>
               </td>
-              <td>{(ele.acc_trade_price_24h / 100000000).toFixed()}억</td>
+              <td>
+                <div>{(ele.acc_trade_price_24h / 100000000).toFixed()}억</div>
+              </td>
             </tr>
           );
         });
@@ -99,11 +103,13 @@ const Popup = () => {
       throw err;
     }
   }, []);
+
   console.log(upbitCryptosKRW);
+
   return (
     <div className="App">
       {' '}
-      <nav>코인시세보기프로그램</nav>
+      <nav>COMO</nav>
       <main>
         <table>
           <thead>
@@ -137,7 +143,7 @@ const Popup = () => {
           </tbody>
         </table>
       </main>
-      <footer></footer>{' '}
+      <footer>footer</footer>{' '}
     </div>
   );
 };
