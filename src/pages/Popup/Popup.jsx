@@ -27,6 +27,7 @@ const Popup = () => {
     try {
       const result = {};
       const resultArr = [];
+      const webSocketParam = [];
 
       const { data: upbitSymbols } = await getUpbitSymbols();
 
@@ -55,28 +56,36 @@ const Popup = () => {
 
       for (let coin in result) {
         resultArr.push(result[coin]);
+        webSocketParam.push(coin);
       }
 
+      console.log('webSocecktParam', webSocketParam);
+
+      const socket = new WebSocket('wss://api.upbit.com/websocket/v1');
+
+      socket.onopen = () => {
+        console.log('소켓오픈');
+        socket.send(
+          `${JSON.stringify([
+            { ticket: 'test' },
+            { type: 'ticker', codes: webSocketParam },
+          ])}`
+        );
+      };
+
+      socket.onmessage = async (blob) => {
+        const websocketData = await new Response(blob.data).json();
+        // setUpbitCryptosKRW(recieveData);
+        console.log('recieveData', websocketData);
+        for (let updateData in websocketData) {
+          let elements = websocketData[updateData];
+          if (result[elements]) {
+            result[elements];
+          }
+        }
+      };
+
       setUpbitCryptosKRW(resultArr);
-      console.log('type', typeof upbitCryptosKRW);
-
-      // const socket = new WebSocket('wss://api.upbit.com/websocket/v1');
-
-      // socket.onopen = () => {
-      //   console.log('소켓오픈');
-      //   socket.send(
-      //     `${JSON.stringify([
-      //       { ticket: 'test' },
-      //       { type: 'ticker', codes: krw },
-      //     ])}`
-      //   );
-      // };
-
-      // socket.onmessage = async (blob) => {
-      //   const recieveData = await new Response(blob.data).json();
-      //   // setUpbitCryptosKRW(recieveData);
-      //   console.log('recieveData', recieveData);
-      // };
     } catch (err) {
       throw err;
     }
