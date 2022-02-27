@@ -6,7 +6,7 @@ import './Popup.css';
 
 const Popup = () => {
   const [upbitCryptosKRW, setUpbitCryptosKRW] = useState([]);
-  const [upbitCryptosBTC, setUpbitCryptosBTC] = useState([]);
+
   const [renderKRW, setRenderKRW] = useState('KRW');
 
   const getUpbitSymbols = async () => {
@@ -26,7 +26,7 @@ const Popup = () => {
   useEffect(async () => {
     try {
       const result = {};
-      const resultArr = [];
+      let resultArr = [];
       const webSocketParam = [];
 
       const { data: upbitSymbols } = await getUpbitSymbols();
@@ -39,7 +39,7 @@ const Popup = () => {
         }
       });
 
-      console.log('result', result);
+      console.log('result1', result['KRW-BTC']);
 
       const upbitMarkets = upbitSymbols.map((ele) => ele.market); //  (ex. KRW-BTC, BTC-ETH) 문자열
       const { data: upbitTickers } = await getUpbitTickers(upbitMarkets);
@@ -52,14 +52,10 @@ const Popup = () => {
         }
       });
 
-      console.log('upbitTickers', upbitTickers);
-
       for (let coin in result) {
         resultArr.push(result[coin]);
         webSocketParam.push(coin);
       }
-
-      console.log('webSocecktParam', webSocketParam);
 
       const socket = new WebSocket('wss://api.upbit.com/websocket/v1');
 
@@ -76,16 +72,29 @@ const Popup = () => {
       socket.onmessage = async (blob) => {
         const websocketData = await new Response(blob.data).json();
         // setUpbitCryptosKRW(recieveData);
-        console.log('recieveData', websocketData);
-        for (let updateData in websocketData) {
-          let elements = websocketData[updateData];
-          if (result[elements]) {
-            result[elements];
-          }
-        }
-      };
 
-      setUpbitCryptosKRW(resultArr);
+        if (result[`${websocketData.code}`]) {
+          result[`${websocketData.code}`] = {
+            ...result[`${websocketData.code}`],
+            trade_price: websocketData['trade_price'],
+            change_rate: websocketData['change_rate'],
+            change_price: websocketData['change_price'],
+            acc_trade_price_24h: websocketData['acc_trade_price_24h'],
+          };
+          // trade_price
+          // change_rate
+          // change_price
+          // acc_trade_price_24h
+          let newArr = [];
+          for (let coin in result) {
+            newArr.push(result[coin]);
+          }
+          resultArr = newArr;
+          setUpbitCryptosKRW(resultArr);
+        }
+        setUpbitCryptosKRW(resultArr);
+      };
+      console.log('result', result['KRW-BTC']);
     } catch (err) {
       throw err;
     }
