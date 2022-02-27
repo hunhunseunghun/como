@@ -11,6 +11,18 @@ main {
 footer {
   height: 10%;
 }
+
+.fontColorRise {
+  color: #d60000;
+}
+
+.fontColorFall {
+  color: #0051c7;
+}
+.fontColorEven {
+  color: #666666;
+}
+
 table {
   display: block;
   width: 100%;
@@ -84,12 +96,4 @@ table tbody tr td:first-child div:nth-child(2) {
 
 table tbody tr td:nth-child(3) div:last-child {
   font-size: 10px;
-}
-
-.fontColorBlue {
-  color: #0051c7;
-}
-
-.fontColorRED {
-  color: #d60000;
 }

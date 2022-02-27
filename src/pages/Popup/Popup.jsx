@@ -7,7 +7,7 @@ import './Popup.css';
 const Popup = () => {
   const [upbitCryptosKRW, setUpbitCryptosKRW] = useState([]);
   const [upbitCryptosBTC, setUpbitCryptosBTC] = useState([]);
-  const [renderKRW, setRenderKRW] = useState(true);
+  const [renderKRW, setRenderKRW] = useState('KRW');
 
   const getUpbitSymbols = async () => {
     return await axios.get(
@@ -23,131 +23,162 @@ const Popup = () => {
     });
   };
 
-  // KRW, BTC render control
-  const renderCryptos = () => {
-    return renderKRW
-      ? upbitCryptosKRW.map((ele, idx) => {
-          return (
-            <tr key={`coins${idx}`}>
-              <td>
-                <div>{ele.korean_name}</div>
-                <div>
-                  {ele.market.replace('-', '').substring(3, 6) +
-                    '/' +
-                    ele.market.replace('-', '').substring(0, 3)}
-                </div>
-              </td>
-              <td
-                className={
-                  ele.change === 'RISE' ? 'fontColorRED' : 'fontColorBlue'
-                }
-              >
-                <div>{ele.trade_price.toLocaleString('ko')}</div>
-              </td>
-              <td
-                className={
-                  ele.change === 'RISE' ? 'fontColorRED' : 'fontColorBlue'
-                }
-              >
-                <div>
-                  {ele.change === 'RISE' ? '+' : '-'}
-                  {(ele.change_rate * 100).toFixed(2) + '%'}
-                </div>
-                <div>
-                  {ele.change === 'RISE' ? '+' : '-'}
-                  {ele.change_price}
-                </div>
-              </td>
-              <td>
-                <div>
-                  {(ele.acc_trade_price_24h / 1000000).toFixed()}
-                  백만
-                </div>
-              </td>
-            </tr>
-          );
-        })
-      : upbitCryptosBTC.map((ele, idx) => {
-          return (
-            <tr key={`coins${idx}`}>
-              <td>
-                <div>{ele.korean_name}</div>
-                <div>
-                  {' '}
-                  {ele.market.replace('-', '').substring(3, 6) +
-                    '/' +
-                    ele.market.replace('-', '').substring(0, 3)}
-                </div>
-              </td>
-              <td
-                className={
-                  ele.change === 'RISE' ? 'fontColorRED' : 'fontColorBlue'
-                }
-              >
-                <div>
-                  {ele.change === 'RISE' ? '+' : '-'}
-                  {ele.price.toLocaleString('ko')}
-                </div>
-              </td>
-              <td
-                className={
-                  ele.change === 'RISE' ? 'fontColorRED' : 'fontColorBlue'
-                }
-              >
-                <div>
-                  {ele.change === 'RISE' ? '+' : '-'}
-                  {(ele.change_rate * 100).toFixed(2) + '%'}
-                </div>
-                <div>{ele.change_price.toLocaleString('ko')}</div>
-              </td>
-              <td>
-                <div>
-                  {(ele.acc_trade_price_24h / 1000000).toFixed()}
-                  백만
-                </div>
-              </td>
-            </tr>
-          );
-        });
-  };
-
   useEffect(async () => {
     try {
       const result = {};
-      const krw = [];
-      const btc = [];
+      const resultArr = [];
+
       const { data: upbitSymbols } = await getUpbitSymbols();
 
       upbitSymbols.forEach((ele) => {
-        result[ele.market] = ele;
+        if (ele.market.indexOf(renderKRW) === -1) {
+          return;
+        } else {
+          result[ele.market] = ele;
+        }
       });
+
+      console.log('result', result);
 
       const upbitMarkets = upbitSymbols.map((ele) => ele.market); //  (ex. KRW-BTC, BTC-ETH) 문자열
       const { data: upbitTickers } = await getUpbitTickers(upbitMarkets);
 
       upbitTickers.forEach((ele) => {
         if (ele.market.indexOf('KRW') === -1) {
-          btc.push(Object.assign(result[ele.market], ele));
+          return;
         } else {
-          krw.push(Object.assign(result[ele.market], ele));
+          Object.assign(result[ele.market], ele);
         }
       });
 
-      setUpbitCryptosKRW(krw);
-      setUpbitCryptosBTC(btc);
-      // const symbolsData = {};
-      // upbitSymbols.forEach((ele) => {
-      //   symbolsData[ele.market] = { korean_name: ele.korean_name };
-      // });
-      // upbitTickers.forEach((ele) => {
-      //   symbolsData[ele.market] = { ...symbolsData[ele.market], ...ele };
-      // });
+      console.log('upbitTickers', upbitTickers);
+
+      for (let coin in result) {
+        resultArr.push(result[coin]);
+      }
+
+      setUpbitCryptosKRW(resultArr);
+      console.log('type', typeof upbitCryptosKRW);
+
+      // const socket = new WebSocket('wss://api.upbit.com/websocket/v1');
+
+      // socket.onopen = () => {
+      //   console.log('소켓오픈');
+      //   socket.send(
+      //     `${JSON.stringify([
+      //       { ticket: 'test' },
+      //       { type: 'ticker', codes: krw },
+      //     ])}`
+      //   );
+      // };
+
+      // socket.onmessage = async (blob) => {
+      //   const recieveData = await new Response(blob.data).json();
+      //   // setUpbitCryptosKRW(recieveData);
+      //   console.log('recieveData', recieveData);
+      // };
     } catch (err) {
       throw err;
     }
   }, []);
 
-  console.log(upbitCryptosKRW);
+  const switchColorHandler = (current) => {
+    switch (current) {
+      case 'RISE':
+        return 'fontColorRise';
+      case 'FALL':
+        return 'fontColorFall';
+      case 'EVEN':
+        return 'fontColorEven';
+    }
+  };
+
+  //handle price operator
+
+  const switchPriceOpeatorHandler = (current) => {
+    switch (current) {
+      case 'RISE':
+        return '+';
+      case 'FALL':
+        return '-';
+      case 'EVEN':
+        return '';
+    }
+  };
+
+  console.log('upbitCryptosKRW', upbitCryptosKRW);
+  // KRW, BTC render control
+  const renderCryptosHandler = () => {
+    return upbitCryptosKRW.map((ele) => {
+      return (
+        <tr key={`${ele.market}`}>
+          <td>
+            <div>{ele.korean_name}</div>
+            <div>
+              {ele.market.replace('-', '').substring(3, 6) +
+                '/' +
+                ele.market.replace('-', '').substring(0, 3)}
+            </div>
+          </td>
+          <td className={switchColorHandler(ele.change)}>
+            <div>{ele.trade_price.toLocaleString('ko')}</div>
+          </td>
+          <td className={switchColorHandler(ele.change)}>
+            <div>
+              {switchPriceOpeatorHandler(ele.change)}
+              {(ele.change_rate * 100).toFixed(2) + '%'}
+            </div>
+            <div>
+              {switchPriceOpeatorHandler(ele.change)}
+              {ele.change_price}
+            </div>
+          </td>
+          <td>
+            <div>
+              {(ele.acc_trade_price_24h / 1000000).toFixed()}
+              백만
+            </div>
+          </td>
+        </tr>
+      );
+    });
+
+    // return upbitCryptosKRW.map((ele, idx) => {
+    //   return (
+    //     <tr key={`coins${idx}`}>
+    //       <td>
+    //         <div>{ele.korean_name}</div>
+    //         <div>
+    //           {ele.market.replace('-', '').substring(3, 6) +
+    //             '/' +
+    //             ele.market.replace('-', '').substring(0, 3)}
+    //         </div>
+    //       </td>
+    //       <td className={switchColorHandler(ele.change)}>
+    //         <div>{ele.trade_price.toLocaleString('ko')}</div>
+    //       </td>
+    //       <td className={switchColorHandler(ele.change)}>
+    //         <div>
+    //           {switchPriceOpeatorHandler(ele.change)}
+    //           {(ele.change_rate * 100).toFixed(2) + '%'}
+    //         </div>
+    //         <div>
+    //           {switchPriceOpeatorHandler(ele.change)}
+    //           {ele.change_price}
+    //         </div>
+    //       </td>
+    //       <td>
+    //         <div>
+    //           {(ele.acc_trade_price_24h / 1000000).toFixed()}
+    //           백만
+    //         </div>
+    //       </td>
+    //     </tr>
+    //   );
+    // });
+  };
+
+  console.log('upbitCryptosKRW', upbitCryptosKRW);
 
   return (
     <div className="App">
@@ -163,27 +194,7 @@ const Popup = () => {
               <th>거래대금</th>
             </tr>
           </thead>
-          <tbody>
-            {renderCryptos()}
-            {/* {crypto.map((ele, idx) => {
-              return (
-                <tr key={`coins${idx}`}>
-                  <td>
-                    <div>{ele.korean_name}</div>
-                    <div>{ele.symbol}/KRW</div>
-                  </td>
-                  <td>
-                    <div>{ele.price}</div>
-                  </td>
-                  <td>
-                    <div>{ele.change}</div>
-                    <div>{ele.change_price}</div>
-                  </td>
-                  <td>{ele.volume}백만</td>
-                </tr>
-              );
-            })} */}
-          </tbody>
+          <tbody>{renderCryptosHandler()}</tbody>
         </table>
       </main>
       <footer>footer</footer>{' '}
