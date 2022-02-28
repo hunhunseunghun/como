@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
+import comoLogo from '../../assets/img/comologo.png';
 import './Popup.css';
 
 const Popup = () => {
@@ -160,7 +160,13 @@ const Popup = () => {
   return (
     <div className="App">
       {' '}
-      <nav>COMO</nav>
+      <nav>
+        <section>
+          <img className="comoLogo" src={comoLogo}></img>
+        </section>
+
+        <div></div>
+      </nav>
       <main>
         <table>
           <thead>

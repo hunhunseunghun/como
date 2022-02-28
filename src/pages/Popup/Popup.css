@@ -3,7 +3,11 @@
   box-sizing: border-box;
 }
 nav {
-  height: 10%;
+  padding: 10px;
+  border-bottom: 1px solid rgb(229, 229, 229);
+}
+.comoLogo {
+  width: 15%;
 }
 main {
   height: 100%;
