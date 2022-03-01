@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
+
 import { v4 as uuidv4 } from 'uuid';
+
+import searchCoin from './Reducer/coinReducer.jsx';
+
 import comoLogo from '../../assets/img/comologo.png';
-import './Popup.css';
+
 import UpbitKRW from './Components/UpbitKRW.jsx';
+import './Popup.css';
 
 const Popup = () => {
   const [upbitCryptos, setUpbitCryptos] = useState([]); //filtered final upbit coins
   const [upbitCryptosBTC, setUpbitCryptosBTC] = useState([]);
   const [renderKRW, setRenderKRW] = useState('KRW'); // handle krw or btc market
   const [isLoading, setIsLoading] = useState(true); // api data loading handle
-
+  const dispatch = useDispatch();
   const getUpbitSymbols = async () => {
     return await axios.get(
       'https://api.upbit.com/v1/market/all?isDetails=false'
