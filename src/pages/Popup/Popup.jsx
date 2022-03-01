@@ -3,13 +3,14 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import comoLogo from '../../assets/img/comologo.png';
 import './Popup.css';
+import UpbitKRW from './Components/UpbitKRW.jsx';
 
 const Popup = () => {
   const [upbitCryptos, setUpbitCryptos] = useState([]); //filtered final upbit coins
   const [upbitCryptosBTC, setUpbitCryptosBTC] = useState([]);
   const [renderKRW, setRenderKRW] = useState('KRW'); // handle krw or btc market
+  const [isLoading, setIsLoading] = useState(true); // api data loading handle
 
-  //upbit 등록 종목명 API
   const getUpbitSymbols = async () => {
     return await axios.get(
       'https://api.upbit.com/v1/market/all?isDetails=false'
@@ -29,6 +30,7 @@ const Popup = () => {
   const [websocketParams, setWebSocketParams] = useState([]);
 
   useEffect(async () => {
+    setIsLoading(true);
     try {
       let forUpdateCryptosObj = {}; // 업데이트되는 코인 정보, 탐색 성능 위해 객체 선택
       const { data: upbitSymbols } = await getUpbitSymbols();
@@ -54,7 +56,7 @@ const Popup = () => {
           }
         }
       });
-      console.log('forUpdateCryptosObj', forUpdateCryptosObj);
+
       // const upbitMarkets = upbitSymbols.map((ele) => ele.market); //  (ex. KRW-BTC, BTC-ETH) 문자열
       const upbitMarkets = [];
       for (let coin in forUpdateCryptosObj) {
@@ -64,7 +66,6 @@ const Popup = () => {
       const { data: upbitTickers } = await getUpbitTickers(upbitMarkets); // 시세 정보
 
       // upbit ticker 객체에 업데이트
-      console.log('upbitMarkets', upbitMarkets);
 
       let websocketParamsArr = [];
       upbitTickers.forEach((ele) => {
@@ -78,6 +79,7 @@ const Popup = () => {
 
       setWebSocketParams(websocketParamsArr);
       setInitUpbitCryptos(forUpdateCryptosObj);
+      setIsLoading(false);
 
       forUpdateCryptosObj = {};
       websocketParamsArr = [];
@@ -101,14 +103,11 @@ const Popup = () => {
     socket.onmessage = async (blob) => {
       const websocketData = await new Response(blob.data).json();
 
-      if (websocketData.code.includes('BTC')) {
-        console.log('websocket BTC DATA', websocketData.code);
-      }
+      console.log(websocketData);
 
       const updatingUpbitCryptos = { ...initUpbitCryptos };
 
       // 변경 시킬 키값 업데이트
-
       if (updatingUpbitCryptos[`${websocketData.code}`]) {
         updatingUpbitCryptos[`${websocketData.code}`] = {
           ...updatingUpbitCryptos[`${websocketData.code}`],
@@ -129,6 +128,9 @@ const Popup = () => {
         }
       }
     };
+
+    updatingUpbitCryptos = {};
+    liveRenderCryptosArr = [];
   }, [websocketParams, initUpbitCryptos]);
 
   const switchColorHandler = (current) => {
@@ -154,11 +156,25 @@ const Popup = () => {
     }
   };
 
-  const converScientificNotationHandler = (sn) => {};
+  // const handleSort = () => {
+  //   let sort = [...upbitCryptos];
+  //   console.log('handlsortexcuted');
+  //   sort.sort((a, b) => {
+  //     if (a.trade_price > b.trade_price) {
+  //       return 1;
+  //     } else if (a.trade_price < b.trade_price) {
+  //       return -1;
+  //     } else {
+  //       return 0;
+  //     }
+  //   });
 
+  //   return setUpbitCryptos(sort);
+  // };
   return (
     <div className="App">
       {' '}
+      <UpbitKRW />
       <nav>
         <section>
           <img className="comoLogo" src={comoLogo}></img>
@@ -192,68 +208,78 @@ const Popup = () => {
               <th>거래대금</th>
             </tr>
           </thead>
-          <tbody>
-            {renderKRW === 'KRW'
-              ? upbitCryptos.map((ele) => {
-                  return (
-                    <tr key={`${ele.market}-KRW`}>
-                      <td>
-                        <div>{ele.korean_name}</div>
-                        <div>
-                          {ele.market.replace('-', '').substring(3, 6) +
-                            '/' +
-                            ele.market.replace('-', '').substring(0, 3)}
-                        </div>
-                      </td>
-                      <td className={switchColorHandler(ele.change)}>
-                        <div>{ele.trade_price.toLocaleString('ko')}</div>
-                      </td>
-                      <td className={switchColorHandler(ele.change)}>
-                        <div>
-                          {switchPriceOpeatorHandler(ele.change)}
-                          {(ele.change_rate * 100).toFixed(2) + '%'}
-                        </div>
-                        <div>
-                          {switchPriceOpeatorHandler(ele.change)}
-                          {ele.change_price}
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          {(ele.acc_trade_price_24h / 1000000).toFixed()}
-                          백만
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })
-              : upbitCryptosBTC.map((ele) => {
-                  return (
-                    <tr key={`${ele.market}-BTC`}>
-                      <td>
-                        <div>{ele.korean_name}</div>
-                        <div>
-                          {ele.market.replace('-', '').substring(3, 6) +
-                            '/' +
-                            ele.market.replace('-', '').substring(0, 3)}
-                        </div>
-                      </td>
-                      <td className={switchColorHandler(ele.change)}>
-                        <div>{ele.trade_price.toFixed(8)}</div>
-                      </td>
-                      <td className={switchColorHandler(ele.change)}>
-                        <div>
-                          {switchPriceOpeatorHandler(ele.change)}
-                          {(ele.change_rate * 100).toFixed(2) + '%'}
-                        </div>
-                      </td>
-                      <td>
-                        <div>{ele.acc_trade_price_24h.toFixed(3)}</div>
-                      </td>
-                    </tr>
-                  );
-                })}
-          </tbody>
+          {!isLoading ? (
+            <tbody>
+              {renderKRW === 'KRW'
+                ? upbitCryptos.map((ele) => {
+                    return (
+                      <tr key={`${ele.market}`}>
+                        <td>
+                          <div>{ele.korean_name}</div>
+                          <div>
+                            {ele.market.replace('-', '').substring(3, 6) +
+                              '/' +
+                              ele.market.replace('-', '').substring(0, 3)}
+                          </div>
+                        </td>
+                        <td className={switchColorHandler(ele.change)}>
+                          <div>{ele.trade_price.toLocaleString('ko')}</div>
+                        </td>
+                        <td className={switchColorHandler(ele.change)}>
+                          <div>
+                            {switchPriceOpeatorHandler(ele.change)}
+                            {(ele.change_rate * 100).toFixed(2) + '%'}
+                          </div>
+                          <div>
+                            {switchPriceOpeatorHandler(ele.change)}
+                            {ele.change_price}
+                          </div>
+                        </td>
+                        <td>
+                          <div>
+                            {(ele.acc_trade_price_24h / 1000000).toFixed()}
+                            백만
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
+                : upbitCryptosBTC.map((ele) => {
+                    return (
+                      <tr key={`${ele.market}-BTC`}>
+                        <td>
+                          <div>{ele.korean_name}</div>
+                          <div>
+                            {ele.market.replace('-', '').substring(3, 6) +
+                              '/' +
+                              ele.market.replace('-', '').substring(0, 3)}
+                          </div>
+                        </td>
+                        <td className={switchColorHandler(ele.change)}>
+                          <div>{ele.trade_price.toFixed(8)}</div>
+                        </td>
+                        <td className={switchColorHandler(ele.change)}>
+                          <div>
+                            {switchPriceOpeatorHandler(ele.change)}
+                            {(ele.change_rate * 100).toFixed(2) + '%'}
+                          </div>
+                        </td>
+                        <td>
+                          <div>{ele.acc_trade_price_24h.toFixed(3)}</div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+            </tbody>
+          ) : (
+            <tbody>
+              <tr>
+                <td>
+                  <div>로딩중입니다</div>
+                </td>
+              </tr>
+            </tbody>
+          )}
         </table>
       </main>
       <footer>footer</footer>{' '}
