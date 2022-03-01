@@ -103,9 +103,7 @@ const Popup = () => {
     socket.onmessage = async (blob) => {
       const websocketData = await new Response(blob.data).json();
 
-      console.log(websocketData);
-
-      const updatingUpbitCryptos = { ...initUpbitCryptos };
+      let updatingUpbitCryptos = { ...initUpbitCryptos };
 
       // 변경 시킬 키값 업데이트
       if (updatingUpbitCryptos[`${websocketData.code}`]) {
@@ -126,11 +124,11 @@ const Popup = () => {
         } else {
           setUpbitCryptosBTC(liveRenderCryptosArr);
         }
+        liveRenderCryptosArr = [];
       }
-    };
 
-    updatingUpbitCryptos = {};
-    liveRenderCryptosArr = [];
+      updatingUpbitCryptos = {};
+    };
   }, [websocketParams, initUpbitCryptos]);
 
   const switchColorHandler = (current) => {
@@ -156,21 +154,6 @@ const Popup = () => {
     }
   };
 
-  // const handleSort = () => {
-  //   let sort = [...upbitCryptos];
-  //   console.log('handlsortexcuted');
-  //   sort.sort((a, b) => {
-  //     if (a.trade_price > b.trade_price) {
-  //       return 1;
-  //     } else if (a.trade_price < b.trade_price) {
-  //       return -1;
-  //     } else {
-  //       return 0;
-  //     }
-  //   });
-
-  //   return setUpbitCryptos(sort);
-  // };
   return (
     <div className="App">
       {' '}
