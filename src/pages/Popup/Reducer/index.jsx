@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import counterReducer from './coinReducer.jsx';
+import { coinReducer } from './coinReducer';
 
 const rootReducer = combineReducers({
-  counterReducer,
+  coinReducer,
 });
 
 export default rootReducer;
