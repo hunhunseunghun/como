@@ -14,7 +14,6 @@ const UPBIT_TICKERS_WEBSOCKET_DATA_SUCCESS =
   'coin/UPBIT_TICKERS_WEBSOCKET_DATA_SUCCESS';
 const UPBIT_TICKERS_WEBSOCKET_DATA_FAIL =
   'coin/UPBIT_TICKERS_WEBSOCKET_DATA_FAIL';
-
 export const coinName = (coinName) => ({
   type: UPBIT_MAREKT_NAME_SUCCESS,
   payload: coinName,
@@ -30,7 +29,7 @@ export const upbitTickerAction = (tickers) => ({
   payload: tickers,
 });
 
-export const upbitSocketTickerACTION = (ticker, key) => ({
+export const upbitSocketTickerACTION = (ticker) => ({
   type: UPBIT_TICKERS_WEBSOCKET_DATA_SUCCESS,
   payload: ticker,
 });
@@ -40,7 +39,7 @@ export const upbitSocketTickerACTION = (ticker, key) => ({
 const initialState = {
   apiLoading: true,
   marketNames: [],
-  ubitTickers: {},
+  upbitTickers: {},
 };
 
 export const coinReducer = (state = initialState, action) => {
@@ -56,16 +55,15 @@ export const coinReducer = (state = initialState, action) => {
       return state;
 
     case UPBIT_TICKERS_DATA_SUCCESS:
-      return { ...state, ubitTickers: action.payload };
+      return { ...state, upbitTickers: action.payload };
     case UPBIT_TICKERS_DATA_FAIL:
       return state;
 
     case UPBIT_TICKERS_WEBSOCKET_DATA_SUCCESS:
+      return upbitWebsocketUtils()(state, action, action.payload.code);
+
     case UPBIT_TICKERS_WEBSOCKET_DATA_FAIL:
-      return upbitWebsocketUtils(
-        UPBIT_TICKERS_WEBSOCKET_DATA_SUCCESS,
-        'ubitTickers'
-      )(state, action, action.payload.code);
+      return state;
 
     default:
       return state;

@@ -1,21 +1,14 @@
-export const upbitWebsocketUtils = (type, key) => {
-  const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_FAIL`];
+export const upbitWebsocketUtils = () => {
   return (state, action, code) => {
-    switch (action.type) {
-      case SUCCESS:
-        return {
-          ...state,
-          [key]: {
-            code: {
-              ...key[code],
-              ...action.payload,
-            },
-          },
-        };
-      case ERROR:
-        return reducerUtils.error(state, action.payload, key);
-      default:
-        return state;
-    }
+    return {
+      ...state,
+      upbitTickers: {
+        ...state.upbitTickers,
+        [code]: {
+          ...state.upbitTickers[code],
+          ...action.payload,
+        },
+      },
+    };
   };
 };
