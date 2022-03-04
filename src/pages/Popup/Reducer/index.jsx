@@ -1,8 +1,13 @@
 import { combineReducers } from 'redux';
-import { coinReducer } from './coinReducer';
+import { coinReducer, coinSaga } from './coinReducer';
+import { all } from 'redux-saga/effects';
 
 const rootReducer = combineReducers({
   coinReducer,
 });
 
-export default rootReducer;
+function* rootSaga() {
+  yield all([coinSaga()]);
+}
+
+export { rootReducer, rootSaga };

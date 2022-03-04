@@ -35,27 +35,27 @@ const CoinList = () => {
     }
   }, []);
 
-  if (!apiLoading) {
-    const websocketParam = useSelector(
-      (state) => state.coinReducer.marketNames
-    );
+  // if (!apiLoading) {
+  //   const websocketParam = useSelector(
+  //     (state) => state.coinReducer.marketNames
+  //   );
 
-    const socket = new WebSocket('wss://api.upbit.com/websocket/v1');
+  //   const socket = new WebSocket('wss://api.upbit.com/websocket/v1');
 
-    socket.onopen = () => {
-      socket.send(
-        `${JSON.stringify([
-          { ticket: 'como-extension' }, //for websocket handshaking , uuid4 library 랜덤키 생성
-          { type: 'ticker', codes: websocketParam }, // codes 요청 코인 문자열  (ex. KRW-BTC, BTC-ETH)
-        ])}`
-      );
-    };
-    socket.onmessage = async (blob) => {
-      const websocketData = await new Response(blob.data).json();
-      setInterval(console.log(websocketData), 100000000000);
-      // dispatch(upbitSocketTickerACTION(websocketData));
-    };
-  }
+  //   socket.onopen = () => {
+  //     socket.send(
+  //       `${JSON.stringify([
+  //         { ticket: 'como-extension' }, //for websocket handshaking , uuid4 library 랜덤키 생성
+  //         { type: 'ticker', codes: websocketParam }, // codes 요청 코인 문자열  (ex. KRW-BTC, BTC-ETH)
+  //       ])}`
+  //     );
+  //   };
+  //   socket.onmessage = async (blob) => {
+  //     const websocketData = await new Response(blob.data).json();
+
+  //     // dispatch(upbitSocketTickerACTION(websocketData));
+  //   };
+  // }
 
   const test = useSelector((state) => {
     return state.coinReducer.upbitTickers['KRW-BTC'];
