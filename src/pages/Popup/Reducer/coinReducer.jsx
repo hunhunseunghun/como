@@ -4,7 +4,7 @@ import { upbitWebsocketUtils } from '../Utils/utils.jsx';
 import {
   createUpbitMarketNameSaga,
   createUpbitTickerSaga,
-  createUpbitWebSocketSaga,
+  createWebsocketBufferSaga,
 } from '../Utils/asyncUtils.jsx';
 
 const UPBIT_API_LOADING = 'coin/UPBIT_API_LOADING';
@@ -41,7 +41,7 @@ export const upbitTickerAction = createUpbitTickerSaga(
   coinApi.getUpbitTickers
 );
 
-export const upbitSocketTickerACTION = createUpbitWebSocketSaga(
+export const upbitSocketTickerACTION = createWebsocketBufferSaga(
   GET_UPBIT_TICKERS_WEBSOCKET_DATA_SUCCESS,
   GET_UPBIT_TICKERS_WEBSOCKET_DATA_FAIL
 );
@@ -49,7 +49,7 @@ export const upbitSocketTickerACTION = createUpbitWebSocketSaga(
 export function* coinSaga() {
   yield takeEvery(GET_UPBIT_MARKET_NAME, coinNameAction);
   yield takeEvery(GET_UPBIT_TICKERS_DATA, upbitTickerAction);
-  yield takeEvery(GET_UPBIT_TICKERS_WEBSOCKET_DATA, getInitOrderbookSaga);
+  yield takeEvery(GET_UPBIT_TICKERS_WEBSOCKET_DATA, upbitSocketTickerACTION);
 }
 //reducers-----------------------------------------------------------------------
 

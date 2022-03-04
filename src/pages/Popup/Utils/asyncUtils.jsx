@@ -23,7 +23,9 @@ export const createUpbitTickerSaga = (SUCCESS, FAIL, API) => {
   return function* () {
     yield put(apiLodingAction(true));
     try {
-      const marketNames = yield select(state.coinReducer.marketNames); // select  == useSelecotor
+      const marketNames = yield select(
+        (state) => state.coinReducer.marketNames
+      ); // select  == useSelecotor
       const tickers = yield call(API, marketNames); // API 함수에 넣어주고 싶은 인자는 call 함수의 두번째 인자부터 순서대로 넣어주면 됩니다.
 
       yield put({ type: SUCCESS, payload: tickers.data });
@@ -37,14 +39,14 @@ export const createUpbitTickerSaga = (SUCCESS, FAIL, API) => {
 };
 
 // 웹소켓 생성
-export const createUpbitWebSocketSaga = () => {
+export const createUpbitWebSocket = () => {
   const webSocket = new WebSocket('wss://api.upbit.com/websocket/v1');
 
   return webSocket;
 };
 
 //웹 소켓 파라미터 전송 요청 및 리스폰스
-export const createSocketChannelSaga = (socket, websocketParam) => {
+export const createSocketChannel = (socket, websocketParam, buffer) => {
   return eventChannel((emit) => {
     socket.onopen = () => {
       socket.send(
@@ -70,17 +72,20 @@ export const createSocketChannelSaga = (socket, websocketParam) => {
     };
 
     return unsubscribe;
-  });
+  }, buffer || buffers.none());
 };
 
 //웹소켓 연결용 사가
-export const createWebsocketBufferSaga = () => {
+export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
   return function* (buffer = {}) {
-    const websocket = yield call(createWebSocket);
-    const websocketChannel = yield call(
-      websocket,
+    const websocketParam = yield select(
+      (state) => state.coinReducer.marketNames
+    );
+    const socket = yield call(createUpbitWebSocket);
+    const websocket = yield call(
       createSocketChannel,
-      buffer,
+      socket,
+      websocketParam,
       buffers.expanding(500)
     );
 
@@ -102,12 +107,14 @@ export const createWebsocketBufferSaga = () => {
               sortedObj[ele.code] = ele;
             }
           });
+
+          const sortedwebsocketData = Object.keys(sortedObj).map(
+            (ele) => sortedObj[ele]
+          );
+          yield put({ type: SUCCESS, payload: sortedwebsocketData });
         }
-        const sortedwebsocketData = Object.keys(sortedObj).map(
-          (ele) => sortedObj[ele]
-        );
       } catch (err) {
-        yield put({ type: '', payload: dataMaker(sortedData, state) });
+        yield put({ type: FAIL, payload: dataMaker(sortedData, state) });
       }
     }
   };
