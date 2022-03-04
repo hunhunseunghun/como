@@ -14,12 +14,10 @@ import CoinItem from './CoinItem.jsx';
 const CoinList = () => {
   const dispatch = useDispatch();
   const apiLoading = useSelector((state) => state.Coin.apiLoading);
-  const state = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(startInit());
   }, [dispatch]);
-  console.log('state', state);
 
   // useEffect(async () => {
   //   try {
@@ -67,16 +65,11 @@ const CoinList = () => {
   //   };
   // }
 
-  const test = useSelector((state) => {
-    return state.Coin.upbitTickers['KRW-BTC'];
-  });
-
   return (
     <div>
-      {test ? test.change_price : ''}
       <CoinItem />
     </div>
   );
 };
 
-export default React.memo(CoinList);
+export default CoinList;

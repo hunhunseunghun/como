@@ -71,19 +71,9 @@ const createSocketChannel = (socket, websocketParam, buffer) => {
     };
 
     socket.onmessage = async (blob) => {
-      // let enc = new TextDecoder('utf-8');
-      // let arr = new Uint8Array(evt.data);
-      // let data = JSON.parse(enc.decode(arr));
-      // const enc = new encoding.TextDecoder('utf-8');
-      // const arr = new Uint8Array(evt.data);
-      // const data = JSON.parse(enc.decode(blob.data));
-      //
-      // emit(data);
-
       const endcode = new encoding.TextDecoder('utf-8');
       const ticker = JSON.parse(endcode.decode(blob.data));
 
-      console.log('ticker', ticker);
       emit(ticker);
     };
 
@@ -107,7 +97,6 @@ export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
     const marektNames = yield select((state) => state.Coin.marketNames);
     const websocketParam = marektNames.map((ele) => ele.market);
 
-    console.log('websocketParam', websocketParam);
     const socket = yield call(createUpbitWebSocket);
     const websocketChannel = yield call(
       createSocketChannel,
@@ -121,6 +110,7 @@ export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
         console.log('infiniti loops excuted');
         // 제네레이터 무한 반복문
         const bufferData = yield flush(websocketChannel); // 버퍼 데이터 가져오기
+
         if (bufferData.length) {
           const sortedObj = {};
           bufferData.forEach((ele) => {
@@ -134,10 +124,11 @@ export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
             }
           });
 
-          const sortedwebsocketData = Object.keys(sortedObj).map(
-            (ele) => sortedObj[ele]
-          );
-          yield put({ type: SUCCESS, payload: sortedwebsocketData });
+          const upbitTicker = select((state) => state.Coin.upbitTickers[key]);
+          yield put({
+            type: SUCCESS,
+            payload: Object.assign({ ...upbitTicker }, { ...sortedObj[key] }),
+          });
         }
 
         yield delay(500); // 500ms 동안 대기
