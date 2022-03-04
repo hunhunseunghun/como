@@ -2,6 +2,7 @@ import { call, put, select, flush, delay } from 'redux-saga/effects';
 import { buffers, eventChannel, END } from 'redux-saga';
 
 import { apiLodingAction } from '../Reducer/coinReducer.jsx';
+import encoding from 'text-encoding';
 
 export const createUpbitMarketNameSaga = (SUCCESS, FAIL, API) => {
   return function* () {
@@ -51,7 +52,7 @@ export const createUpbitTickerSaga = (SUCCESS, FAIL, API) => {
 // 웹소켓 생성
 const createUpbitWebSocket = () => {
   const webSocket = new WebSocket('wss://api.upbit.com/websocket/v1');
-  console.log('webSocket', webSocket);
+  webSocket.binaryType = 'arraybuffer';
   return webSocket;
 };
 
@@ -60,6 +61,7 @@ const createSocketChannel = (socket, websocketParam, buffer) => {
   return eventChannel((emit) => {
     console.log('eventChannel excuted');
     socket.onopen = () => {
+      console.log(websocketParam);
       socket.send(
         JSON.stringify([
           { ticket: 'downbit-clone' },
@@ -68,10 +70,21 @@ const createSocketChannel = (socket, websocketParam, buffer) => {
       );
     };
 
-    socket.onmessage = (blob) => {
-      const websocketData = new Response(blob.data).json();
-      console.log('websocketData', websocketData);
-      emit(websocketData);
+    socket.onmessage = async (blob) => {
+      // let enc = new TextDecoder('utf-8');
+      // let arr = new Uint8Array(evt.data);
+      // let data = JSON.parse(enc.decode(arr));
+      // const enc = new encoding.TextDecoder('utf-8');
+      // const arr = new Uint8Array(evt.data);
+      // const data = JSON.parse(enc.decode(blob.data));
+      //
+      // emit(data);
+
+      const endcode = new encoding.TextDecoder('utf-8');
+      const ticker = JSON.parse(endcode.decode(blob.data));
+
+      console.log('ticker', ticker);
+      emit(ticker);
     };
 
     socket.onerror = (err) => {
@@ -89,10 +102,10 @@ const createSocketChannel = (socket, websocketParam, buffer) => {
 
 //웹소켓 연결용 사가
 export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
-  return function* () {
+  return function* pong() {
     console.log('createWebsocketBufferSaga excuted');
     const marektNames = yield select((state) => state.Coin.marketNames);
-    const websocketParam = marektNames.map((ele) => ele.market).join(',');
+    const websocketParam = marektNames.map((ele) => ele.market);
 
     console.log('websocketParam', websocketParam);
     const socket = yield call(createUpbitWebSocket);
