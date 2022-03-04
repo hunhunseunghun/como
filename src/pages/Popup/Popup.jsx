@@ -5,6 +5,7 @@ import comoLogo from '../../assets/img/comologo.png';
 import './Popup.css';
 import { coinApi } from './Api/api.jsx';
 import CoinList from './Components/Upbit/CoinList.jsx';
+import { coinNameAction } from './Reducer/coinReducer';
 
 const Popup = () => {
   // const [upbitCryptos, setUpbitCryptos] = useState([]); //filtered final upbit coins
@@ -273,7 +274,7 @@ const Popup = () => {
 
   return (
     <div className="App">
-      <CoinList />{' '}
+      <CoinList /> coinItem
     </div>
   );
 };

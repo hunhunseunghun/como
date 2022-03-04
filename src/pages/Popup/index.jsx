@@ -5,21 +5,23 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import { rootReducer, rootSaga } from './Reducer';
 
-import rootReducer from './Reducer';
 import Popup from './Popup';
 import './index.css';
 
-const devTools =
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(ReduxThunk))
+  composeWithDevTools(applyMiddleware(ReduxThunk, sagaMiddleware))
 );
-console.log(store.getState());
+
+sagaMiddleware.run(rootSaga);
+console.log('rootSaga', rootSaga());
+console.log('store', store.getState());
 render(
   <Provider store={store}>
-    {' '}
     <Popup />
   </Provider>,
   window.document.querySelector('#app-container')

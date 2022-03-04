@@ -6,34 +6,44 @@ import {
   apiLodingAction,
   upbitTickerAction,
   upbitSocketTickerACTION,
+  coinNameAction,
+  startInit,
 } from '../../Reducer/coinReducer.jsx';
 import CoinItem from './CoinItem.jsx';
+
 const CoinList = () => {
   const dispatch = useDispatch();
-  const apiLoading = useSelector((state) => state.coinReducer.apiLading);
-  useEffect(async () => {
-    try {
-      const { data: symbols } = await coinApi.getUpbitMarketNames();
+  const apiLoading = useSelector((state) => state.Coin.apiLoading);
+  const state = useSelector((state) => state);
 
-      let marketNamesArr = [];
-      symbols.map((ele) => marketNamesArr.push(ele.market));
-      dispatch(coinName(marketNamesArr));
+  useEffect(() => {
+    dispatch(startInit());
+  }, [dispatch]);
+  console.log('state', state);
 
-      const { data: upbitTickers } = await coinApi.getUpbitTickers(
-        marketNamesArr
-      );
+  // useEffect(async () => {
+  //   try {
+  //     const { data: symbols } = await coinApi.getUpbitMarketNames();
 
-      const ubitTickersObj = {};
-      upbitTickers.forEach((ele, idx) => {
-        ubitTickersObj[ele.market] = Object.assign(ele, symbols[idx]);
-      });
+  //     let marketNamesArr = [];
+  //     symbols.map((ele) => marketNamesArr.push(ele.market));
+  //     dispatch(coinName(marketNamesArr));
 
-      dispatch(upbitTickerAction(ubitTickersObj));
-      dispatch(apiLodingAction(false));
-    } catch (err) {
-      throw err;
-    }
-  }, []);
+  //     const { data: upbitTickers } = await coinApi.getUpbitTickers(
+  //       marketNamesArr
+  //     );
+
+  //     const ubitTickersObj = {};
+  //     upbitTickers.forEach((ele, idx) => {
+  //       ubitTickersObj[ele.market] = Object.assign(ele, symbols[idx]);
+  //     });
+
+  //     dispatch(upbitTickerAction(ubitTickersObj));
+  //     dispatch(apiLodingAction(false));
+  //   } catch (err) {
+  //     throw err;
+  //   }
+  // }, []);
 
   // if (!apiLoading) {
   //   const websocketParam = useSelector(
@@ -58,7 +68,7 @@ const CoinList = () => {
   // }
 
   const test = useSelector((state) => {
-    return state.coinReducer.upbitTickers['KRW-BTC'];
+    return state.Coin.upbitTickers['KRW-BTC'];
   });
 
   return (

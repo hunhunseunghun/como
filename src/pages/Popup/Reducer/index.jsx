@@ -3,7 +3,7 @@ import { coinReducer, coinSaga } from './coinReducer';
 import { all } from 'redux-saga/effects';
 
 const rootReducer = combineReducers({
-  coinReducer,
+  Coin: coinReducer,
 });
 
 function* rootSaga() {
