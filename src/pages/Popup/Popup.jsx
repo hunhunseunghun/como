@@ -274,7 +274,7 @@ const Popup = () => {
 
   return (
     <div className="App">
-      <CoinList /> coinItem
+      <CoinList />
     </div>
   );
 };

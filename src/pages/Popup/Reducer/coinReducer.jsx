@@ -1,10 +1,9 @@
-import { takeEvery } from 'redux-saga/effects';
+import { take, takeEvery } from 'redux-saga/effects';
 import { coinApi } from '../Api/api';
 import { upbitWebsocketUtils } from '../Utils/utils.jsx';
 import {
   createUpbitMarketNameSaga,
   createUpbitTickerSaga,
-  createUpbitWebSocket,
   createWebsocketBufferSaga,
 } from '../Utils/asyncUtils.jsx';
 
@@ -54,8 +53,8 @@ export const upbitSocketTickerACTION = createWebsocketBufferSaga(
 
 export function* coinSaga() {
   yield takeEvery(START_INIT, startInittSaga);
-  yield takeEvery(GET_UPBIT_MARKET_NAME, coinNameAction);
-  yield takeEvery(GET_UPBIT_TICKERS_DATA, upbitTickerAction);
+  // yield takeEvery(GET_UPBIT_MARKET_NAME, coinNameAction);
+  // yield takeEvery(GET_UPBIT_TICKERS_DATA, upbitTickerAction);
   yield takeEvery(GET_UPBIT_TICKERS_WEBSOCKET_DATA, upbitSocketTickerACTION);
 }
 //reducers-----------------------------------------------------------------------
@@ -88,8 +87,7 @@ export const coinReducer = (state = initialState, action) => {
       return state;
 
     case GET_UPBIT_TICKERS_WEBSOCKET_DATA_SUCCESS:
-      return upbitWebsocketUtils()(state, action, action.payload.code);
-
+      return upbitWebsocketUtils()(state, action);
     case GET_UPBIT_TICKERS_WEBSOCKET_DATA_FAIL:
       return state;
 
