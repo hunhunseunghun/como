@@ -109,7 +109,6 @@ export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
 
     try {
       while (true) {
-        console.log('infinity loops excuted');
         // 제네레이터 무한 반복문
 
         const bufferData = yield flush(websocketChannel); // 버퍼 데이터 가져오기
@@ -132,7 +131,6 @@ export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
             type: SUCCESS,
             payload: sortedObj,
           });
-          console.log('upbitTicker', upbitTicker['KRW-BTC'].trade_price);
         }
 
         yield delay(500); // 500ms 동안 대기

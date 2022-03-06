@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import comoLogo from '../../assets/img/comologo.png';
@@ -10,7 +10,9 @@ import { coinNameAction } from './Reducer/coinReducer';
 const Popup = () => {
   // const [upbitCryptos, setUpbitCryptos] = useState([]); //filtered final upbit coins
   // const [upbitCryptosBTC, setUpbitCryptosBTC] = useState([]);
-  // const [renderKRW, setRenderKRW] = useState('KRW'); // handle krw or btc market
+  const [renderKRW, setRenderKRW] = useState('KRW'); // handle krw or btc market
+  const [ascending, setAscending] = useState(false);
+  const apiLoading = useSelector((state) => state.Coin.apiLoading);
   // const [isLoading, setIsLoading] = useState(true); // api data loading handle
 
   // dispatch(coinSearch('coinsearch test'));
@@ -272,9 +274,46 @@ const Popup = () => {
   //   </div>
   // );
 
+  const setAscendingState = () => {
+    setAscending(!ascending);
+  };
+
   return (
     <div className="App">
-      <CoinList />
+      <nav>
+        <section>
+          <img className="comoLogo" src={comoLogo}></img>
+        </section>
+        <ul>
+          <li
+            className={renderKRW === 'KRW' ? 'currencyActive' : ''}
+            onClick={() => {
+              setRenderKRW('KRW');
+            }}
+          >
+            KRW
+          </li>
+          <li
+            className={renderKRW === 'BTC' ? 'currencyActive' : ''}
+            onClick={() => {
+              setRenderKRW('BTC');
+            }}
+          >
+            BTC
+          </li>
+        </ul>
+      </nav>
+      <table>
+        <thead>
+          <tr>
+            <th>코인</th>
+            <th onClick={setAscendingState}>현재가</th>
+            <th>전일대비</th>
+            <th>거래대금</th>
+          </tr>
+        </thead>
+        <CoinList renderKRW={renderKRW} ascending={ascending} />
+      </table>
     </div>
   );
 };
