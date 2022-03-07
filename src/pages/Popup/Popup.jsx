@@ -12,8 +12,8 @@ const Popup = () => {
   // const [upbitCryptos, setUpbitCryptos] = useState([]); //filtered final upbit coins
   // const [upbitCryptosBTC, setUpbitCryptosBTC] = useState([]);
   const [renderKRW, setRenderKRW] = useState('KRW'); // handle krw or btc market
-  const [makeSort, SetMakeSort] = useState('ascending');
-  const [sortProps, setSortProps] = useState('trade_price');
+  const [makeSort, setMakeSort] = useState('decending');
+  const [sortElement, setSortElement] = useState('trade_price');
 
   const apiLoading = useSelector((state) => state.Coin.apiLoading);
   // const [isLoading, setIsLoading] = useState(true); // api data loading handle
@@ -276,27 +276,39 @@ const Popup = () => {
   //     <footer>footer</footer>{' '}
   //   </div>
   // );
-  const handleMakeSort = () => {
-    setSortProps('trade_price');
+  const handleSortPrice = () => {
+    setSortElement('trade_price');
     if (makeSort === 'ascending') {
-      return SetMakeSort('decending');
+      return setMakeSort('decending');
     } else if (makeSort === 'decending') {
-      return SetMakeSort('ascending');
+      return setMakeSort('ascending');
     } else {
-      return SetMakeSort('ascending');
+      return setMakeSort('ascending');
     }
   };
 
-  const handleSortProps = () => {
-    setSortProps('change_rate');
+  const handleSortRate = () => {
+    setSortElement('change_rate');
     if (makeSort === 'ascending') {
-      return SetMakeSort('decending');
+      return setMakeSort('decending');
     } else if (makeSort === 'decending') {
-      return SetMakeSort('ascending');
+      return setMakeSort('ascending');
     } else {
-      return SetMakeSort('ascending');
+      return setMakeSort('ascending');
     }
   };
+
+  const handleSortTotal = () => {
+    setSortElement('acc_trade_price_24h');
+    if (makeSort === 'ascending') {
+      return setMakeSort('decending');
+    } else if (makeSort === 'decending') {
+      return setMakeSort('ascending');
+    } else {
+      return setMakeSort('ascending');
+    }
+  };
+
   console.log(makeSort);
   return (
     <div className="App">
@@ -327,15 +339,15 @@ const Popup = () => {
         <thead>
           <tr>
             <th>코인</th>
-            <th onClick={handleMakeSort}>현재가</th>
-            <th onClick={handleSortProps}>전일대비</th>
-            <th>거래대금</th>
+            <th onClick={handleSortPrice}>현재가</th>
+            <th onClick={handleSortRate}>전일대비</th>
+            <th onClick={handleSortTotal}>거래대금</th>
           </tr>
         </thead>
         <CoinList
           renderKRW={renderKRW}
           makeSort={makeSort}
-          sortProps={sortProps}
+          sortElement={sortElement}
         />
       </table>
     </div>

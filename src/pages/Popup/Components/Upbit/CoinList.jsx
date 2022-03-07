@@ -4,7 +4,7 @@ import { startInit } from '../../Reducer/coinReducer.jsx';
 import CoinItemBTC from './CoinItemBTC.jsx';
 import CoinItemKRW from './CoinItemKRW.jsx';
 
-const CoinList = ({ renderKRW, makeSort, sortProps }) => {
+const CoinList = ({ renderKRW, makeSort, sortElement }) => {
   const dispatch = useDispatch();
   const [upbitTickersKRW, setUpbitTickersKRW] = useState([]);
   const [upbitTickersBTC, setUpbitTickerBTC] = useState([]);
@@ -30,29 +30,31 @@ const CoinList = ({ renderKRW, makeSort, sortProps }) => {
 
     if (makeSort === 'ascending') {
       console.log('오름차순');
-      upbitTickersArrKRW.sort((a, b) => {
-        if (a[sortProps] > b[sortProps]) return 1;
-        if (a[sortProps] === b[sortProps]) return 0;
-        if (a[sortProps] < b[sortProps]) return -1;
+      upbitTickersArrKRW.sort((pre, aft) => {
+        // if (a[sortRate] > b[sortRate]) return 1;
+        // if (a[sortRate] === b[sortRate]) return 0;
+        // if (a[sortRate] < b[sortRate]) return -1;
+        return pre[sortElement] - aft[sortElement];
       });
-      upbitTickersArrBTC.sort((a, b) => {
-        return b[sortProps] - a[sortProps];
+      upbitTickersArrBTC.sort((pre, aft) => {
+        return pre[sortElement] - aft[sortElement];
       });
     } else if (makeSort === 'decending') {
       console.log('내림차순');
-      upbitTickersKRW.sort((a, b) => {
-        if (a[sortProps] < b[sortProps]) return 1;
-        if (a[sortProps] === b[sortProps]) return 0;
-        if (a[sortProps] > b[sortProps]) return -1;
+      upbitTickersArrKRW.sort((pre, aft) => {
+        // if (a[sortRate] < b[sortRate]) return 1;
+        // if (a[sortRate] === b[sortRate]) return 0;
+        // if (a[sortRate] > b[sortRate]) return -1;
+        return aft[sortElement] - pre[sortElement];
       });
-      upbitTickersBTC.sort((a, b) => {
-        return a[sortProps] - b[sortProps];
+      upbitTickersArrBTC.sort((pre, aft) => {
+        return aft[sortElement] - pre[sortElement];
       });
     }
 
     setUpbitTickersKRW(upbitTickersArrKRW);
     setUpbitTickerBTC(upbitTickersArrBTC);
-  }, [upbitTickers, makeSort, sortProps]);
+  }, [upbitTickers, makeSort, sortElement]);
 
   const switchColorHandler = (current) => {
     switch (current) {
