@@ -16,10 +16,10 @@ const CoinItemBTC = ({
         </div>
       </td>
       <td className={switchColorHandler(ticker.change)}>
-        <div>{ticker.trade_price}</div>
+        <div>{ticker.trade_price.toFixed(8)}</div>
       </td>
-      <td className={switchColorHandler(ticker.change)}>
-        <div>
+      <td>
+        <div className={switchColorHandler(ticker.change)}>
           {switchPriceOpeatorHandler(ticker.change)}
           {(ticker.change_rate * 100).toFixed(2) + '%'}
         </div>

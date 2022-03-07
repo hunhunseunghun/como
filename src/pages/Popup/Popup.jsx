@@ -5,13 +5,16 @@ import comoLogo from '../../assets/img/comologo.png';
 import './Popup.css';
 import { coinApi } from './Api/api.jsx';
 import CoinList from './Components/Upbit/CoinList.jsx';
-import { coinNameAction } from './Reducer/coinReducer';
+import { coinNameAction, upbitTickersSortACTION } from './Reducer/coinReducer';
 
 const Popup = () => {
+  const dispatch = useDispatch();
   // const [upbitCryptos, setUpbitCryptos] = useState([]); //filtered final upbit coins
   // const [upbitCryptosBTC, setUpbitCryptosBTC] = useState([]);
   const [renderKRW, setRenderKRW] = useState('KRW'); // handle krw or btc market
-  const [ascending, setAscending] = useState(false);
+  const [makeSort, SetMakeSort] = useState('ascending');
+  const [sortProps, setSortProps] = useState('trade_price');
+
   const apiLoading = useSelector((state) => state.Coin.apiLoading);
   // const [isLoading, setIsLoading] = useState(true); // api data loading handle
 
@@ -273,11 +276,28 @@ const Popup = () => {
   //     <footer>footer</footer>{' '}
   //   </div>
   // );
-
-  const setAscendingState = () => {
-    setAscending(!ascending);
+  const handleMakeSort = () => {
+    setSortProps('trade_price');
+    if (makeSort === 'ascending') {
+      return SetMakeSort('decending');
+    } else if (makeSort === 'decending') {
+      return SetMakeSort('ascending');
+    } else {
+      return SetMakeSort('ascending');
+    }
   };
 
+  const handleSortProps = () => {
+    setSortProps('change_rate');
+    if (makeSort === 'ascending') {
+      return SetMakeSort('decending');
+    } else if (makeSort === 'decending') {
+      return SetMakeSort('ascending');
+    } else {
+      return SetMakeSort('ascending');
+    }
+  };
+  console.log(makeSort);
   return (
     <div className="App">
       <nav>
@@ -307,12 +327,16 @@ const Popup = () => {
         <thead>
           <tr>
             <th>코인</th>
-            <th onClick={setAscendingState}>현재가</th>
-            <th>전일대비</th>
+            <th onClick={handleMakeSort}>현재가</th>
+            <th onClick={handleSortProps}>전일대비</th>
             <th>거래대금</th>
           </tr>
         </thead>
-        <CoinList renderKRW={renderKRW} ascending={ascending} />
+        <CoinList
+          renderKRW={renderKRW}
+          makeSort={makeSort}
+          sortProps={sortProps}
+        />
       </table>
     </div>
   );

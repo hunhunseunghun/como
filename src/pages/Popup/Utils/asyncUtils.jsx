@@ -1,7 +1,10 @@
 import { call, put, select, flush, delay } from 'redux-saga/effects';
 import { buffers, eventChannel, END } from 'redux-saga';
 
-import { apiLodingAction } from '../Reducer/coinReducer.jsx';
+import {
+  apiLodingAction,
+  upbitTickersArrACTION,
+} from '../Reducer/coinReducer.jsx';
 import encoding from 'text-encoding';
 
 export const createUpbitMarketNameSaga = (SUCCESS, FAIL, API) => {
@@ -13,7 +16,6 @@ export const createUpbitMarketNameSaga = (SUCCESS, FAIL, API) => {
       // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
       yield put({ type: SUCCESS, payload: marketNames.data });
       const state = yield select((state) => state);
-      console.log('state', state);
     } catch (err) {
       yield put({ type: FAIL, payload: err });
 
@@ -37,10 +39,7 @@ export const createUpbitTickerSaga = (SUCCESS, FAIL, API) => {
       tickers.data.forEach((ele) => {
         Object.assign(assignMarektNamesTickers[ele.market], ele);
       });
-      console.log('marketNames', marketNames);
-      console.log('tickers', tickers);
-      console.log('assignMarektNamesTickers', assignMarektNamesTickers);
-      console.log('marketNames', marketNames);
+
       yield put({ type: SUCCESS, payload: assignMarektNamesTickers });
       yield put(apiLodingAction(false));
     } catch (err) {
@@ -61,9 +60,7 @@ const createUpbitWebSocket = () => {
 //웹 소켓 파라미터 전송 요청 및 리스폰스
 const createSocketChannel = (socket, websocketParam, buffer) => {
   return eventChannel((emit) => {
-    console.log('eventChannel excuted');
     socket.onopen = () => {
-      console.log('websocketParam', websocketParam);
       socket.send(
         JSON.stringify([
           { ticket: 'downbit-clone' },
@@ -95,7 +92,6 @@ const createSocketChannel = (socket, websocketParam, buffer) => {
 //웹소켓 연결용 사가
 export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
   return function* pong() {
-    console.log('createWebsocketBufferSaga excuted');
     const marketNames = yield select((state) => state.Coin.marketNames);
     const websocketParam = yield marketNames.map((ele) => ele.market);
 
@@ -131,6 +127,7 @@ export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
             type: SUCCESS,
             payload: sortedObj,
           });
+          // yield put(upbitTickersArrACTION());
         }
 
         yield delay(500); // 500ms 동안 대기

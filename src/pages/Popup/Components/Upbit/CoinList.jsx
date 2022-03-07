@@ -4,47 +4,55 @@ import { startInit } from '../../Reducer/coinReducer.jsx';
 import CoinItemBTC from './CoinItemBTC.jsx';
 import CoinItemKRW from './CoinItemKRW.jsx';
 
-const CoinList = ({ renderKRW, ascending }) => {
+const CoinList = ({ renderKRW, makeSort, sortProps }) => {
   const dispatch = useDispatch();
-
   const [upbitTickersKRW, setUpbitTickersKRW] = useState([]);
-  const [upbitTickersBTC, setUpbitTickersBTC] = useState([]);
-
-  const upbitTickers = useSelector((state) => state.Coin.upbitTickers);
-
-  useEffect(() => {
-    const upbitTickersKRW = [];
-    const upbitTickersBTC = [];
-    for (let key in upbitTickers) {
-      if (upbitTickers[key]['market'].includes('KRW-')) {
-        upbitTickersKRW.push(upbitTickers[key]);
-      } else if (upbitTickers[key]['market'].includes('BTC-')) {
-        upbitTickersBTC.push(upbitTickers[key]);
-      }
-    }
-    setUpbitTickersKRW(upbitTickersKRW);
-    setUpbitTickersBTC(upbitTickersBTC);
-  }, [upbitTickers]);
-
-  useEffect(() => {
-    const sortedArr = [...upbitTickersKRW];
-    if (ascending) {
-      sortedArr.sort((a, b) => {
-        return b['trade_price'] - a['trade_price'];
-      });
-    } else if (!ascending) {
-      sortedArr.sort((a, b) => {
-        return a['trade_price'] - b['trade_price'];
-      });
-    }
-    console.log(upbitTickersKRW);
-    setUpbitTickersKRW(sortedArr);
-    console.log(upbitTickersKRW);
-  }, [ascending]);
+  const [upbitTickersBTC, setUpbitTickerBTC] = useState([]);
 
   useEffect(() => {
     dispatch(startInit());
   }, [dispatch]);
+
+  const apiLoading = useSelector((state) => state.Coin.apiLoading);
+  const upbitTickers = useSelector((state) => state.Coin.upbitTickers);
+
+  useEffect(() => {
+    let upbitTickersArrKRW = [];
+    let upbitTickersArrBTC = [];
+
+    for (let key in upbitTickers) {
+      if (upbitTickers[key]['market'].includes('KRW-')) {
+        upbitTickersArrKRW.push(upbitTickers[key]);
+      } else if (upbitTickers[key]['market'].includes('BTC-')) {
+        upbitTickersArrBTC.push(upbitTickers[key]);
+      }
+    }
+
+    if (makeSort === 'ascending') {
+      console.log('오름차순');
+      upbitTickersArrKRW.sort((a, b) => {
+        if (a[sortProps] > b[sortProps]) return 1;
+        if (a[sortProps] === b[sortProps]) return 0;
+        if (a[sortProps] < b[sortProps]) return -1;
+      });
+      upbitTickersArrBTC.sort((a, b) => {
+        return b[sortProps] - a[sortProps];
+      });
+    } else if (makeSort === 'decending') {
+      console.log('내림차순');
+      upbitTickersKRW.sort((a, b) => {
+        if (a[sortProps] < b[sortProps]) return 1;
+        if (a[sortProps] === b[sortProps]) return 0;
+        if (a[sortProps] > b[sortProps]) return -1;
+      });
+      upbitTickersBTC.sort((a, b) => {
+        return a[sortProps] - b[sortProps];
+      });
+    }
+
+    setUpbitTickersKRW(upbitTickersArrKRW);
+    setUpbitTickerBTC(upbitTickersArrBTC);
+  }, [upbitTickers, makeSort, sortProps]);
 
   const switchColorHandler = (current) => {
     switch (current) {
@@ -69,7 +77,7 @@ const CoinList = ({ renderKRW, ascending }) => {
 
   return (
     <tbody>
-      {renderKRW === 'KRW'
+      {!apiLoading && renderKRW === 'KRW'
         ? upbitTickersKRW.map((ticker) => {
             return (
               <CoinItemKRW

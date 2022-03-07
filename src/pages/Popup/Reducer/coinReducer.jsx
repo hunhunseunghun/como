@@ -1,6 +1,10 @@
-import { take, takeEvery } from 'redux-saga/effects';
+import { takeEvery } from 'redux-saga/effects';
 import { coinApi } from '../Api/api';
-import { upbitTickersSort } from '../Utils/utils.jsx';
+import {
+  setUpbitTickersArrUtil,
+  upbitWebsocketUtil,
+  upbitTickersSort,
+} from '../Utils/utils.jsx';
 import {
   createUpbitMarketNameSaga,
   createUpbitTickerSaga,
@@ -24,8 +28,13 @@ const GET_UPBIT_TICKERS_WEBSOCKET_DATA_SUCCESS =
 const GET_UPBIT_TICKERS_WEBSOCKET_DATA_FAIL =
   'coin/UPBIT_TICKERS_WEBSOCKET_DATA_FAIL';
 
-const SWITCH_UPBIT_TICKERS_SORT = 'SWITCH_UPBIT_TICKERS_SORT';
+const SET_UPBIT_TICKERS_ARR = 'coin/SET_UPBIT_TICKERS_ARR';
 
+const SWITCH_UPBIT_TICKERS_SORT = 'coin/SWITCH_UPBIT_TICKERS_SORT';
+const SWITCH_UPBIT_TICKERS_SORT_ASENDING =
+  'coin/SWITCH_UPBIT_TICKERS_SORT_ASENDING';
+const SWITCH_UPBIT_TICKERS_SORT_DESENDING =
+  'coin/SWITCH_UPBIT_TICKERS_SORT_DESENDING';
 export const startInit = () => ({ type: START_INIT });
 
 export const apiLodingAction = (boolean) => ({
@@ -45,15 +54,24 @@ export const upbitTickerAction = createUpbitTickerSaga(
   coinApi.getUpbitTickers
 );
 
-export const upbitSocketTickerACTION = createWebsocketBufferSaga(
+export const upbitTickersArrACTION = () => ({ type: SET_UPBIT_TICKERS_ARR });
+
+export const upbitWebSocketACTION = createWebsocketBufferSaga(
   GET_UPBIT_TICKERS_WEBSOCKET_DATA_SUCCESS,
   GET_UPBIT_TICKERS_WEBSOCKET_DATA_FAIL
 );
+
+export const upbitTickersSortACTION = (boolean) => ({
+  type: SWITCH_UPBIT_TICKERS_SORT,
+  payload: boolean,
+});
+
 //sagas-------------------------------------------------------------------------
 
 export function* coinSaga() {
   yield takeEvery(START_INIT, startInittSaga);
-  yield takeEvery(GET_UPBIT_TICKERS_WEBSOCKET_DATA, upbitSocketTickerACTION);
+  // yield takeEvery(SET_UPBIT_TICKERS_ARR, upbitTickersArrACTION);
+  yield takeEvery(GET_UPBIT_TICKERS_WEBSOCKET_DATA, upbitWebSocketACTION);
 }
 //reducers-----------------------------------------------------------------------
 
@@ -61,12 +79,14 @@ const initialState = {
   apiLoading: true,
   marketNames: [],
   upbitTickers: {},
+  upbitTickersKRW: [],
+  upbitTickersBTC: [],
 };
 
 function* startInittSaga() {
   yield coinNameAction();
   yield upbitTickerAction();
-  yield upbitSocketTickerACTION();
+  yield upbitWebSocketACTION();
 }
 
 export const coinReducer = (state = initialState, action) => {
@@ -85,12 +105,12 @@ export const coinReducer = (state = initialState, action) => {
       return state;
 
     case GET_UPBIT_TICKERS_WEBSOCKET_DATA_SUCCESS:
-      return upbitWebsocketUtil(state, action);
+      return upbitWebsocketUtil()(state, action);
     case GET_UPBIT_TICKERS_WEBSOCKET_DATA_FAIL:
       return state;
 
-    // case SWITCH_UPBIT_TICKERS_SORT:
-    //   return upbitTickersSort(state, action);
+    // case SET_UPBIT_TICKERS_ARR:
+    //   return setUpbitTickersArrUtil()(state);
 
     default:
       return state;
