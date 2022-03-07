@@ -1,10 +1,7 @@
 import { call, put, select, flush, delay } from 'redux-saga/effects';
 import { buffers, eventChannel, END } from 'redux-saga';
 
-import {
-  apiLodingAction,
-  upbitTickersArrACTION,
-} from '../Reducer/coinReducer.jsx';
+import { apiLodingAction } from '../Reducer/coinReducer.jsx';
 import encoding from 'text-encoding';
 
 export const createUpbitMarketNameSaga = (SUCCESS, FAIL, API) => {
@@ -15,7 +12,6 @@ export const createUpbitMarketNameSaga = (SUCCESS, FAIL, API) => {
       const marketNames = yield call(API);
       // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
       yield put({ type: SUCCESS, payload: marketNames.data });
-      const state = yield select((state) => state);
     } catch (err) {
       yield put({ type: FAIL, payload: err });
 
@@ -108,7 +104,6 @@ export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
         // 제네레이터 무한 반복문
 
         const bufferData = yield flush(websocketChannel); // 버퍼 데이터 가져오기
-        const upbitTicker = yield select((state) => state.Coin.upbitTickers);
 
         if (bufferData.length) {
           const sortedObj = {};
@@ -127,7 +122,6 @@ export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
             type: SUCCESS,
             payload: sortedObj,
           });
-          // yield put(upbitTickersArrACTION());
         }
 
         yield delay(500); // 500ms 동안 대기

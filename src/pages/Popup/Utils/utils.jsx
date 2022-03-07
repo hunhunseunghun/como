@@ -2,7 +2,12 @@ export const upbitWebsocketUtil = () => {
   return (state, action) => {
     const assignObj = { ...state.upbitTickers };
     for (let key in action.payload) {
+      // 초기 데이터와 websocket 데이터 병합
       assignObj[key] = Object.assign(assignObj[key], action.payload[key]);
+      // 데이터 change_rate 음수 값 표기 : 배열 소팅 목적
+      if (assignObj[key]['change'] === 'FALL') {
+        assignObj[key]['change_rate'] = assignObj[key]['change_rate'] * -1;
+      }
     }
 
     return {
@@ -17,50 +22,22 @@ export const upbitWebsocketUtil = () => {
 export const setUpbitTickersArrUtil = () => {
   return (state) => {
     let upbitTickers = { ...state.upbitTickers };
-    let upbitTickersKR = [];
-    let upbitTickersBT = [];
+    let upbitTickersKRW = [];
+    let upbitTickersBTC = [];
 
     for (let key in upbitTickers) {
       if (upbitTickers[key]['market'].includes('KRW-')) {
-        upbitTickersKR.push(upbitTickers[key]);
+        upbitTickersKRW.push(upbitTickers[key]);
       } else if (upbitTickers[key]['market'].includes('BTC-')) {
-        upbitTickersBT.push(upbitTickers[key]);
+        upbitTickersKRW.push(upbitTickers[key]);
       }
     }
 
     return {
       ...state,
 
-      upbitTickersKRW: [...upbitTickersKR],
-      upbitTickersBTC: [...upbitTickersBT],
+      upbitTickersKRW: [...upbitTickersKRW],
+      upbitTickersBTC: [...upbitTickersBTC],
     };
   };
 };
-
-// export const upbitTickersSort = () => {
-//   return (state, action) => {
-//     console.log('EXCUTED !!!!!!!');
-//     const upbitTickersKRW = [...state.upbitTickersKRW];
-//     const upbitTickersBTC = [...state.upbitTickersBTC];
-//     if (action.payload) {
-//       upbitTickersKRW.sort((a, b) => {
-//         return b['trade_price'] - a['trade_price'];
-//       });
-//       upbitTickersBTC.sort((a, b) => {
-//         return b['trade_price'] - a['trade_price'];
-//       });
-//     } else if (!action.payload) {
-//       upbitTickersKRW.sort((a, b) => {
-//         return a['trade_price'] - b['trade_price'];
-//       });
-//       upbitTickersBTC.sort((a, b) => {
-//         return a['trade_price'] - b['trade_price'];
-//       });
-//     }
-//     return {
-//       ...state,
-//       upbitTickersKRW: [...upbitTickersKRW],
-//       upbitTickersBTC: [...upbitTickersBTC],
-//     };
-//   };
-// };

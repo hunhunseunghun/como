@@ -29,22 +29,14 @@ const CoinList = ({ renderKRW, makeSort, sortElement }) => {
     }
 
     if (makeSort === 'ascending') {
-      console.log('오름차순');
       upbitTickersArrKRW.sort((pre, aft) => {
-        // if (a[sortRate] > b[sortRate]) return 1;
-        // if (a[sortRate] === b[sortRate]) return 0;
-        // if (a[sortRate] < b[sortRate]) return -1;
         return pre[sortElement] - aft[sortElement];
       });
       upbitTickersArrBTC.sort((pre, aft) => {
         return pre[sortElement] - aft[sortElement];
       });
     } else if (makeSort === 'decending') {
-      console.log('내림차순');
       upbitTickersArrKRW.sort((pre, aft) => {
-        // if (a[sortRate] < b[sortRate]) return 1;
-        // if (a[sortRate] === b[sortRate]) return 0;
-        // if (a[sortRate] > b[sortRate]) return -1;
         return aft[sortElement] - pre[sortElement];
       });
       upbitTickersArrBTC.sort((pre, aft) => {
@@ -71,7 +63,7 @@ const CoinList = ({ renderKRW, makeSort, sortElement }) => {
       case 'RISE':
         return '+';
       case 'FALL':
-        return '-';
+        return '';
       case 'EVEN':
         return '';
     }
