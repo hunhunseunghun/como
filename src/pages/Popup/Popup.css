@@ -6,6 +6,110 @@ nav {
   padding: 10px;
   border-bottom: 1px solid rgb(229, 229, 229);
 }
+.custom-shape-divider-top-1646706813 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: -1;
+}
+
+.custom-shape-divider-top-1646706813 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 100px;
+}
+
+.custom-shape-divider-top-1646706813 .shape-fill {
+  fill: #060b8a;
+}
+
+@media (max-width: 767px) {
+  .custom-shape-divider-top-1646706813 svg {
+    width: calc(184% + 1.3px);
+    height: 100px;
+  }
+}
+
+.dropdown {
+  font-size: 12px;
+  width: 70px;
+  height: 30px;
+}
+
+.dropdown .dropdownBtn {
+  position: relative;
+  height: 20px;
+  padding: 2px 4px;
+  background: #ffffff;
+  box-shadow: 0px 2px 4px 0px rgba(116, 116, 116, 0.589);
+  color: rgb(0, 0, 0);
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dropdown .dropdownBtn div {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown .dropdownBtn .exchangerLogo {
+  width: 14px;
+  height: 14px;
+  padding: 0 2px 0 0;
+}
+
+.dropdown .dropdownBtn img {
+  padding: 2px 0 0 0;
+}
+
+.dropdown .dropdownContent {
+  position: absolute;
+  width: 70px;
+  box-sizing: border-box;
+  background: #f0f0f0;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px 0px rgba(85, 85, 85, 0.589);
+  color: rgb(0, 0, 0);
+  font-weight: 400;
+}
+
+.dropdown .dropdownContent .dropdownItem {
+  display: flex;
+  align-items: left;
+  width: 100%;
+  padding: 4px 4px;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+
+.dropdown .dropdownContent .dropdownItem img {
+  width: 14px;
+  height: 14px;
+  padding: 0 2px 0 0;
+}
+
+.dropdown .dropdownContent .dropdownItem:first-child {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.dropdown .dropdownContent .dropdownItem:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.dropdown .dropdownContent .dropdownItem:hover {
+  background: #bbbbbb;
+  cursor: pointer;
+}
+
 .comoLogo {
   width: 15%;
 }
@@ -50,13 +154,26 @@ table thead tr {
   color: #666;
 }
 table thead tr th {
+  display: flex;
+  align-items: center;
+  justify-content: right;
   text-align: right;
   padding: 6px 4px;
   font-weight: normal;
 }
+table thead tr th {
+  cursor: pointer;
+}
+
+table thead tr th img {
+  padding: 3px 0 0 2px;
+}
+
 table thead tr th:first-child {
+  justify-content: left;
   padding: 6px 4px 6px 8px;
   text-align: left;
+  cursor: default;
 }
 table thead tr th:last-child {
   padding: 6px 8px 6px 4px;
@@ -90,11 +207,13 @@ table tbody tr td:first-child div {
   display: block;
   word-break: break-all;
   text-align: left;
+  font-weight: 600;
 }
 
 table tbody tr td:first-child div:nth-child(2) {
   font-size: 10px;
   text-align: left;
+  font-weight: 400;
   color: #666666;
 }
 
