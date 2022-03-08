@@ -4,7 +4,7 @@ import { startInit } from '../../Reducer/coinReducer.jsx';
 import CoinItemBTC from './CoinItemBTC.jsx';
 import CoinItemKRW from './CoinItemKRW.jsx';
 
-const CoinList = ({ renderKRW, makeSort, sortElement }) => {
+const CoinList = ({ marketDropDownSelected, makeSort, sortElement }) => {
   const dispatch = useDispatch();
   const [upbitTickersKRW, setUpbitTickersKRW] = useState([]);
   const [upbitTickersBTC, setUpbitTickerBTC] = useState([]);
@@ -71,7 +71,7 @@ const CoinList = ({ renderKRW, makeSort, sortElement }) => {
 
   return (
     <tbody>
-      {!apiLoading && renderKRW === 'KRW'
+      {!apiLoading && marketDropDownSelected === 'KRW'
         ? upbitTickersKRW.map((ticker) => {
             return (
               <CoinItemKRW

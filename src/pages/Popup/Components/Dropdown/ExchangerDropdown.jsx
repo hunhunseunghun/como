@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-
-export const DropDown = ({ dropDownSelected, setDropDownSelected }) => {
-  const [isActive, setIsAcitve] = useState(false);
-  const logoUrl = {
-    upbit: 'https://gi.esmplus.com/kingdooo/upbitlogo.png',
-    bithumb: 'https://gi.esmplus.com/kingdooo/bithumblogo.png',
-    coinone: 'https://gi.esmplus.com/kingdooo/coinonelogo.png',
-  };
+import upbitLogo from '../../../../assets/img/upbitLogo.png';
+import bithumblogo from '../../../../assets/img/bithumblogo.png';
+import coinonelogo from '../../../../assets/img/coinonelogo.png';
+export const ExchangerDropdown = ({
+  dropDownSelected,
+  setDropDownSelected,
+}) => {
   const outsideRef = useRef(null);
+  const [isActive, setIsAcitve] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -21,11 +21,11 @@ export const DropDown = ({ dropDownSelected, setDropDownSelected }) => {
   const handleExchangerLogo = () => {
     switch (dropDownSelected) {
       case '업비트':
-        return logoUrl.upbit;
+        return upbitLogo;
       case '빗썸':
-        return logoUrl.bithumb;
+        return bithumblogo;
       case '코인원':
-        return logoUrl.coinone;
+        return coinonelogo;
     }
   };
   return (
@@ -42,7 +42,7 @@ export const DropDown = ({ dropDownSelected, setDropDownSelected }) => {
         ></img>
       </div>
       {isActive && (
-        <div className="dropdownContent">
+        <div className="dropdownContent exchangerDropdownContent">
           <div
             className="dropdownItem"
             onClick={(e) => {
@@ -50,7 +50,7 @@ export const DropDown = ({ dropDownSelected, setDropDownSelected }) => {
               setIsAcitve(false);
             }}
           >
-            <img src="https://gi.esmplus.com/kingdooo/upbitlogo.png" alt="" />
+            <img src={upbitLogo} alt="" />
             <div>업비트</div>
           </div>
           <div
@@ -60,7 +60,7 @@ export const DropDown = ({ dropDownSelected, setDropDownSelected }) => {
               setIsAcitve(false);
             }}
           >
-            <img src="https://gi.esmplus.com/kingdooo/bithumblogo.png" alt="" />
+            <img src={bithumblogo} alt="" />
             <div>빗썸</div>
           </div>
           <div
@@ -70,7 +70,7 @@ export const DropDown = ({ dropDownSelected, setDropDownSelected }) => {
               setIsAcitve(false);
             }}
           >
-            <img src="https://gi.esmplus.com/kingdooo/coinonelogo.png" alt="" />
+            <img src={coinonelogo} alt="" />
             <div>코인원</div>
           </div>
         </div>
@@ -79,4 +79,4 @@ export const DropDown = ({ dropDownSelected, setDropDownSelected }) => {
   );
 };
 
-export default DropDown;
+export default ExchangerDropdown;
