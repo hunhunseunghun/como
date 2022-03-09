@@ -101,7 +101,7 @@ nav section:last-child div:first-child div:first-child {
   font-weight: 400;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   border: 1px solid rgb(155, 155, 155);
   border-radius: 5px;
   cursor: pointer;
@@ -206,7 +206,6 @@ table thead {
   width: 100%;
   height: 6%;
   font-size: 10px;
-
   background-color: #f9fafc;
 }
 
@@ -260,17 +259,58 @@ table tbody tr {
 
 table tbody tr td {
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  align-items: center;
   height: 47px;
   padding: 5px;
   box-sizing: border-box;
 }
-
-table tbody tr td div {
+table tbody tr td img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+table tbody tr td {
+  display: flex;
+  justify-content: right;
   text-align: right;
 }
-table tbody tr td:first-child div {
+
+.coinItemsName {
+  display: flex;
+  justify-content: space-between;
+}
+
+.coinItemsLogo {
+  display: flex;
+}
+
+.coinItemsName section {
+  display: flex;
+}
+
+.coinItemsName section div div {
+  word-break: break-all;
+  text-align: left;
+  font-weight: 600;
+}
+.coinItemsName section div div:nth-child(2) {
+  font-size: 10px;
+  text-align: left;
+  font-weight: 400;
+  color: #666666;
+}
+
+.coinItemsRate {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.coinItemsRate div {
+  width: 100%;
+  text-align: right;
+}
+
+/* table tbody tr td:first-child div {
   display: block;
   word-break: break-all;
   text-align: left;
@@ -282,35 +322,8 @@ table tbody tr td:first-child div:nth-child(2) {
   text-align: left;
   font-weight: 400;
   color: #666666;
-}
+} */
 
 table tbody tr td:nth-child(3) div:last-child {
   font-size: 10px;
-}
-
-nav ul {
-  display: flex;
-  justify-content: space-between;
-  background-color: #e4e4e7;
-  border-radius: 7px;
-  width: 52px;
-  padding: 2px 4px;
-}
-
-nav ul li {
-  all: unset;
-  font-size: 10px;
-  border-radius: 7px;
-  padding: 2px;
-  box-sizing: border-box;
-  color: #2b2b2b;
-  font-weight: 500;
-}
-nav ul li:hover {
-  cursor: pointer;
-}
-
-.currencyActive {
-  background-color: #ffffff;
-  color: #2b2b2b;
 }

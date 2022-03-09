@@ -1,24 +1,53 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import { FiStar } from 'react-icons/fi';
 const CoinItemKRW = ({
   ticker,
   switchColorHandler,
   switchPriceOpeatorHandler,
+  markedCoin,
+  setMarkedCoin,
 }) => {
+  const [isMarked, setIsMarked] = useState(false);
+  const handleMarkedCoin = () => {
+    if (isMarked === false) {
+      const marked = [...markedCoin, ticker.market];
+      setMarkedCoin(marked);
+      setIsMarked(true);
+    } else {
+      const marked = [...markedCoin];
+      marked.splice([...markedCoin].indexOf(ticker.market), 1);
+      setMarkedCoin(marked);
+      setIsMarked(false);
+    }
+  };
   return (
     <tr key={`${ticker.market}`}>
-      <td>
-        <div>{ticker.korean_name}</div>
-        <div>
-          {ticker.market.replace('-', '').substring(3, 6) +
-            '/' +
-            ticker.market.replace('-', '').substring(0, 3)}
-        </div>
+      <td className="coinItemsName">
+        <section>
+          <img
+            src={`https://static.upbit.com/logos/${
+              ticker.market.split('-')[1]
+            }.png`}
+          />
+
+          <div>
+            <div>{ticker.korean_name}</div>
+            <div>
+              {ticker.market.replace('-', '').substring(3, 6) +
+                '/' +
+                ticker.market.replace('-', '').substring(0, 3)}
+            </div>
+          </div>
+        </section>
+
+        <section className="coinItemsMarked" onClick={handleMarkedCoin}>
+          <FiStar />
+        </section>
       </td>
       <td className={switchColorHandler(ticker.change)}>
         <div>{ticker.trade_price.toLocaleString()}</div>
       </td>
-      <td className={switchColorHandler(ticker.change)}>
+      <td className={switchColorHandler(ticker.change) + ' coinItemsRate'}>
         <div>
           {switchPriceOpeatorHandler(ticker.change)}
           {(ticker.change_rate * 100).toFixed(2) + '%'}

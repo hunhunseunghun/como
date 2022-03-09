@@ -15,7 +15,9 @@ const CoinList = ({
   const dispatch = useDispatch();
   const [upbitTickersKRW, setUpbitTickersKRW] = useState([]);
   const [upbitTickersBTC, setUpbitTickerBTC] = useState([]);
+  const [markedCoin, setMarkedCoin] = useState([]); // 즐겨찾기 코인 배열
 
+  console.log(markedCoin);
   useEffect(() => {
     dispatch(startInit());
   }, [dispatch]);
@@ -70,6 +72,26 @@ const CoinList = ({
       });
     }
 
+    // if (markedCoin.length > 0) {
+    //   const markedArrKRW = [];
+    //   const unMarkedArrKRW = [];
+    //   markedCoin.map((coinName) => {
+    //     const filteredCoin = upbitTickersArrKRW.filter(
+    //       (coin) => coin.market === coinName
+    //     );
+    //     markedArrKRW.push(filteredCoin[0]);
+    //   });
+    //   markedArrKRW.forEach((marked) => {
+    //     upbitTickersArrKRW.forEach((ele, idx) => {
+    //       if (ele === marked) {
+    //         delete upbitTickersArrKRW[idx];
+    //       }
+    //     });
+    //   });
+    //   const deleteBoolean = upbitTickersArrKRW.filter(Boolean);
+    //   upbitTickersArrKRW = [...markedArrKRW, ...upbitTickersArrKRW];
+    // }
+
     setUpbitTickersKRW(upbitTickersArrKRW);
     setUpbitTickerBTC(upbitTickersArrBTC);
   }, [upbitTickers, makeSort, sortElement, searchCoinName]);
@@ -105,6 +127,8 @@ const CoinList = ({
                 ticker={ticker}
                 switchColorHandler={switchColorHandler}
                 switchPriceOpeatorHandler={switchPriceOpeatorHandler}
+                markedCoin={markedCoin}
+                setMarkedCoin={setMarkedCoin}
               />
             );
           })
