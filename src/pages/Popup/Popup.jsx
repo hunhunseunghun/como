@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './Popup.css';
+
 import CoinList from './Components/Upbit/CoinList.jsx';
 import ExchangerDropdown from './Components/Dropdown/ExchangerDropdown';
 import MarketDropDown from './Components/Dropdown/marketDropDown';
 
-const Popup = () => {
-  const dispatch = useDispatch();
+import { FaSistrix } from 'react-icons/fa';
 
-  const [renderKRW, setRenderKRW] = useState('KRW'); // handle krw or btc market
+const Popup = () => {
+  const searchInputRef = useRef();
   const [makeSort, setMakeSort] = useState('decending');
   const [sortElement, setSortElement] = useState('trade_price');
   const [dropDownSelected, setDropDownSelected] = useState('업비트');
   const [marketDropDownSelected, setmarketDropDownSelected] = useState('KRW');
+  const [searchCoinName, setSearchCoinName] = useState('');
 
   const apiLoading = useSelector((state) => state.Coin.apiLoading);
 
@@ -66,9 +68,29 @@ const Popup = () => {
             ></path>
           </svg>
         </div>
-        <section>modify</section>
+        <section></section>
+
         <section>
-          <div></div>
+          <div
+            className="coinSearchBar"
+            onClick={() => {
+              searchInputRef.current.focus();
+            }}
+          >
+            <FaSistrix />
+            <input
+              ref={searchInputRef}
+              className="coinSearchInput coinSearchText"
+              type="text"
+              placeholder=""
+              onChange={(e) => {
+                console.log(e.target.value);
+                setSearchCoinName(e.target.value);
+              }}
+            />
+            검색
+          </div>
+
           <div>
             <MarketDropDown
               marketDropDownSelected={marketDropDownSelected}
@@ -114,6 +136,7 @@ const Popup = () => {
           marketDropDownSelected={marketDropDownSelected}
           makeSort={makeSort}
           sortElement={sortElement}
+          searchCoinName={searchCoinName}
         />
       </table>
     </div>

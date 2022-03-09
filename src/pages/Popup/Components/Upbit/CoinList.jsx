@@ -4,7 +4,14 @@ import { startInit } from '../../Reducer/coinReducer.jsx';
 import CoinItemBTC from './CoinItemBTC.jsx';
 import CoinItemKRW from './CoinItemKRW.jsx';
 
-const CoinList = ({ marketDropDownSelected, makeSort, sortElement }) => {
+import * as Hangul from 'hangul-js';
+
+const CoinList = ({
+  marketDropDownSelected,
+  makeSort,
+  sortElement,
+  searchCoinName,
+}) => {
   const dispatch = useDispatch();
   const [upbitTickersKRW, setUpbitTickersKRW] = useState([]);
   const [upbitTickersBTC, setUpbitTickerBTC] = useState([]);
@@ -20,6 +27,7 @@ const CoinList = ({ marketDropDownSelected, makeSort, sortElement }) => {
     let upbitTickersArrKRW = [];
     let upbitTickersArrBTC = [];
 
+    // tickers 객체 배열화
     for (let key in upbitTickers) {
       if (upbitTickers[key]['market'].includes('KRW-')) {
         upbitTickersArrKRW.push(upbitTickers[key]);
@@ -27,6 +35,24 @@ const CoinList = ({ marketDropDownSelected, makeSort, sortElement }) => {
         upbitTickersArrBTC.push(upbitTickers[key]);
       }
     }
+
+    // 코인 이름 검색
+    upbitTickersArrKRW = upbitTickersArrKRW.filter(
+      (ele) =>
+        //영어 검색
+        ele['english_name']
+          .toLowerCase()
+          .includes(searchCoinName.toLowerCase()) ||
+        //코인 마켓명(심볼) 검색
+        ele['market']
+          .replace('/', '')
+          .toLowerCase()
+          .includes(searchCoinName.toLowerCase()) ||
+        //한글 검색
+        Hangul.disassembleToString(ele['korean_name']).includes(
+          Hangul.disassembleToString(searchCoinName)
+        )
+    );
 
     if (makeSort === 'ascending') {
       upbitTickersArrKRW.sort((pre, aft) => {
@@ -46,7 +72,7 @@ const CoinList = ({ marketDropDownSelected, makeSort, sortElement }) => {
 
     setUpbitTickersKRW(upbitTickersArrKRW);
     setUpbitTickerBTC(upbitTickersArrBTC);
-  }, [upbitTickers, makeSort, sortElement]);
+  }, [upbitTickers, makeSort, sortElement, searchCoinName]);
 
   const switchColorHandler = (current) => {
     switch (current) {
