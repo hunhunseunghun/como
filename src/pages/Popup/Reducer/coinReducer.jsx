@@ -1,10 +1,6 @@
 import { takeEvery } from 'redux-saga/effects';
 import { coinApi } from '../Api/api';
-import {
-  setUpbitTickersArrUtil,
-  upbitWebsocketUtil,
-  upbitTickersSort,
-} from '../Utils/utils.jsx';
+import { upbitWebsocketUtil } from '../Utils/utils.jsx';
 import {
   createUpbitMarketNameSaga,
   createUpbitTickerSaga,
@@ -108,9 +104,6 @@ export const coinReducer = (state = initialState, action) => {
       return upbitWebsocketUtil()(state, action);
     case GET_UPBIT_TICKERS_WEBSOCKET_DATA_FAIL:
       return state;
-
-    // case SET_UPBIT_TICKERS_ARR:
-    //   return setUpbitTickersArrUtil()(state);
 
     default:
       return state;
