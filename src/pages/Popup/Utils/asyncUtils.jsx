@@ -133,3 +133,5 @@ export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
     }
   };
 };
+
+export const createBithumbMarketNameSaga = () => {};

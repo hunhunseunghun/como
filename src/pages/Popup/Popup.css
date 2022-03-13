@@ -212,7 +212,7 @@ table thead {
 
 table thead tr {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   width: 100%;
   color: #666;
 }
@@ -253,7 +253,7 @@ table tbody {
 
 table tbody tr {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   width: 100%;
 }
 
