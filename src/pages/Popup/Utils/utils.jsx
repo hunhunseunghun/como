@@ -41,3 +41,5 @@ export const setUpbitTickersArrUtil = () => {
     };
   };
 };
+
+export const setBithumbWebsoketParamsUtil = () => {};

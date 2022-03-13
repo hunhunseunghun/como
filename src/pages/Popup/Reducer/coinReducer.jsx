@@ -1,10 +1,16 @@
 import { takeEvery } from 'redux-saga/effects';
 import { coinApi } from '../Api/api';
-import { upbitWebsocketUtil } from '../Utils/utils.jsx';
+import {
+  upbitWebsocketUtil,
+  setBithumbWebsoketParamsUtil,
+} from '../Utils/utils.jsx';
 import {
   createUpbitMarketNameSaga,
   createUpbitTickerSaga,
   createWebsocketBufferSaga,
+  createBithumbTickersKrw,
+  createBithumbTickersBtc,
+  createBithumbWebsocketBufferSaga,
 } from '../Utils/asyncUtils.jsx';
 
 const START_INIT = 'coin/START_INIT';
@@ -26,11 +32,25 @@ const GET_UPBIT_TICKERS_WEBSOCKET_DATA_FAIL =
 
 const SET_UPBIT_TICKERS_ARR = 'coin/SET_UPBIT_TICKERS_ARR';
 
-const SWITCH_UPBIT_TICKERS_SORT = 'coin/SWITCH_UPBIT_TICKERS_SORT';
-const SWITCH_UPBIT_TICKERS_SORT_ASENDING =
-  'coin/SWITCH_UPBIT_TICKERS_SORT_ASENDING';
-const SWITCH_UPBIT_TICKERS_SORT_DESENDING =
-  'coin/SWITCH_UPBIT_TICKERS_SORT_DESENDING';
+const GET_BITHUMB_TICKERS_KRW_DATA = 'coin/GET_BITHUMB_TICKERS_KRW_DATA';
+const GET_BITHUMB_TICKERS_KRW_DATA_SUCCESS =
+  'coin/GET_BITHUMB_TICKERS_KRW_DATA_SUCCESS';
+const GET_BITHUMB_TICKERS_KRW_DATA_FAIL =
+  'coin/GET_BITHUMB_TICKERS_KRW_DATA_FAIL';
+
+const GET_BITHUMB_TICKERS_BTC_DATA = 'coin/GET_BITHUMB_TICKERS_BTC_DATA';
+const GET_BITHUMB_TICKERS_BTC_DATA_SUCCESS =
+  'coin/GET_BITHUMB_TICKERS_BTC_DATA_SUCCESS';
+const GET_BITHUMB_TICKERS_BTC_DATA_FAIL =
+  'coin/GET_BITHUMB_TICKERS_BTC_DATA_FAIL';
+
+const GET_BITHUMB_TICKERS_WEBSOCKET_DATA =
+  'coin/GET_BITHUMB_TICKERS_WEBSOCKET_DATA';
+const GET_BITHUMB_TICKERS_WEBSOCKET_DATA_SUECCES =
+  'coin/GET_BITHUMB_TICKERS_WEBSOCKET_DATA_SUCCESS';
+const GET_BITHUMB_TICKERS_WEBSOCKET_DATA_FAIL =
+  'coin/GET_BITHUMB_TICKERS_WEBSOCKET_DATA_FAIL';
+
 export const startInit = () => ({ type: START_INIT });
 
 export const apiLodingAction = (boolean) => ({
@@ -57,10 +77,22 @@ export const upbitWebSocketACTION = createWebsocketBufferSaga(
   GET_UPBIT_TICKERS_WEBSOCKET_DATA_FAIL
 );
 
-export const upbitTickersSortACTION = (boolean) => ({
-  type: SWITCH_UPBIT_TICKERS_SORT,
-  payload: boolean,
-});
+export const bithumbTickersKrwACTION = createBithumbTickersKrw(
+  GET_BITHUMB_TICKERS_KRW_DATA_SUCCESS,
+  GET_BITHUMB_TICKERS_KRW_DATA_FAIL,
+  coinApi.getBithumbTickersKRW
+);
+
+export const bithumbTickersBtcACTION = createBithumbTickersBtc(
+  GET_BITHUMB_TICKERS_BTC_DATA_SUCCESS,
+  GET_BITHUMB_TICKERS_BTC_DATA_FAIL,
+  coinApi.getBithumbTickersBTC
+);
+
+export const bithumbWebSocketACTION = createBithumbWebsocketBufferSaga(
+  GET_BITHUMB_TICKERS_WEBSOCKET_DATA_SUECCES,
+  GET_BITHUMB_TICKERS_WEBSOCKET_DATA_FAIL
+);
 
 //sagas-------------------------------------------------------------------------
 
@@ -68,7 +100,9 @@ export function* coinSaga() {
   yield takeEvery(START_INIT, startInittSaga);
   // yield takeEvery(SET_UPBIT_TICKERS_ARR, upbitTickersArrACTION);
   yield takeEvery(GET_UPBIT_TICKERS_WEBSOCKET_DATA, upbitWebSocketACTION);
+  yield takeEvery(GET_BITHUMB_TICKERS_WEBSOCKET_DATA, bithumbWebSocketACTION);
 }
+
 //reducers-----------------------------------------------------------------------
 
 const initialState = {
@@ -77,12 +111,16 @@ const initialState = {
   upbitTickers: {},
   upbitTickersKRW: [],
   upbitTickersBTC: [],
+  bithumbTickers: {},
 };
 
 function* startInittSaga() {
   yield coinNameAction();
   yield upbitTickerAction();
+  yield bithumbTickersKrwACTION();
+  yield bithumbTickersBtcACTION();
   yield upbitWebSocketACTION();
+  yield bithumbWebSocketACTION();
 }
 
 export const coinReducer = (state = initialState, action) => {
@@ -103,6 +141,27 @@ export const coinReducer = (state = initialState, action) => {
     case GET_UPBIT_TICKERS_WEBSOCKET_DATA_SUCCESS:
       return upbitWebsocketUtil()(state, action);
     case GET_UPBIT_TICKERS_WEBSOCKET_DATA_FAIL:
+      return state;
+
+    case GET_BITHUMB_TICKERS_KRW_DATA_SUCCESS:
+      return {
+        ...state,
+        bithumbTickers: { ...state.bithumbTickers, ...action.payload },
+      };
+    case GET_BITHUMB_TICKERS_KRW_DATA_FAIL:
+      return state;
+
+    case GET_BITHUMB_TICKERS_BTC_DATA_SUCCESS:
+      return {
+        ...state,
+        bithumbTickers: { ...state.bithumbTickers, ...action.payload },
+      };
+    case GET_BITHUMB_TICKERS_BTC_DATA_FAIL:
+      return state;
+
+    case GET_BITHUMB_TICKERS_WEBSOCKET_DATA_SUECCES:
+      return state;
+    case GET_BITHUMB_TICKERS_WEBSOCKET_DATA_FAIL:
       return state;
 
     default:

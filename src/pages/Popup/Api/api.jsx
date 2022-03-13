@@ -8,9 +8,9 @@ export const coinApi = {
       params: { markets: tickersParam },
     }),
   getBithumbTickersKRW: () => {
-    axios.get('https://api.bithumb.com/public/ticker/all_krw');
+    return axios.get('https://api.bithumb.com/public/ticker/all_krw');
   },
   getBithumbTickersBTC: () => {
-    axios.get('https://api.bithumb.com/public/ticker/all_btc');
+    return axios.get('https://api.bithumb.com/public/ticker/all_btc');
   },
 };

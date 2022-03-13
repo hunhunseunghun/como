@@ -1,6 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './Popup.css';
+
+import encoding from 'text-encoding';
 
 import CoinList from './Components/Upbit/CoinList.jsx';
 import ExchangerDropdown from './Components/Dropdown/ExchangerDropdown';
@@ -17,6 +19,31 @@ const Popup = () => {
   const [searchCoinName, setSearchCoinName] = useState('');
 
   const apiLoading = useSelector((state) => state.Coin.apiLoading);
+
+  useEffect(() => {
+    const webSocket = new WebSocket('wss://pubwss.bithumb.com/pub/ws');
+
+    webSocket.onopen = () => {
+      console.log('excuted');
+      webSocket.send(
+        JSON.stringify([
+          {
+            type: 'ticker',
+            symbols: ['BTC_KRW', 'ETH_KRW'],
+            tickTypes: ['30M', '1H', '12H', '24H', 'MID'],
+          },
+        ])
+      );
+    };
+
+    webSocket.onmessage = async (blob) => {
+      const endcode = new encoding.TextDecoder('utf-8');
+      // const ticker = JSON.parse(endcode.decode(blob.data));
+
+      console.log(blob);
+      // emit(ticker);
+    };
+  }, []);
 
   const handleSortPrice = () => {
     setSortElement('trade_price');
