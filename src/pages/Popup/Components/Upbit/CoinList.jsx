@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { startInit } from '../../Reducer/coinReducer.jsx';
+
 import CoinItemBTC from './CoinItemBTC.jsx';
 import CoinItemKRW from './CoinItemKRW.jsx';
 
@@ -21,15 +21,10 @@ const CoinList = ({
     localStorageDataBTC = JSON.parse(localStorage.isMarkedCoinBTC);
   }
 
-  const dispatch = useDispatch();
   const [markedCoinKRW, setMarkedCoinKRW] = useState([...localStorageDataKRW]); // 즐겨찾기 코인 KRW 배열
   const [markedCoinBTC, setMarkedCoinBTC] = useState([...localStorageDataBTC]); // 즐겨찾기 코인 BTC 배열
   const [upbitTickersKRW, setUpbitTickersKRW] = useState([]);
   const [upbitTickersBTC, setUpbitTickerBTC] = useState([]);
-
-  useEffect(() => {
-    dispatch(startInit());
-  }, [dispatch]);
 
   const apiLoading = useSelector((state) => state.Coin.apiLoading);
   const upbitTickers = useSelector((state) => state.Coin.upbitTickers);
