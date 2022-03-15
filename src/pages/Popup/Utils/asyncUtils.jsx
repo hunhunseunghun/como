@@ -194,30 +194,26 @@ export const createBithumbTickersBtc = (SUCCESS, FAIL, API) => {
 
 const createBithumbWebSocket = () => {
   const webSocket = new WebSocket('wss://pubwss.bithumb.com/pub/ws');
-
   // webSocket.binaryType = 'arraybuffer';
   return webSocket;
 };
 
 //웹 소켓 파라미터 전송 요청 및 리스폰스
 const createBithumbSocketChannel = (socket, websocketParam, buffer) => {
-  console.log(`${[...websocketParam]}`);
   return eventChannel((emit) => {
     socket.onopen = () => {
+      const websocketParamTostring = websocketParam
+        .map((ele) => "'" + ele + "'")
+        .toString();
+
       socket.send(
-        `{"type":"ticker","symbols":${[
-          ...websocketParam,
-        ]},"tickTypes":["1H","6H"]}`
+        `{"type":"ticker","symbols":[${websocketParamTostring}],"tickTypes":["1H","6H"]}`
       );
     };
 
     socket.onmessage = (blob) => {
-      // const endcode = new encoding.TextDecoder('utf-8');
-      // const ticker = JSON.parse(endcode.decode(blob.data));
-
-      // emit(ticker);
-
-      console.log('createBithumbWebSocket', blob.data);
+      const ticker = JSON.parse(blob.data);
+      emit(ticker);
     };
 
     socket.onerror = (err) => {
@@ -246,34 +242,31 @@ export const createBithumbWebsocketBufferSaga = (SUCCESS, FAIL) => {
       buffers.expanding(500)
     );
 
-    console.log(websocketChannel);
     try {
-      // while (true) {
-      //   // 제네레이터 무한 반복문
-      //   const bufferData = yield flush(websocketChannel); // 버퍼 데이터 가져오기
-      //   if (bufferData.length) {
-      //     const sortedObj = {};
-      //     bufferData.forEach((ele) => {
-      //       if (sortedObj[ele.code]) {
-      //         sortedObj[ele.code] =
-      //           sortedObj[ele.code].timestamp > ele.timestamp
-      //             ? sortedObj[ele.code]
-      //             : ele;
-      //       } else {
-      //         sortedObj[ele.code] = ele;
-      //       }
-      //     });
-      //     yield put({
-      //       type: SUCCESS,
-      //       payload: sortedObj,
-      //     });
-      //   }
-      //   yield delay(500); // 500ms 동안 대기
-      // }
+      while (true) {
+        // 제네레이터 무한 반복문
+        const bufferData = yield flush(websocketChannel); // 버퍼 데이터 가져오기
+
+        if (bufferData.length) {
+          const sortedObj = {};
+          bufferData.forEach((ele) => {
+            if (ele.content) {
+              sortedObj[ele.content.symbol] = ele.content;
+            }
+          });
+          console.log(sortedObj);
+          yield put({
+            type: SUCCESS,
+            payload: sortedObj,
+          });
+        }
+        yield delay(500); // 500ms 동안 대기
+      }
     } catch (err) {
-      // yield put({ type: FAIL, payload: err });
+      console.log('err excuted');
+      yield put({ type: FAIL, payload: err });
     } finally {
-      // websocketChannel.close(); // emit(END) 접근시 소켓 닫기
+      websocketChannel.close(); // emit(END) 접근시 소켓 닫기
     }
   };
 };

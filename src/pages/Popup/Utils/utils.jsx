@@ -42,4 +42,18 @@ export const setUpbitTickersArrUtil = () => {
   };
 };
 
-export const setBithumbWebsoketParamsUtil = () => {};
+export const bithumbWebsocketUtil = (state, action) => {
+  const assignObj = { ...state.bithumbTickers };
+  for (let key in action.payload) {
+    // 초기 데이터와 websocket 데이터 병합
+    if (assignObj[key]) {
+      assignObj[key] = Object.assign(assignObj[key], action.payload[key]);
+    }
+  }
+  return {
+    ...state,
+    bithumbTickers: {
+      ...assignObj,
+    },
+  };
+};

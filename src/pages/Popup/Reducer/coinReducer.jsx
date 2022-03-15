@@ -1,9 +1,6 @@
 import { takeEvery } from 'redux-saga/effects';
 import { coinApi } from '../Api/api';
-import {
-  upbitWebsocketUtil,
-  setBithumbWebsoketParamsUtil,
-} from '../Utils/utils.jsx';
+import { upbitWebsocketUtil, bithumbWebsocketUtil } from '../Utils/utils.jsx';
 import {
   createUpbitMarketNameSaga,
   createUpbitTickerSaga,
@@ -123,8 +120,6 @@ const initialState = {
   apiLoading: true,
   marketNames: [],
   upbitTickers: {},
-  upbitTickersKRW: [],
-  upbitTickersBTC: [],
   bithumbTickers: {},
 };
 
@@ -162,6 +157,11 @@ export const coinReducer = (state = initialState, action) => {
         bithumbTickers: { ...state.bithumbTickers, ...action.payload },
       };
     case GET_BITHUMB_TICKERS_BTC_DATA_FAIL:
+      return state;
+
+    case GET_BITHUMB_WEBSOCKET_DATA_SUCCESS:
+      return bithumbWebsocketUtil(state, action);
+    case GET_BITHUMB_WEBSOCKET_DATA_FAIL:
       return state;
 
     default:
