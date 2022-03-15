@@ -17,9 +17,9 @@ const BithumbCoinList = ({ marketDropDownSelected }) => {
 
     for (let key in tickers) {
       if (tickers[key]['market'].includes('_KRW')) {
-        bithumbTickersKrwArr.push(tickers);
+        bithumbTickersKrwArr.push(tickers[key]);
       } else {
-        bithumbTickersBtcArr.push(tickers);
+        bithumbTickersBtcArr.push(tickers[key]);
       }
     }
 
@@ -34,7 +34,7 @@ const BithumbCoinList = ({ marketDropDownSelected }) => {
             return (
               <BithumbCoinItemKRW
                 market={ticker.market}
-                acc_trade_value={ticker.acc_trade_value_24H}
+                acc_trade_value_24H={ticker.acc_trade_value_24H}
               />
             );
           })

@@ -137,17 +137,25 @@ export const createWebsocketBufferSaga = (SUCCESS, FAIL) => {
 export const createBithumbTickersKrw = (SUCCESS, FAIL, API) => {
   return function* () {
     try {
-      while (true) {
-        const tickers = yield call(API);
-        // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
-        const editkeyTickers = {};
-        for (let key in tickers.data.data) {
-          editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
-          editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
-        }
-        yield put({ type: SUCCESS, payload: editkeyTickers });
-        yield delay(1000);
+      const tickers = yield call(API);
+      // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
+      const editkeyTickers = {};
+      for (let key in tickers.data.data) {
+        editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
+        editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
       }
+      yield put({ type: SUCCESS, payload: editkeyTickers });
+      // while (true) {
+      //   const tickers = yield call(API);
+      //   // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
+      //   const editkeyTickers = {};
+      //   for (let key in tickers.data.data) {
+      //     editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
+      //     editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
+      //   }
+      //   yield put({ type: SUCCESS, payload: editkeyTickers });
+      //   yield delay(1000);
+      // }
     } catch (err) {
       yield put({ type: FAIL, payload: err });
       throw err;
@@ -158,20 +166,114 @@ export const createBithumbTickersKrw = (SUCCESS, FAIL, API) => {
 export const createBithumbTickersBtc = (SUCCESS, FAIL, API) => {
   return function* () {
     try {
-      while (true) {
-        const tickers = yield call(API);
+      const tickers = yield call(API);
 
-        const editkeyTickers = {};
-        for (let key in tickers.data.data) {
-          editkeyTickers[`${key}_BTC`] = { ...tickers.data.data[key] };
-          editkeyTickers[`${key}_BTC`]['market'] = `${key}_BTC`;
-        }
-        yield put({ type: SUCCESS, payload: editkeyTickers });
-        yield delay(1000);
+      const editkeyTickers = {};
+      for (let key in tickers.data.data) {
+        editkeyTickers[`${key}_BTC`] = { ...tickers.data.data[key] };
+        editkeyTickers[`${key}_BTC`]['market'] = `${key}_BTC`;
       }
+      yield put({ type: SUCCESS, payload: editkeyTickers });
+      // while (true) {
+      //   const tickers = yield call(API);
+
+      //   const editkeyTickers = {};
+      //   for (let key in tickers.data.data) {
+      //     editkeyTickers[`${key}_BTC`] = { ...tickers.data.data[key] };
+      //     editkeyTickers[`${key}_BTC`]['market'] = `${key}_BTC`;
+      //   }
+      //   yield put({ type: SUCCESS, payload: editkeyTickers });
+      //   yield delay(1000);
+      // }
     } catch (err) {
       yield put({ type: FAIL, payload: err });
       throw err;
+    }
+  };
+};
+
+const createBithumbWebSocket = () => {
+  const webSocket = new WebSocket('wss://pubwss.bithumb.com/pub/ws');
+
+  // webSocket.binaryType = 'arraybuffer';
+  return webSocket;
+};
+
+//웹 소켓 파라미터 전송 요청 및 리스폰스
+const createBithumbSocketChannel = (socket, websocketParam, buffer) => {
+  console.log(`${[...websocketParam]}`);
+  return eventChannel((emit) => {
+    socket.onopen = () => {
+      socket.send(
+        `{"type":"ticker","symbols":${[
+          ...websocketParam,
+        ]},"tickTypes":["1H","6H"]}`
+      );
+    };
+
+    socket.onmessage = (blob) => {
+      // const endcode = new encoding.TextDecoder('utf-8');
+      // const ticker = JSON.parse(endcode.decode(blob.data));
+
+      // emit(ticker);
+
+      console.log('createBithumbWebSocket', blob.data);
+    };
+
+    socket.onerror = (err) => {
+      emit(err);
+      emit(END);
+    };
+
+    const unsubscribe = () => {
+      socket.close();
+    };
+
+    return unsubscribe;
+  }, buffer || buffers.none());
+};
+
+//웹소켓 연결용 사가
+export const createBithumbWebsocketBufferSaga = (SUCCESS, FAIL) => {
+  return function* pong() {
+    const marketNames = yield select((state) => state.Coin.bithumbTickers);
+    const websocketParam = yield Object.keys(marketNames);
+    const socket = yield call(createBithumbWebSocket);
+    const websocketChannel = yield call(
+      createBithumbSocketChannel,
+      socket,
+      websocketParam,
+      buffers.expanding(500)
+    );
+
+    console.log(websocketChannel);
+    try {
+      // while (true) {
+      //   // 제네레이터 무한 반복문
+      //   const bufferData = yield flush(websocketChannel); // 버퍼 데이터 가져오기
+      //   if (bufferData.length) {
+      //     const sortedObj = {};
+      //     bufferData.forEach((ele) => {
+      //       if (sortedObj[ele.code]) {
+      //         sortedObj[ele.code] =
+      //           sortedObj[ele.code].timestamp > ele.timestamp
+      //             ? sortedObj[ele.code]
+      //             : ele;
+      //       } else {
+      //         sortedObj[ele.code] = ele;
+      //       }
+      //     });
+      //     yield put({
+      //       type: SUCCESS,
+      //       payload: sortedObj,
+      //     });
+      //   }
+      //   yield delay(500); // 500ms 동안 대기
+      // }
+    } catch (err) {
+      // yield put({ type: FAIL, payload: err });
+    } finally {
+      // websocketChannel.close(); // emit(END) 접근시 소켓 닫기
     }
   };
 };

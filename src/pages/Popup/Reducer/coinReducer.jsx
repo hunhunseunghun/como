@@ -10,6 +10,7 @@ import {
   createWebsocketBufferSaga,
   createBithumbTickersKrw,
   createBithumbTickersBtc,
+  createBithumbWebsocketBufferSaga,
 } from '../Utils/asyncUtils.jsx';
 
 const START_INIT = 'coin/START_INIT';
@@ -44,6 +45,11 @@ const GET_BITHUMB_TICKERS_BTC_DATA_SUCCESS =
   'coin/GET_BITHUMB_TICKERS_BTC_DATA_SUCCESS';
 const GET_BITHUMB_TICKERS_BTC_DATA_FAIL =
   'coin/GET_BITHUMB_TICKERS_BTC_DATA_FAIL';
+
+const GET_BITHUMB_WEBSOCKET_DATA = 'coin/GET_BITHUMB_WEBSOCKET_DATA';
+const GET_BITHUMB_WEBSOCKET_DATA_SUCCESS =
+  'coin/GET_BITHUMB_WEBSOCKET_DATA_SUCCESS';
+const GET_BITHUMB_WEBSOCKET_DATA_FAIL = 'coin/GET_BITHUMB_WEBSOCKET_DATA_FAIL';
 
 export const startInit = () => ({ type: START_INIT });
 
@@ -85,15 +91,31 @@ export const bithumbTickersBtcACTION = createBithumbTickersBtc(
   coinApi.getBithumbTickersBTC
 );
 
+export const bithumbWebsocketACTION = createBithumbWebsocketBufferSaga(
+  GET_BITHUMB_WEBSOCKET_DATA_SUCCESS,
+  GET_BITHUMB_WEBSOCKET_DATA_FAIL
+);
+
 //sagas-------------------------------------------------------------------------
 
 export function* coinSaga() {
   yield takeEvery(START_INIT, startInittSaga);
-  yield takeEvery(START_BITHUMB, bithumbTickersKrwACTION);
-  yield takeEvery(START_BITHUMB, bithumbTickersBtcACTION);
+  // yield takeEvery(START_BITHUMB, bithumbTickersKrwACTION);
+  // yield takeEvery(START_BITHUMB, bithumbTickersBtcACTION);
+  yield takeEvery(START_BITHUMB, bithumbSaga);
 }
 
-export function* bithumbSaga() {}
+export function* bithumbSaga() {
+  yield bithumbTickersKrwACTION();
+  yield bithumbTickersBtcACTION();
+  yield bithumbWebsocketACTION();
+}
+
+function* startInittSaga() {
+  yield coinNameAction();
+  yield upbitTickerAction();
+  yield upbitWebSocketACTION();
+}
 
 //reducers-----------------------------------------------------------------------
 
@@ -105,12 +127,6 @@ const initialState = {
   upbitTickersBTC: [],
   bithumbTickers: {},
 };
-
-function* startInittSaga() {
-  yield coinNameAction();
-  yield upbitTickerAction();
-  yield upbitWebSocketACTION();
-}
 
 export const coinReducer = (state = initialState, action) => {
   switch (action.type) {
