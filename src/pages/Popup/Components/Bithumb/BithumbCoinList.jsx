@@ -31,6 +31,7 @@ const BithumbCoinList = ({ marketDropDownSelected }) => {
         ? bithumbTickersKRW.map((ticker) => {
             return (
               <BithumbCoinItemKRW
+                key={ticker.market}
                 market={ticker.market}
                 acc_trade_value_24H={ticker.acc_trade_value_24H}
                 closePrice={ticker.closePrice}
@@ -42,7 +43,9 @@ const BithumbCoinList = ({ marketDropDownSelected }) => {
             );
           })
         : bithumbTickersBTC.map((ticker) => {
-            return <BithumbCoinItemBTC />;
+            return (
+              <BithumbCoinItemBTC key={ticker.market} market={ticker.market} />
+            );
           })}
     </tbody>
   );

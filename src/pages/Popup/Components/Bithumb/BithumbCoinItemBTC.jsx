@@ -1,7 +1,11 @@
 import React from 'react';
 
-const BithumbCoinItemBTC = () => {
-  return <div>BithumbCoinItemBTC</div>;
+const BithumbCoinItemBTC = ({ market }) => {
+  return (
+    <tr key={market}>
+      <td>{market}</td>
+    </tr>
+  );
 };
 
 export default BithumbCoinItemBTC;
