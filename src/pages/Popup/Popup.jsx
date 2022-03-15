@@ -10,6 +10,7 @@ import ExchangerDropdown from './Components/Dropdown/ExchangerDropdown';
 import MarketDropDown from './Components/Dropdown/marketDropDown';
 
 import { FaSistrix } from 'react-icons/fa';
+import BithumbCoinList from './Components/Bithumb/BithumbCoinList.jsx';
 
 const Popup = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const Popup = () => {
 
   const apiLoading = useSelector((state) => state.Coin.apiLoading);
 
+  console.log(dropDownSelected);
   useEffect(() => {
     dispatch(startInit());
     dispatch(startBithumb());
@@ -141,12 +143,17 @@ const Popup = () => {
             </th>
           </tr>
         </thead>
-        <CoinList
-          marketDropDownSelected={marketDropDownSelected}
-          makeSort={makeSort}
-          sortElement={sortElement}
-          searchCoinName={searchCoinName}
-        />
+        {dropDownSelected === '업비트' && (
+          <CoinList
+            marketDropDownSelected={marketDropDownSelected}
+            makeSort={makeSort}
+            sortElement={sortElement}
+            searchCoinName={searchCoinName}
+          />
+        )}
+        {dropDownSelected === '빗썸' && (
+          <BithumbCoinList marketDropDownSelected={marketDropDownSelected} />
+        )}
       </table>
     </div>
   );

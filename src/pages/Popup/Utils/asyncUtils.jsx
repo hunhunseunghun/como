@@ -142,7 +142,8 @@ export const createBithumbTickersKrw = (SUCCESS, FAIL, API) => {
         // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
         const editkeyTickers = {};
         for (let key in tickers.data.data) {
-          editkeyTickers[`${key}_KRW`] = tickers.data.data[key];
+          editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
+          editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
         }
         yield put({ type: SUCCESS, payload: editkeyTickers });
         yield delay(1000);
@@ -162,7 +163,8 @@ export const createBithumbTickersBtc = (SUCCESS, FAIL, API) => {
 
         const editkeyTickers = {};
         for (let key in tickers.data.data) {
-          editkeyTickers[`${key}_BTC`] = tickers.data.data[key];
+          editkeyTickers[`${key}_BTC`] = { ...tickers.data.data[key] };
+          editkeyTickers[`${key}_BTC`]['market'] = `${key}_BTC`;
         }
         yield put({ type: SUCCESS, payload: editkeyTickers });
         yield delay(1000);
