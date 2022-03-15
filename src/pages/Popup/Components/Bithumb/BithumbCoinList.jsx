@@ -9,8 +9,6 @@ const BithumbCoinList = ({ marketDropDownSelected }) => {
   const [bithumbTickersBTC, setBithumbTickersBTC] = useState([]);
   const tickers = useSelector((state) => state.Coin.bithumbTickers);
 
-  console.log(tickers);
-
   useEffect(() => {
     const bithumbTickersKrwArr = [];
     const bithumbTickersBtcArr = [];
@@ -35,6 +33,11 @@ const BithumbCoinList = ({ marketDropDownSelected }) => {
               <BithumbCoinItemKRW
                 market={ticker.market}
                 acc_trade_value_24H={ticker.acc_trade_value_24H}
+                closePrice={ticker.closePrice}
+                chgAmt={ticker.chgAmt}
+                chgRate={ticker.chgRate}
+                fluctate_rate_24H={ticker.fluctate_rate_24H}
+                fluctate_24H={ticker.fluctate_24H}
               />
             );
           })

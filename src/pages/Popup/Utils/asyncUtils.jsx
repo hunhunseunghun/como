@@ -139,23 +139,23 @@ export const createBithumbTickersKrw = (SUCCESS, FAIL, API) => {
     try {
       const tickers = yield call(API);
       // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
-      const editkeyTickers = {};
-      for (let key in tickers.data.data) {
-        editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
-        editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
-      }
-      yield put({ type: SUCCESS, payload: editkeyTickers });
-      // while (true) {
-      //   const tickers = yield call(API);
-      //   // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
-      //   const editkeyTickers = {};
-      //   for (let key in tickers.data.data) {
-      //     editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
-      //     editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
-      //   }
-      //   yield put({ type: SUCCESS, payload: editkeyTickers });
-      //   yield delay(1000);
+      // const editkeyTickers = {};
+      // for (let key in tickers.data.data) {
+      //   editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
+      //   editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
       // }
+      // yield put({ type: SUCCESS, payload: editkeyTickers });
+      while (true) {
+        const tickers = yield call(API);
+        // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
+        const editkeyTickers = {};
+        for (let key in tickers.data.data) {
+          editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
+          editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
+        }
+        yield put({ type: SUCCESS, payload: editkeyTickers });
+        yield delay(1000);
+      }
     } catch (err) {
       yield put({ type: FAIL, payload: err });
       throw err;
@@ -207,7 +207,7 @@ const createBithumbSocketChannel = (socket, websocketParam, buffer) => {
         .toString();
 
       socket.send(
-        `{"type":"ticker","symbols":[${websocketParamTostring}],"tickTypes":["1H","6H"]}`
+        `{"type":"ticker","symbols":[${websocketParamTostring}],"tickTypes":["MID"]}`
       );
     };
 
@@ -239,7 +239,7 @@ export const createBithumbWebsocketBufferSaga = (SUCCESS, FAIL) => {
       createBithumbSocketChannel,
       socket,
       websocketParam,
-      buffers.expanding(500)
+      buffers.expanding(10)
     );
 
     try {
@@ -260,7 +260,7 @@ export const createBithumbWebsocketBufferSaga = (SUCCESS, FAIL) => {
             payload: sortedObj,
           });
         }
-        yield delay(500); // 500ms 동안 대기
+        yield delay(10); // 500ms 동안 대기
       }
     } catch (err) {
       console.log('err excuted');
