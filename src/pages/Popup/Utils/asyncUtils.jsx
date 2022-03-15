@@ -3,6 +3,8 @@ import { buffers, eventChannel, END } from 'redux-saga';
 
 import { apiLodingAction } from '../Reducer/coinReducer.jsx';
 import encoding from 'text-encoding';
+import { useSelector } from 'react-redux';
+import { coinApi } from '../Api/api.jsx';
 
 export const createUpbitMarketNameSaga = (SUCCESS, FAIL, API) => {
   return function* () {
@@ -139,23 +141,23 @@ export const createBithumbTickersKrw = (SUCCESS, FAIL, API) => {
     try {
       const tickers = yield call(API);
       // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
-      // const editkeyTickers = {};
-      // for (let key in tickers.data.data) {
-      //   editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
-      //   editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
-      // }
-      // yield put({ type: SUCCESS, payload: editkeyTickers });
-      while (true) {
-        const tickers = yield call(API);
-        // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
-        const editkeyTickers = {};
-        for (let key in tickers.data.data) {
-          editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
-          editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
-        }
-        yield put({ type: SUCCESS, payload: editkeyTickers });
-        yield delay(1000);
+      const editkeyTickers = {};
+      for (let key in tickers.data.data) {
+        editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
+        editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
       }
+      yield put({ type: SUCCESS, payload: editkeyTickers });
+      // while (true) {
+      //   const tickers = yield call(API);
+      //   // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
+      //   const editkeyTickers = {};
+      //   for (let key in tickers.data.data) {
+      //     editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
+      //     editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
+      //   }
+      //   yield put({ type: SUCCESS, payload: editkeyTickers });
+      //   yield delay(1000);
+      // }
     } catch (err) {
       yield put({ type: FAIL, payload: err });
       throw err;
@@ -187,6 +189,25 @@ export const createBithumbTickersBtc = (SUCCESS, FAIL, API) => {
       // }
     } catch (err) {
       yield put({ type: FAIL, payload: err });
+      throw err;
+    }
+  };
+};
+
+export const createBithumbTransaction = (SUCCES, FAIL, API) => {
+  return function* () {
+    const bithumbTickers = yield select((state) => state.Coin.bithumbTickers);
+    const transactionParam = Object.keys(bithumbTickers);
+    console.log(transactionParam);
+    try {
+      while (true) {
+        transactionParam.forEach(async (ele) => {
+          const transactionData = await API(ele);
+          console.log(transactionData);
+        });
+        yield delay();
+      }
+    } catch (err) {
       throw err;
     }
   };

@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 export const coinApi = {
   getUpbitMarketNames: () =>
     axios.get('https://api.upbit.com/v1/market/all?isDetails=false'),
@@ -12,5 +11,10 @@ export const coinApi = {
   },
   getBithumbTickersBTC: () => {
     return axios.get('https://api.bithumb.com/public/ticker/all_btc');
+  },
+  getBithumbTransaction: (param) => {
+    return axios.get(
+      `https://api.bithumb.com/public/transaction_history/${param}`
+    );
   },
 };

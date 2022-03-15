@@ -7,6 +7,7 @@ import {
   createWebsocketBufferSaga,
   createBithumbTickersKrw,
   createBithumbTickersBtc,
+  createBithumbTransaction,
   createBithumbWebsocketBufferSaga,
 } from '../Utils/asyncUtils.jsx';
 
@@ -42,6 +43,12 @@ const GET_BITHUMB_TICKERS_BTC_DATA_SUCCESS =
   'coin/GET_BITHUMB_TICKERS_BTC_DATA_SUCCESS';
 const GET_BITHUMB_TICKERS_BTC_DATA_FAIL =
   'coin/GET_BITHUMB_TICKERS_BTC_DATA_FAIL';
+
+const GET_BITHUMB_TRANSACTION_DATA = 'coin/GET_BITHUMB_TRANSACTION_DATA';
+const GET_BITHUMB_TRANSACTION_DATA_SUCCESS =
+  'coin/GET_BITHUMB_TRANSACTION_DATA_SUCCESS';
+const GET_BITHUMB_TRANSACTION_DATA_FAIL =
+  'coin/GET_BITHUMB_TRANSACTION_DATA_FAIL';
 
 const GET_BITHUMB_WEBSOCKET_DATA = 'coin/GET_BITHUMB_WEBSOCKET_DATA';
 const GET_BITHUMB_WEBSOCKET_DATA_SUCCESS =
@@ -88,6 +95,12 @@ export const bithumbTickersBtcACTION = createBithumbTickersBtc(
   coinApi.getBithumbTickersBTC
 );
 
+export const bithumbTransactionACTION = createBithumbTransaction(
+  GET_BITHUMB_TRANSACTION_DATA_SUCCESS,
+  GET_BITHUMB_TRANSACTION_DATA_FAIL,
+  coinApi.getBithumbTransaction
+);
+
 export const bithumbWebsocketACTION = createBithumbWebsocketBufferSaga(
   GET_BITHUMB_WEBSOCKET_DATA_SUCCESS,
   GET_BITHUMB_WEBSOCKET_DATA_FAIL
@@ -105,6 +118,7 @@ export function* coinSaga() {
 export function* bithumbSaga() {
   yield bithumbTickersKrwACTION();
   yield bithumbTickersBtcACTION();
+  // yield bithumbTransactionACTION();
   // yield bithumbWebsocketACTION();
 }
 
