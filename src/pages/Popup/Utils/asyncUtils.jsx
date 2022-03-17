@@ -201,11 +201,13 @@ export const createBithumbTransaction = (SUCCES, FAIL, API) => {
     console.log(transactionParam);
     try {
       while (true) {
-        transactionParam.forEach(async (ele) => {
-          const transactionData = await API(ele);
-          console.log(transactionData);
-        });
-        yield delay();
+        // transactionParam.forEach((ele) => {
+        //   return setInterval(async () => {
+        //     const transactionData = await API(ele);
+        //     console.log(transactionData);
+        //   }, 1000);
+        // });
+        yield delay(2000);
       }
     } catch (err) {
       throw err;
