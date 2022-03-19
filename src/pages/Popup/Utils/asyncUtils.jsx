@@ -202,14 +202,14 @@ export const createBithumbTransaction = (SUCCES, FAIL, API) => {
     try {
       while (true) {
         console.log('excuted');
-        const transactionResponse = () => {
-          const transactionDataArr = transactionParam.map(function* (ele) {
-            const response = yield call(API(ele));
-            console.log('excuted', response);
+        const transactionResponse = async () => {
+          const transactionDataArr = transactionParam.map(async (ele) => {
+            const response = await API(ele);
+
             return response.data.data[0];
           });
 
-          return Promise.all(transactionDataArr);
+          return await Promise.all(transactionDataArr);
         };
         console.log(
           'excuted',
