@@ -201,23 +201,41 @@ export const createBithumbTransaction = (SUCCES, FAIL, API) => {
     console.log(transactionParam);
     try {
       while (true) {
-       
+        console.log('excuted');
+        const transactionResponse = () => {
+          const transactionDataArr = transactionParam.map(function* (ele) {
+            const response = yield call(API(ele));
+            console.log('excuted', response);
+            return response.data.data[0];
+          });
 
-       
+          return Promise.all(transactionDataArr);
+        };
+        console.log(
+          'excuted',
+          transactionResponse().then((res) => console.log(res))
+        );
+        // transactionParam.map((ele) => {
+        //   const transactionData = API(ele);
+        //   console.log(transactionData);
+        //   put({
+        //     type: SUCCES,
+        //     payload: { ele: transactionData.data.data[0].price },
+        //   });
+        // });
 
-        transactionParam.map(ele=>{
-          const transactionData = yield API(ele);
-          console.log(transactionData.data.data[0]);
-        })
+        // transactionParam.map(ele=>{
+        //   const transactionData = yield API(...transactionParam);
+        //   console.log(transactionData.data.data[0]);
+        // })
 
-       
         // transactionParam.forEach((ele) => {
         //   return setInterval(async () => {
         //     const transactionData = await API(ele);
         //     console.log(transactionData);
         //   }, 1000);
         // });???????????????
-        yield delay(2000);
+        yield delay(1000);
       }
     } catch (err) {
       throw err;

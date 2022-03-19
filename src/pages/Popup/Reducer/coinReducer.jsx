@@ -178,6 +178,14 @@ export const coinReducer = (state = initialState, action) => {
     case GET_BITHUMB_WEBSOCKET_DATA_FAIL:
       return state;
 
+    case GET_BITHUMB_TRANSACTION_DATA_SUCCESS:
+      return {
+        ...state,
+        bithumbTickers: { ...Object.assign(bithumbTickers, action.payload) },
+      };
+    case GET_BITHUMB_TRANSACTION_DATA_FAIL:
+      return state;
+
     default:
       return state;
   }
