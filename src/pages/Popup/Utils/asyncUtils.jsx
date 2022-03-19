@@ -201,12 +201,22 @@ export const createBithumbTransaction = (SUCCES, FAIL, API) => {
     console.log(transactionParam);
     try {
       while (true) {
+       
+
+       
+
+        transactionParam.map(ele=>{
+          const transactionData = yield API(ele);
+          console.log(transactionData.data.data[0]);
+        })
+
+       
         // transactionParam.forEach((ele) => {
         //   return setInterval(async () => {
         //     const transactionData = await API(ele);
         //     console.log(transactionData);
         //   }, 1000);
-        // });
+        // });???????????????
         yield delay(2000);
       }
     } catch (err) {
@@ -217,7 +227,7 @@ export const createBithumbTransaction = (SUCCES, FAIL, API) => {
 
 const createBithumbWebSocket = () => {
   const webSocket = new WebSocket('wss://pubwss.bithumb.com/pub/ws');
-  // webSocket.binaryType = 'arraybuffer';
+
   return webSocket;
 };
 
