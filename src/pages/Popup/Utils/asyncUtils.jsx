@@ -208,8 +208,8 @@ export const createBithumbTransaction = (SUCCES, FAIL, API) => {
 
             return response.data.data[0];
           });
-
-          return await Promise.all(transactionDataArr);
+          console.log(transactionDataArr);
+          // return await Promise.all(transactionDataArr);
         };
         console.log(
           'excuted',
