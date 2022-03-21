@@ -201,41 +201,41 @@ export const createBithumbTransaction = (SUCCES, FAIL, API) => {
     console.log(transactionParam);
     try {
       while (true) {
-        console.log('excuted');
-        const transactionResponse = async () => {
-          const transactionDataArr = transactionParam.map(async (ele) => {
-            const response = await API(ele);
+        let counter = 0;
 
-            return response.data.data[0];
-          });
-          console.log(transactionDataArr);
-          // return await Promise.all(transactionDataArr);
+        const transactionResponse = async () => {
+          switch (counter) {
+            case 0:
+              return transactionParam.slice(0, 50).map(async (ele) => {
+                const response = await API(ele);
+                response.data.data.market[0] = ele;
+                counter = 1;
+                return response.data.data[0];
+              });
+            case 1:
+              return transactionParam.slice(50, 100).map(async (ele) => {
+                const response = await API(ele);
+                response.data.data.market[0] = ele;
+                counter = 2;
+                return response.data.data[0];
+              });
+            case 2:
+              return transactionParam
+                .slice(250, transactionParam.length - 1)
+                .map(async (ele) => {
+                  const response = await API(ele);
+                  response.data.data.market[0] = ele;
+                  counter = 0;
+                  return response.data.data[0];
+                });
+          }
         };
+
         console.log(
           'excuted',
-          transactionResponse().then((res) => console.log(res))
+          transactionResponse().then((res) => res)
         );
-        // transactionParam.map((ele) => {
-        //   const transactionData = API(ele);
-        //   console.log(transactionData);
-        //   put({
-        //     type: SUCCES,
-        //     payload: { ele: transactionData.data.data[0].price },
-        //   });
-        // });
-
-        // transactionParam.map(ele=>{
-        //   const transactionData = yield API(...transactionParam);
-        //   console.log(transactionData.data.data[0]);
-        // })
-
-        // transactionParam.forEach((ele) => {
-        //   return setInterval(async () => {
-        //     const transactionData = await API(ele);
-        //     console.log(transactionData);
-        //   }, 1000);
-        // });???????????????
-        yield delay(1000);
+        yield delay(2000);
       }
     } catch (err) {
       throw err;
