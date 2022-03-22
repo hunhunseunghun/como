@@ -238,12 +238,25 @@ export const createBithumbTransaction = (SUCCES, FAIL, API) => {
         };
 
         const transactionData = transactionResponse().then((val) => val);
-        console.log('excuted', transactionData);
+        // console.log(
+        //   'excuted',
+        //   transactionData.then((val) => {
+        //     return console.log(val);
+        //   })
+        // );
+        const transactionObj = {};
+
+        transactionData.map((ele) => {
+          transactionObj[ele.market] = ele;
+        });
+
+        console.log('transactionObj', transactionObj);
+
         // yield put({
         //   type: SUCCES,
         //   payload: transactionResponse().then((res) => res),
         // });
-        yield delay(3000);
+        yield delay(5000);
       }
     } catch (err) {
       throw err;
