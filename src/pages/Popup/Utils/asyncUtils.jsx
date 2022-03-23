@@ -206,52 +206,39 @@ export const createBithumbTransaction = (SUCCES, FAIL, API) => {
         const transactionResponse = async () => {
           switch (counter) {
             case 0:
-              return Promise.all(
-                transactionParam.slice(0, 100).map(async (ele) => {
-                  const response = await API(ele);
-                  response.data.data[0].market = ele;
-                  counter = 1;
-                  return response.data.data[0];
-                })
-              );
+              return transactionParam.slice(0, 100).map(async (ele) => {
+                const response = await API(ele);
+                response.data.data[0].market = ele;
+                counter = 1;
+                return response.data.data[0];
+              });
+
             case 1:
-              return Promise.all(
-                transactionParam.slice(100, 200).map(async (ele) => {
+              return transactionParam.slice(100, 200).map(async (ele) => {
+                const response = await API(ele);
+                response.data.data[0].market = ele;
+                counter = 2;
+                return response.data.data[0];
+              });
+
+            case 2:
+              return transactionParam
+                .slice(200, transactionParam.length - 1)
+                .map(async (ele) => {
                   const response = await API(ele);
                   response.data.data[0].market = ele;
-                  counter = 2;
+                  counter = 0;
                   return response.data.data[0];
-                })
-              );
-            case 2:
-              return Promise.all(
-                transactionParam
-                  .slice(200, transactionParam.length - 1)
-                  .map(async (ele) => {
-                    const response = await API(ele);
-                    response.data.data[0].market = ele;
-                    counter = 0;
-                    return response.data.data[0];
-                  })
-              );
+                });
           }
         };
+        let final;
+        let data = transactionResponse().then((result) =>
+          Promise.all(result).then((val) => (final = val))
+        );
 
-        const transactionData = transactionResponse().then((val) => val);
-        // console.log(
-        //   'excuted',
-        //   transactionData.then((val) => {
-        //     return console.log(val);
-        //   })
-        // );
-        const transactionObj = {};
-
-        transactionData.map((ele) => {
-          transactionObj[ele.market] = ele;
-        });
-
-        console.log('transactionObj', transactionObj);
-
+        console.log('data', final);
+        // console.log(Promise.all(data).then((val) => console.log(val)));
         // yield put({
         //   type: SUCCES,
         //   payload: transactionResponse().then((res) => res),
