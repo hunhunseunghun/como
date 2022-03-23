@@ -222,7 +222,7 @@ export const createBithumbTransaction = (SUCCESS, FAIL, API) => {
                   const response = await API(ele);
                   response.data.data[0].market = ele;
                   recievedTransaction[ele] = response.data.data[0];
-                  counter = 0;
+                  counter = 3;
                 });
 
             case 3:
@@ -235,15 +235,15 @@ export const createBithumbTransaction = (SUCCESS, FAIL, API) => {
                   const response = await API(ele);
                   response.data.data[0].market = ele;
                   recievedTransaction[ele] = response.data.data[0];
-                  counter = 3;
+                  counter = 0;
                 });
           }
         };
         yield transactionResponse();
 
         console.log('data', recievedTransaction, counter);
-        yield put({ type: SUCCESS, payload: recievedTransaction });
-        yield delay(1000);
+        // yield put({ type: SUCCESS, payload: recievedTransaction });
+        yield delay(5000);
       }
     } catch (err) {
       throw err;
@@ -272,6 +272,7 @@ const createBithumbSocketChannel = (socket, websocketParam, buffer) => {
 
     socket.onmessage = (blob) => {
       const ticker = JSON.parse(blob.data);
+      console.log('ticker', ticker);
       emit(ticker);
     };
 
@@ -298,7 +299,7 @@ export const createBithumbWebsocketBufferSaga = (SUCCESS, FAIL) => {
       createBithumbSocketChannel,
       socket,
       websocketParam,
-      buffers.expanding(10)
+      buffers.expanding(1)
     );
 
     try {
@@ -319,7 +320,7 @@ export const createBithumbWebsocketBufferSaga = (SUCCESS, FAIL) => {
             payload: sortedObj,
           });
         }
-        yield delay(10); // 500ms 동안 대기
+        yield delay(1); // 500ms 동안 대기
       }
     } catch (err) {
       console.log('err excuted');

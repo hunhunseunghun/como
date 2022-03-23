@@ -33,12 +33,20 @@ const BithumbCoinList = ({ marketDropDownSelected }) => {
               <BithumbCoinItemKRW
                 key={ticker.market}
                 market={ticker.market}
+                closePrice={
+                  ticker.closePrice ? ticker.closePrice : ticker.closing_price
+                }
+                chgAmt={
+                  ticker.prev_closing_price -
+                  ticker.closing_price /
+                    (ticker.prev_closing_price * 100).toFixed(2)
+                }
+                chgRate={
+                  ticker.prev_closing_price -
+                  ticker.closing_price /
+                    (ticker.prev_closing_price * 100).toFixed(2)
+                }
                 acc_trade_value_24H={ticker.acc_trade_value_24H}
-                closePrice={ticker.closePrice}
-                chgAmt={ticker.chgAmt}
-                chgRate={ticker.chgRate}
-                fluctate_rate_24H={ticker.fluctate_rate_24H}
-                fluctate_24H={ticker.fluctate_24H}
               />
             );
           })

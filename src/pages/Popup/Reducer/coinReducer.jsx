@@ -122,8 +122,8 @@ export function* coinSaga() {
 export function* bithumbSaga() {
   yield bithumbTickersKrwACTION();
   yield bithumbTickersBtcACTION();
-  yield bithumbTransactionACTION();
-  // yield bithumbWebsocketACTION();
+  // yield bithumbTransactionACTION();
+  yield bithumbWebsocketACTION();
 }
 
 function* startInittSaga() {
