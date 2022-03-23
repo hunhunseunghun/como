@@ -1,17 +1,110 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { FiStar } from 'react-icons/fi';
+import { AiFillStar } from 'react-icons/ai';
 
 const BithumbCoinItemKRW = ({
-  market,
-  closePrice,
-  chgRate,
-  acc_trade_value_24H,
+  ticker,
+  markedCoinKRW,
+  setMarkedCoinKRW,
+  switchColorHandler,
 }) => {
+  const [isMarked, setIsMarked] = useState(false);
+
+  const handleMarkedCoin = () => {
+    //즐겨찾기 배열 데이터 추가, 삭제
+    if (isMarked === false) {
+      const marked = [...markedCoinKRW, ticker.market];
+      setMarkedCoinKRW(marked);
+      setIsMarked(true);
+      localStorage.setItem('isBithumbMarkedCoinKRW', JSON.stringify(marked)); //즐겨찾기 데이터 로컬스토리지 사용(새로고침해도 유지 )
+    } else {
+      const marked = [...markedCoinKRW];
+      marked.splice([...markedCoinKRW].indexOf(ticker.market), 1);
+      setMarkedCoinKRW(marked);
+      setIsMarked(false);
+      localStorage.setItem('isBithubmMarkedCoinKRW', JSON.stringify(marked));
+    }
+  };
+
+  const chgPriceHandler = () => {
+    if (ticker.closePrice) {
+      if (Math.abs(ticker.closePrice - ticker.prevClosePrice) > 100) {
+        return ticker.closePrice - ticker.prevClosePrice;
+      } else {
+        return (ticker.closePrice - ticker.prevClosePrice).toFixed(2);
+      }
+    } else {
+      if (Math.abs(ticker.closing_price - ticker.prev_closing_price) > 100) {
+        return ticker.closing_price - ticker.prev_closing_price;
+      } else {
+        return (ticker.closing_price - ticker.prev_closing_price).toFixed(2);
+      }
+    }
+  };
+
   return (
-    <tr key={market}>
-      <td>{market}</td>
-      <td>{closePrice}</td>
-      <td>{chgRate}</td>
-      <td>{acc_trade_value_24H}</td>
+    <tr key={ticker.market}>
+      <td className="coinItemsName">
+        <section>
+          <div>
+            <div>{ticker.korean_name}</div>
+            <div>
+              {ticker.market.replace('_', '').substring(3, 6) +
+                '/' +
+                ticker.market.replace('_', '').substring(0, 3)}
+            </div>
+          </div>
+        </section>
+        <section
+          className={
+            isMarked ? 'coinItemsMarked markedIcon' : 'coinItemsMarked'
+          }
+          onClick={handleMarkedCoin}
+        >
+          {isMarked ? <AiFillStar /> : <FiStar />}
+        </section>
+      </td>
+
+      <td
+        className={
+          ticker.chgRate
+            ? switchColorHandler(ticker.chgRate)
+            : switchColorHandler(
+                ((ticker.closing_price - ticker.prev_closing_price) /
+                  ticker.prev_closing_price) *
+                  100
+              )
+        }
+      >
+        <div>
+          {ticker.closePrice ? ticker.closePrice : ticker.closing_price}
+        </div>
+      </td>
+      <td
+        className={
+          ticker.chgRate
+            ? switchColorHandler(ticker.chgRate) + ' coinItemsRate'
+            : switchColorHandler(
+                ((ticker.closing_price - ticker.prev_closing_price) /
+                  ticker.prev_closing_price) *
+                  100
+              ) + ' coinItemsRate'
+        }
+      >
+        <div>
+          {ticker.chgRate
+            ? ticker.chgRate + '%'
+            : (
+                ((ticker.closing_price - ticker.prev_closing_price) /
+                  ticker.prev_closing_price) *
+                100
+              ).toFixed(2) + '%'}
+        </div>
+        <div>{chgPriceHandler()}</div>
+      </td>
+      <td>
+        {(Number(ticker.acc_trade_value_24H) / 1000000).toFixed() + '백만'}
+      </td>
     </tr>
   );
 };

@@ -3,8 +3,8 @@ import { buffers, eventChannel, END } from 'redux-saga';
 
 import { apiLodingAction } from '../Reducer/coinReducer.jsx';
 import encoding from 'text-encoding';
-import { useSelector } from 'react-redux';
-import { coinApi } from '../Api/api.jsx';
+
+import { bithumbCoinInfo } from '../Components/Bithumb/BithumbCoinInfo/BithumbCoinInfo.jsx';
 
 export const createUpbitMarketNameSaga = (SUCCESS, FAIL, API) => {
   return function* () {
@@ -146,6 +146,11 @@ export const createBithumbTickersKrw = (SUCCESS, FAIL, API) => {
         if (key !== 'date') {
           editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
           editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
+
+          if (bithumbCoinInfo[`${key}`]) {
+            editkeyTickers[`${key}_KRW`]['korean_name'] =
+              bithumbCoinInfo[`${key}`]['korean_name'];
+          }
         }
       }
       yield put({ type: SUCCESS, payload: editkeyTickers });
@@ -166,6 +171,11 @@ export const createBithumbTickersBtc = (SUCCESS, FAIL, API) => {
         if (key !== 'date') {
           editkeyTickers[`${key}_BTC`] = { ...tickers.data.data[key] };
           editkeyTickers[`${key}_BTC`]['market'] = `${key}_BTC`;
+
+          if (bithumbCoinInfo[`${key}`]) {
+            editkeyTickers[`${key}_BTC`]['korean_name'] =
+              bithumbCoinInfo[`${key}`]['korean_name'];
+          }
         }
       }
       yield put({ type: SUCCESS, payload: editkeyTickers });
@@ -179,6 +189,7 @@ export const createBithumbTickersBtc = (SUCCESS, FAIL, API) => {
 export const createBithumbTransaction = (SUCCESS, FAIL, API) => {
   return function* () {
     const bithumbTickers = yield select((state) => state.Coin.bithumbTickers);
+
     const transactionParam = Object.keys(bithumbTickers);
     console.log(transactionParam);
     let counter = 0;
@@ -272,7 +283,7 @@ const createBithumbSocketChannel = (socket, websocketParam, buffer) => {
 
     socket.onmessage = (blob) => {
       const ticker = JSON.parse(blob.data);
-      console.log('ticker', ticker);
+
       emit(ticker);
     };
 

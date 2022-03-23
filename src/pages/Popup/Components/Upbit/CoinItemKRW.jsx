@@ -37,6 +37,7 @@ const CoinItemKRW = ({
       localStorage.setItem('isMarkedCoinKRW', JSON.stringify(marked));
     }
   };
+
   return (
     <tr key={`${ticker.market}`}>
       <td className="coinItemsName">
