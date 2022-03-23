@@ -42,11 +42,17 @@ const BithumbCoinList = ({ marketDropDownSelected }) => {
                     (ticker.prev_closing_price * 100).toFixed(2)
                 }
                 chgRate={
-                  ticker.prev_closing_price -
-                  ticker.closing_price /
-                    (ticker.prev_closing_price * 100).toFixed(2)
+                  ticker.chgRate
+                    ? ticker.chgRate
+                    : (
+                        ((ticker.closing_price - ticker.prev_closing_price) /
+                          ticker.prev_closing_price) *
+                        100
+                      ).toFixed(2)
                 }
-                acc_trade_value_24H={ticker.acc_trade_value_24H}
+                acc_trade_value_24H={(
+                  ticker.acc_trade_value_24H / 1000000
+                ).toFixed()}
               />
             );
           })

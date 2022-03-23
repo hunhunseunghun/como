@@ -2,9 +2,7 @@ import React from 'react';
 
 const BithumbCoinItemKRW = ({
   market,
-
   closePrice,
-  closing_price,
   chgRate,
   acc_trade_value_24H,
 }) => {
