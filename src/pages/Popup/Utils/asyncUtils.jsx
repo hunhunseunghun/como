@@ -143,21 +143,12 @@ export const createBithumbTickersKrw = (SUCCESS, FAIL, API) => {
       // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
       const editkeyTickers = {};
       for (let key in tickers.data.data) {
-        editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
-        editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
+        if (key !== 'date') {
+          editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
+          editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
+        }
       }
       yield put({ type: SUCCESS, payload: editkeyTickers });
-      // while (true) {
-      //   const tickers = yield call(API);
-      //   // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
-      //   const editkeyTickers = {};
-      //   for (let key in tickers.data.data) {
-      //     editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
-      //     editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
-      //   }
-      //   yield put({ type: SUCCESS, payload: editkeyTickers });
-      //   yield delay(1000);
-      // }
     } catch (err) {
       yield put({ type: FAIL, payload: err });
       throw err;
@@ -169,24 +160,15 @@ export const createBithumbTickersBtc = (SUCCESS, FAIL, API) => {
   return function* () {
     try {
       const tickers = yield call(API);
-
+      console.log(tickers.data.data);
       const editkeyTickers = {};
       for (let key in tickers.data.data) {
-        editkeyTickers[`${key}_BTC`] = { ...tickers.data.data[key] };
-        editkeyTickers[`${key}_BTC`]['market'] = `${key}_BTC`;
+        if (key !== 'date') {
+          editkeyTickers[`${key}_BTC`] = { ...tickers.data.data[key] };
+          editkeyTickers[`${key}_BTC`]['market'] = `${key}_BTC`;
+        }
       }
       yield put({ type: SUCCESS, payload: editkeyTickers });
-      // while (true) {
-      //   const tickers = yield call(API);
-
-      //   const editkeyTickers = {};
-      //   for (let key in tickers.data.data) {
-      //     editkeyTickers[`${key}_BTC`] = { ...tickers.data.data[key] };
-      //     editkeyTickers[`${key}_BTC`]['market'] = `${key}_BTC`;
-      //   }
-      //   yield put({ type: SUCCESS, payload: editkeyTickers });
-      //   yield delay(1000);
-      // }
     } catch (err) {
       yield put({ type: FAIL, payload: err });
       throw err;
@@ -194,56 +176,74 @@ export const createBithumbTickersBtc = (SUCCESS, FAIL, API) => {
   };
 };
 
-export const createBithumbTransaction = (SUCCES, FAIL, API) => {
+export const createBithumbTransaction = (SUCCESS, FAIL, API) => {
   return function* () {
     const bithumbTickers = yield select((state) => state.Coin.bithumbTickers);
     const transactionParam = Object.keys(bithumbTickers);
     console.log(transactionParam);
+    let counter = 0;
+    let recievedTransaction = {};
     try {
       while (true) {
-        let counter = 0;
-
         const transactionResponse = async () => {
           switch (counter) {
             case 0:
-              return transactionParam.slice(0, 100).map(async (ele) => {
-                const response = await API(ele);
-                response.data.data[0].market = ele;
-                counter = 1;
-                return response.data.data[0];
-              });
-
-            case 1:
-              return transactionParam.slice(100, 200).map(async (ele) => {
-                const response = await API(ele);
-                response.data.data[0].market = ele;
-                counter = 2;
-                return response.data.data[0];
-              });
-
-            case 2:
               return transactionParam
-                .slice(200, transactionParam.length - 1)
+                .slice(0, transactionParam.length * 0.25)
                 .map(async (ele) => {
                   const response = await API(ele);
                   response.data.data[0].market = ele;
+                  recievedTransaction[ele] = response.data.data[0];
+                  counter = 1;
+                });
+
+            case 1:
+              return transactionParam
+                .slice(
+                  transactionParam.length * 0.25,
+                  transactionParam.length * 0.5
+                )
+                .map(async (ele) => {
+                  console.log('excuted2');
+                  const response = await API(ele);
+
+                  response.data.data[0].market = ele;
+                  counter = 2;
+                  recievedTransaction[ele] = response.data.data[0];
+                });
+
+            case 2:
+              return transactionParam
+                .slice(
+                  transactionParam.length * 0.5,
+                  transactionParam.length * 0.75
+                )
+                .map(async (ele) => {
+                  const response = await API(ele);
+                  response.data.data[0].market = ele;
+                  recievedTransaction[ele] = response.data.data[0];
                   counter = 0;
-                  return response.data.data[0];
+                });
+
+            case 3:
+              return transactionParam
+                .slice(
+                  transactionParam.length * 0.75,
+                  transactionParam.length - 1
+                )
+                .map(async (ele) => {
+                  const response = await API(ele);
+                  response.data.data[0].market = ele;
+                  recievedTransaction[ele] = response.data.data[0];
+                  counter = 3;
                 });
           }
         };
-        let final;
-        let data = transactionResponse().then((result) =>
-          Promise.all(result).then((val) => (final = val))
-        );
+        yield transactionResponse();
 
-        console.log('data', final);
-        // console.log(Promise.all(data).then((val) => console.log(val)));
-        // yield put({
-        //   type: SUCCES,
-        //   payload: transactionResponse().then((res) => res),
-        // });
-        yield delay(5000);
+        console.log('data', recievedTransaction, counter);
+        yield put({ type: SUCCESS, payload: recievedTransaction });
+        yield delay(1000);
       }
     } catch (err) {
       throw err;
@@ -313,7 +313,7 @@ export const createBithumbWebsocketBufferSaga = (SUCCESS, FAIL) => {
               sortedObj[ele.content.symbol] = ele.content;
             }
           });
-          console.log(sortedObj);
+
           yield put({
             type: SUCCESS,
             payload: sortedObj,

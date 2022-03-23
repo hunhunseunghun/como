@@ -42,6 +42,25 @@ export const setUpbitTickersArrUtil = () => {
   };
 };
 
+export const bithumbTransactionUtil = (state, action) => {
+  const assignedObj = { ...state.bithumbTickers };
+
+  console.log('state', state.bithumbTickers, action.payload, assignedObj);
+
+  for (let key in action.payload) {
+    if (assignedObj[key] && action.payload[key] !== undefined) {
+      assignedObj[key] = Object.assign(assignedObj[key], action.payload[key]);
+    }
+  }
+
+  return {
+    ...state,
+    bithumbTickers: {
+      ...assignedObj,
+    },
+  };
+};
+
 export const bithumbWebsocketUtil = (state, action) => {
   const assignObj = { ...state.bithumbTickers };
   for (let key in action.payload) {

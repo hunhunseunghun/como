@@ -1,6 +1,10 @@
 import { takeEvery } from 'redux-saga/effects';
 import { coinApi } from '../Api/api';
-import { upbitWebsocketUtil, bithumbWebsocketUtil } from '../Utils/utils.jsx';
+import {
+  upbitWebsocketUtil,
+  bithumbWebsocketUtil,
+  bithumbTransactionUtil,
+} from '../Utils/utils.jsx';
 import {
   createUpbitMarketNameSaga,
   createUpbitTickerSaga,
@@ -179,15 +183,7 @@ export const coinReducer = (state = initialState, action) => {
       return state;
 
     case GET_BITHUMB_TRANSACTION_DATA_SUCCESS:
-      return {
-        ...state,
-        bithumbTickers: {
-          ...Object.assign(
-            ...state.bithumbTickers[action.payload['market']],
-            action.payload
-          ),
-        },
-      };
+      return bithumbTransactionUtil(state, action);
     case GET_BITHUMB_TRANSACTION_DATA_FAIL:
       return state;
 
