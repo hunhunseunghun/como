@@ -182,6 +182,11 @@ export const createBithumbTickersBtc = (SUCCESS, FAIL, API) => {
             editkeyTickers[`${key}_BTC`]['korean_name'] =
               bithumbCoinInfo[`${key}`]['korean_name'];
           }
+          editkeyTickers[`${key}_BTC`]['initChgRate'] =
+            ((tickers.data.data[key]['closing_price'] -
+              tickers.data.data[key]['prev_closing_price']) /
+              tickers.data.data[key]['prev_closing_price']) *
+            100;
         }
       }
       yield put({ type: SUCCESS, payload: editkeyTickers });

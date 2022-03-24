@@ -196,4 +196,8 @@ export const bithumbCoinInfo = {
   FCT2: { korean_name: '피르마체인' },
   HIVE: { korean_name: '하이브' },
   HIBS: { korean_name: '힙스' },
+  ASTA: { korean_name: '아스타' },
+  IBP: { korean_name: '아이비피토큰' },
+  STPT: { korean_name: '에스티피' },
+  LN: { korean_name: '링크' },
 };

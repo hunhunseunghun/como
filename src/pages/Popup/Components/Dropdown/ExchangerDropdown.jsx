@@ -63,7 +63,7 @@ export const ExchangerDropdown = ({
             <img src={bithumblogo} alt="" />
             <div>빗썸</div>
           </div>
-          <div
+          {/* <div
             className="dropdownItem"
             onClick={(e) => {
               setDropDownSelected(e.target.textContent);
@@ -72,7 +72,7 @@ export const ExchangerDropdown = ({
           >
             <img src={coinonelogo} alt="" />
             <div>코인원</div>
-          </div>
+          </div> */}
         </div>
       )}
     </div>
