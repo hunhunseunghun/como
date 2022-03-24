@@ -7,8 +7,19 @@ const BithumbCoinItemKRW = ({
   markedCoinKRW,
   setMarkedCoinKRW,
   switchColorHandler,
+  localStorageDataKRW,
 }) => {
   const [isMarked, setIsMarked] = useState(false);
+
+  useEffect(() => {
+    //로컬스토리지 즐겨찾기 배열 데이터에서 해당요소 확인 (마켓이름 사용)
+    const confirmMarkedTicker = localStorageDataKRW.filter(
+      (ele) => ele === ticker.market
+    );
+    if (localStorageDataKRW.length > 0 && confirmMarkedTicker.length > 0) {
+      setIsMarked(true);
+    }
+  }, [localStorageDataKRW]);
 
   const handleMarkedCoin = () => {
     //즐겨찾기 배열 데이터 추가, 삭제
@@ -22,7 +33,7 @@ const BithumbCoinItemKRW = ({
       marked.splice([...markedCoinKRW].indexOf(ticker.market), 1);
       setMarkedCoinKRW(marked);
       setIsMarked(false);
-      localStorage.setItem('isBithubmMarkedCoinKRW', JSON.stringify(marked));
+      localStorage.setItem('isBithumbMarkedCoinKRW', JSON.stringify(marked));
     }
   };
 
@@ -76,9 +87,7 @@ const BithumbCoinItemKRW = ({
               )
         }
       >
-        <div>
-          {ticker.closePrice ? ticker.closePrice : ticker.closing_price}
-        </div>
+        <div>{ticker.trade_price}</div>
       </td>
       <td
         className={
@@ -103,7 +112,7 @@ const BithumbCoinItemKRW = ({
         <div>{chgPriceHandler()}</div>
       </td>
       <td>
-        {(Number(ticker.acc_trade_value_24H) / 1000000).toFixed() + '백만'}
+        {(Number(ticker.acc_trade_price_24h) / 1000000).toFixed() + '백만'}
       </td>
     </tr>
   );

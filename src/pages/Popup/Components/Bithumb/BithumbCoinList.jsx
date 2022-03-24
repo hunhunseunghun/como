@@ -21,16 +21,17 @@ const BithumbCoinList = ({
     localStorageDataBTC = JSON.parse(localStorage.isBithumbMarkedCoinBTC);
   }
 
+  console.log('localStorageDataKRW', localStorageDataKRW);
+
   const [markedCoinKRW, setMarkedCoinKRW] = useState([...localStorageDataKRW]); // 즐겨찾기 코인 KRW 배열
   const [markedCoinBTC, setMarkedCoinBTC] = useState([...localStorageDataBTC]); // 즐겨찾기 코인 BTC 배열
   const [bithumbTickersKRW, setBithumbTickersKRW] = useState([]);
   const [bithumbTickersBTC, setBithumbTickersBTC] = useState([]);
-  const [bithumbSortElement, setBithumbSortElement] = useState('closing_price');
   const tickers = useSelector((state) => state.Coin.bithumbTickers);
 
   useEffect(() => {
-    const bithumbTickersKrwArr = [];
-    const bithumbTickersBtcArr = [];
+    let bithumbTickersKrwArr = [];
+    let bithumbTickersBtcArr = [];
 
     // tickers 객체 배열화
     for (let key in tickers) {
@@ -63,8 +64,6 @@ const BithumbCoinList = ({
       }
     }
     //오름 내림차순 데이터 정렬
-    console.log(makeSort);
-    console.log(sortElement);
 
     if (makeSort === 'ascending') {
       bithumbTickersKrwArr.sort((pre, aft) => {
@@ -82,9 +81,88 @@ const BithumbCoinList = ({
       });
     }
 
+    if (markedCoinKRW.length > 0 && bithumbTickersKrwArr.length > 0) {
+      //KRW 데이터 배열 핸들링
+      const markedArrKRW = [];
+
+      // 코인데이터 배열 즐겨찾기된 요소 추출
+      markedCoinKRW.map((coinName) => {
+        const filteredCoin = bithumbTickersKrwArr.filter(
+          (coin) => coin.market === coinName
+        );
+        markedArrKRW.push(filteredCoin[0]);
+      });
+      // 코인데이터 배열 즐겨찾기된 요소 삭제
+      markedCoinKRW.forEach((coinName) => {
+        bithumbTickersKrwArr.forEach((ele, idx) => {
+          if (ele.market === coinName) {
+            delete bithumbTickersKrwArr[idx];
+          }
+        });
+      });
+
+      //empty값 삭제
+      const deleteBooleanKRW = bithumbTickersKrwArr.filter(Boolean);
+      bithumbTickersKrwArr = [...markedArrKRW, ...deleteBooleanKRW];
+    }
+
+    // if (markedCoinBTC.length > 0 && bithumbTickersBtcArr.length > 0) {
+    //   //BTC 데이터 배열 핸들링
+    //   const markedArrBTC = [];
+
+    //   // 코인데이터 배열 즐겨찾기된 요소 추출
+    //   markedCoinBTC.map((coinName) => {
+    //     const filteredCoin = bithumbTickersBtcArr.filter(
+    //       (coin) => coin.market === coinName
+    //     );
+    //     markedArrBTC.push(filteredCoin[0]);
+    //   });
+
+    //   // 코인데이터 배열 즐겨찾기된 요소 삭제
+    //   markedCoinBTC.forEach((coinName) => {
+    //     bithumbTickersBtcArr.forEach((ele, idx) => {
+    //       if (ele.market === coinName) {
+    //         delete bithumbTickersBtcArr[idx];
+    //       }
+    //     });
+    //   });
+
+    //   //empty값 삭제
+    //   const deleteBooleanBTC = bithumbTickersBtcArr.filter(Boolean);
+
+    //   bithumbTickersBtcArr = [...markedArrBTC, ...deleteBooleanBTC];
+    // }
+
+    // 코인 이름 검색
+    // bithumbTickersKrwArr = bithumbTickersKrwArr.filter(
+    //   (ele) =>
+    //     //코인 마켓명(심볼) 검색
+    //     ele['market']
+    //       .replace('_', '')
+    //       .toLowerCase()
+    //       .includes(searchCoinName.toLowerCase()) ||
+    //     //한글 검색
+    //     Hangul.disassembleToString(ele['korean_name']).includes(
+    //       Hangul.disassembleToString(searchCoinName)
+    //     )
+    // );
+
+    // bithumbTickersBtcArr = bithumbTickersBtcArr.filter(
+    //   (ele) =>
+    //     //코인 마켓명(심볼) 검색
+    //     ele['market']
+    //       .replace('_', '')
+    //       .toLowerCase()
+    //       .includes(searchCoinName.toLowerCase()) ||
+    //     //한글 검색
+    //     Hangul.disassembleToString(ele['korean_name']).includes(
+    //       Hangul.disassembleToString(searchCoinName)
+    //     )
+    // );
+
     setBithumbTickersKRW(bithumbTickersKrwArr);
     setBithumbTickersBTC(bithumbTickersBtcArr);
-  }, [tickers, makeSort]);
+  }, [tickers, makeSort, searchCoinName]);
 
   const switchColorHandler = (current = 0) => {
     if (current > 0) {
@@ -94,35 +172,27 @@ const BithumbCoinList = ({
     } else if ((current = 0)) {
       return 'fontColorEven';
     }
-    // console.log(current);
-    // switch (current) {
-    //   case current > 0:
-    //     return 'fontColorRise';
-    //   case current < 0:
-    //     return 'fontColorFall';
-    //   case (current = 0):
-    //     return 'fontColorEven';
-    // }
   };
 
   return (
     <tbody>
       {marketDropDownSelected === 'KRW'
-        ? bithumbTickersKRW.map((ticker) => {
+        ? bithumbTickersKRW.map((ticker, idx) => {
             return (
               <BithumbCoinItemKRW
-                key={ticker.market}
+                key={ticker.market + idx}
                 ticker={ticker}
                 markedCoinKRW={markedCoinKRW}
                 setMarkedCoinKRW={setMarkedCoinKRW}
                 switchColorHandler={switchColorHandler}
+                localStorageDataKRW={localStorageDataKRW}
               />
             );
           })
-        : bithumbTickersBTC.map((ticker) => {
+        : bithumbTickersBTC.map((ticker, idx) => {
             return (
               <BithumbCoinItemBTC
-                key={ticker.market}
+                key={ticker.market + idx}
                 ticker={ticker}
                 markedCoinBTC={markedCoinBTC}
                 setMarkedCoinBTC={setMarkedCoinBTC}
@@ -133,4 +203,4 @@ const BithumbCoinList = ({
   );
 };
 
-export default BithumbCoinList;
+export default React.memo(BithumbCoinList);
