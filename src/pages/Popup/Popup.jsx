@@ -152,7 +152,12 @@ const Popup = () => {
           />
         )}
         {dropDownSelected === '빗썸' && (
-          <BithumbCoinList marketDropDownSelected={marketDropDownSelected} />
+          <BithumbCoinList
+            marketDropDownSelected={marketDropDownSelected}
+            makeSort={makeSort}
+            sortElement={sortElement}
+            searchCoinName={searchCoinName}
+          />
         )}
       </table>
     </div>

@@ -6,7 +6,12 @@ import BithumbCoinItemKRW from './BithumbCoinItemKRW';
 
 import * as Hangul from 'hangul-js';
 
-const BithumbCoinList = ({ marketDropDownSelected }) => {
+const BithumbCoinList = ({
+  marketDropDownSelected,
+  makeSort,
+  sortElement,
+  searchCoinName,
+}) => {
   let localStorageDataKRW = []; //즐겨찾기 데이터 로컬스토리지 사용(새로고침해도 유지 )
   let localStorageDataBTC = [];
   if (localStorage.isBithumbMarkedCoinKRW) {
@@ -20,23 +25,66 @@ const BithumbCoinList = ({ marketDropDownSelected }) => {
   const [markedCoinBTC, setMarkedCoinBTC] = useState([...localStorageDataBTC]); // 즐겨찾기 코인 BTC 배열
   const [bithumbTickersKRW, setBithumbTickersKRW] = useState([]);
   const [bithumbTickersBTC, setBithumbTickersBTC] = useState([]);
+  const [bithumbSortElement, setBithumbSortElement] = useState('closing_price');
   const tickers = useSelector((state) => state.Coin.bithumbTickers);
 
   useEffect(() => {
     const bithumbTickersKrwArr = [];
     const bithumbTickersBtcArr = [];
 
+    // tickers 객체 배열화
     for (let key in tickers) {
+      //sorting, rendering 목적 기준 배열 추가 , ticker api, websocket 데이터 진위여부에 따라 기준 설정
+      //현재가 trade_price
+      if (tickers[key]['closePrice']) {
+        tickers[key]['trade_price'] = tickers[key]['closePrice'];
+      } else {
+        tickers[key]['trade_price'] = tickers[key]['closing_price'];
+      }
+
+      //변동률 change_rate
+      if (tickers[key]['chgRate']) {
+        tickers[key]['change_rate'] = tickers[key]['chgRate'];
+      } else {
+        tickers[key]['change_rate'] =
+          ((tickers[key]['closing_price'] -
+            tickers[key]['prev_closing_price']) /
+            tickers[key]['prev_closing_price']) *
+          100;
+      }
+
+      //거래대금 acc_trade_price_24h
+      tickers[key]['acc_trade_price_24h'] = tickers[key]['acc_trade_value_24H'];
+
       if (tickers[key]['market'].includes('_KRW')) {
         bithumbTickersKrwArr.push(tickers[key]);
       } else if (tickers[key]['market'].includes('_BTC')) {
         bithumbTickersBtcArr.push(tickers[key]);
       }
     }
-    console.log(tickers['BTC_KRW']['closing_price']);
+    //오름 내림차순 데이터 정렬
+    console.log(makeSort);
+    console.log(sortElement);
+
+    if (makeSort === 'ascending') {
+      bithumbTickersKrwArr.sort((pre, aft) => {
+        return pre[sortElement] - aft[sortElement];
+      });
+      bithumbTickersBtcArr.sort((pre, aft) => {
+        return pre[sortElement] - aft[sortElement];
+      });
+    } else if (makeSort === 'decending') {
+      bithumbTickersKrwArr.sort((pre, aft) => {
+        return aft[sortElement] - pre[sortElement];
+      });
+      bithumbTickersBtcArr.sort((pre, aft) => {
+        return aft[sortElement] - pre[sortElement];
+      });
+    }
+
     setBithumbTickersKRW(bithumbTickersKrwArr);
     setBithumbTickersBTC(bithumbTickersBtcArr);
-  }, [tickers]);
+  }, [tickers, makeSort]);
 
   const switchColorHandler = (current = 0) => {
     if (current > 0) {
