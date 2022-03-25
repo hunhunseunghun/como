@@ -8,11 +8,10 @@ import encoding from 'text-encoding';
 import CoinList from './Components/Upbit/CoinList.jsx';
 import ExchangerDropdown from './Components/Dropdown/ExchangerDropdown';
 import MarketDropDown from './Components/Dropdown/marketDropDown';
+import BithumbCoinList from './Components/Bithumb/BithumbCoinList.jsx';
 
 import { FaSistrix } from 'react-icons/fa';
 import { CgArrowDownR, CgArrowUpR } from 'react-icons/cg';
-
-import BithumbCoinList from './Components/Bithumb/BithumbCoinList.jsx';
 
 const Popup = () => {
   const dispatch = useDispatch();
@@ -94,6 +93,9 @@ const Popup = () => {
               setWindowXaxisSize(!windowXaxisSize);
               windowResize();
             }}
+            data-tip
+            data-for="windowXaxisSize_btn_tooltip"
+            title={`창 세로 ${windowXaxisSize ? '축소' : '확대'}`}
           >
             {windowXaxisSize ? (
               <CgArrowUpR size="20" />
@@ -136,7 +138,7 @@ const Popup = () => {
           </div>
         </section>
       </nav>
-      <table>
+      <table className={windowXaxisSize ? 'table_wide' : ''}>
         <thead>
           <tr>
             <th>
