@@ -1,14 +1,9 @@
 body {
-  width: 400px;
-  height: 450px;
   margin: 0;
   font-weight: 200;
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif, 'Roboto',
     'Roboto Serif';
-  /* position: relative; */
 }
 
 #app-container {
-  height: 100%;
-  box-sizing: border-box;
 }

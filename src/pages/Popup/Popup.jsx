@@ -10,6 +10,8 @@ import ExchangerDropdown from './Components/Dropdown/ExchangerDropdown';
 import MarketDropDown from './Components/Dropdown/marketDropDown';
 
 import { FaSistrix } from 'react-icons/fa';
+import { CgArrowDownR, CgArrowUpR } from 'react-icons/cg';
+
 import BithumbCoinList from './Components/Bithumb/BithumbCoinList.jsx';
 
 const Popup = () => {
@@ -20,6 +22,7 @@ const Popup = () => {
   const [dropDownSelected, setDropDownSelected] = useState('업비트');
   const [marketDropDownSelected, setmarketDropDownSelected] = useState('KRW');
   const [searchCoinName, setSearchCoinName] = useState('');
+  const [windowXaxisSize, setWindowXaxisSize] = useState(false);
 
   const apiLoading = useSelector((state) => state.Coin.apiLoading);
 
@@ -28,6 +31,11 @@ const Popup = () => {
     dispatch(startInit());
     dispatch(startBithumb());
   }, [dispatch]);
+
+  const windowResize = () => {
+    console.log('window resize excuted');
+    return document.body.clientHeight(1000);
+  };
 
   const handleSortPrice = () => {
     setSortElement('trade_price');
@@ -79,9 +87,23 @@ const Popup = () => {
             ></path>
           </svg>
         </div>
-        <section></section>
+        <section className="nav_top_section">
+          <div
+            className="windowXaxisSize_btn"
+            onClick={() => {
+              setWindowXaxisSize(!windowXaxisSize);
+              windowResize();
+            }}
+          >
+            {windowXaxisSize ? (
+              <CgArrowUpR size="20" />
+            ) : (
+              <CgArrowDownR size="20" />
+            )}
+          </div>
+        </section>
 
-        <section>
+        <section className="nav_bottom_section">
           <div
             className="coinSearchBar"
             onClick={() => {
