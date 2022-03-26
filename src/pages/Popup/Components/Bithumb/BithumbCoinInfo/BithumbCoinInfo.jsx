@@ -200,4 +200,5 @@ export const bithumbCoinInfo = {
   IBP: { korean_name: '아이비피토큰' },
   STPT: { korean_name: '에스티피' },
   LN: { korean_name: '링크' },
+  ETHG: { korean_name: '이더지움' },
 };
