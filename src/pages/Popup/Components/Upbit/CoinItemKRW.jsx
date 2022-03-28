@@ -90,4 +90,4 @@ const CoinItemKRW = ({
   );
 };
 
-export default CoinItemKRW;
+export default React.memo(CoinItemKRW);

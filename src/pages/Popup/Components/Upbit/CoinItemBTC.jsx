@@ -91,4 +91,4 @@ const CoinItemBTC = ({
   );
 };
 
-export default CoinItemBTC;
+export default React.memo(CoinItemBTC);

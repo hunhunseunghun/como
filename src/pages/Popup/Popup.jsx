@@ -12,6 +12,7 @@ import BithumbCoinList from './Components/Bithumb/BithumbCoinList.jsx';
 
 import { FaSistrix } from 'react-icons/fa';
 import { CgArrowDownR, CgArrowUpR } from 'react-icons/cg';
+import defaultcomologo from '../../assets/img/defaultcomologo.png';
 
 const Popup = () => {
   const dispatch = useDispatch();
@@ -87,6 +88,7 @@ const Popup = () => {
           </svg>
         </div>
         <section className="nav_top_section">
+          <img src={defaultcomologo}></img>
           <div
             className="windowXaxisSize_btn"
             onClick={() => {
@@ -184,6 +186,7 @@ const Popup = () => {
           />
         )}
       </table>
+      <footer>como</footer>
     </div>
   );
 };

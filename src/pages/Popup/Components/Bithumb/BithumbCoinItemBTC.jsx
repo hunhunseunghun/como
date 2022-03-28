@@ -119,4 +119,4 @@ const BithumbCoinItemBTC = ({
   );
 };
 
-export default BithumbCoinItemBTC;
+export default React.memo(BithumbCoinItemBTC);

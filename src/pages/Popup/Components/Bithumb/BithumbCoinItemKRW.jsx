@@ -118,4 +118,4 @@ const BithumbCoinItemKRW = ({
   );
 };
 
-export default BithumbCoinItemKRW;
+export default React.memo(BithumbCoinItemKRW);

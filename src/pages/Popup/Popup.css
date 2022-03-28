@@ -41,8 +41,11 @@ nav section:first-child input {
 }
 .nav_top_section {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
   padding: 5px 0;
+}
+.nav_top_section img {
+  width: 20px;
 }
 
 .windowXaxisSize_btn {
