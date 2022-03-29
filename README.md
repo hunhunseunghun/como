@@ -3,6 +3,8 @@
 
 
 <p align="center">
+<br>
+<br> 
 <img src="./src/assets/img/preview.png"/>
 <br>
 <br>
