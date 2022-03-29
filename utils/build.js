@@ -2,6 +2,7 @@
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 process.env.ASSET_PATH = '/';
+process.env.COMO_API = '';
 
 var webpack = require('webpack'),
   config = require('../webpack.config');
