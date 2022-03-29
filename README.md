@@ -1,3 +1,5 @@
+
+<p align="center">
 # **COMO**
 
 ![defaultcomologo.png](./src/assets/img/defaultcomologo.png)
@@ -6,6 +8,7 @@
 
 가상화폐 시세조회 크롬 익스텐션
 
+</p>
 ---
 
 ## :wrench: Skills
