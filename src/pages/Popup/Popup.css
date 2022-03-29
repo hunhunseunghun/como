@@ -379,3 +379,9 @@ table tbody tr td:first-child div:nth-child(2) {
 table tbody tr td:nth-child(3) div:last-child {
   font-size: 10px;
 }
+
+footer {
+  display: flex;
+  justify-content: right;
+  padding: 4px;
+}
