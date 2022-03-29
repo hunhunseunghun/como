@@ -1,5 +1,5 @@
 
-# **COMO** ***(Cryptocurrency Monitoring Chrome Extension)*** 
+# **COMO** ***- Cryptocurrency Monitoring Chrome Extension*** 
 
 ![defaultcomologo.png](./src/assets/img/defaultcomologo.png)
 
