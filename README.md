@@ -1,5 +1,5 @@
 
-# <img src="./src/assets/img/defaultcomologo.png"  width="40" height="40"/>  **COMO** ***- Cryptocurrency Monitoring Chrome Extension*** 
+# <img src="./src/assets/img/defaultcomologo.png"  width="80" height="80"/>  **COMO** ***- Cryptocurrency Monitoring Chrome Extension*** 
 
 
 
