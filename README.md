@@ -20,7 +20,7 @@ Dependencies
 <img alt="Redux" src ="https://img.shields.io/badge/Redux-764ABC.svg?&style=for-the-badge&logo=Redux&logoColor=white"/>
 <img alt="Redux-Saga" src ="https://img.shields.io/badge/Redux-Saga-999999.svg?&style=for-the-badge&logo=Redux-Saga&logoColor=white"/>
   
-  
+<br>  
 DevDependencies
 <br>
 <img alt="Webpack" src ="https://img.shields.io/badge/Webpack-8DD6F9.svg?&style=for-the-badge&logo=Webpack&logoColor=white"/>
@@ -28,7 +28,7 @@ DevDependencies
 <img alt="ESLint" src ="https://img.shields.io/badge/ESLint-4B32C3.svg?&style=for-the-badge&logo=ESLint&logoColor=white"/>
 <img alt="Prettier" src ="https://img.shields.io/badge/Prettier-F7B93E.svg?&style=for-the-badge&logo=Prettier&logoColor=white"/>
 <img alt="Google Chrome" src ="https://img.shields.io/badge/Google Chrome-4285F4.svg?&style=for-the-badge&logo=Google Chrome&logoColor=white"/>
-
+<br>
 Tool
 <br>
 <img alt="Visual Studio Code" src ="https://img.shields.io/badge/Visual Studio Code-007ACC.svg?&style=for-the-badge&logo=Visual Studio Code&logoColor=white"/>
