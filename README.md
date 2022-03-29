@@ -5,7 +5,6 @@
 **Coin Monitoring Chrome Extension**
 
 가상화폐 시세조회 크롬 익스텐션
-
 ---
 ## :wrench: Stack
 
@@ -22,12 +21,8 @@
 <img alt="Google Chrome" src ="https://img.shields.io/badge/Google Chrome-4285F4.svg?&style=for-the-badge&logo=Google Chrome&logoColor=white"/>
 <img alt="Babel" src ="https://img.shields.io/badge/Babel-F9DC3E.svg?&style=for-the-badge&logo=Babel&logoColor=white"/>
 <img alt="Visual Studio Code" src ="https://img.shields.io/badge/Visual Studio Code-007ACC.svg?&style=for-the-badge&logo=Visual Studio Code&logoColor=white"/>
-  
 </p>
 ---
-
-
-
 ## 프로젝트 구조
 
 ```jsx
