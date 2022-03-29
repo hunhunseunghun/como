@@ -3,7 +3,7 @@
 
 
 <p align="center">
-<img src="./src/assets/img/preview.png"  width="80" height="80"/>
+<img src="./src/assets/img/preview.png"/>
 <br>
 가상화폐 시세조회 크롬 익스텐션
 </p>
