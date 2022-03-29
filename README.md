@@ -21,7 +21,7 @@ Dependencies:
 <img alt="Redux-Saga" src ="https://img.shields.io/badge/Redux-Saga-999999.svg?&style=for-the-badge&logo=Redux-Saga&logoColor=white"/>
   
   
-DevDependencies:
+  <span> DevDependencies:</span>
 <img alt="Webpack" src ="https://img.shields.io/badge/Webpack-8DD6F9.svg?&style=for-the-badge&logo=Webpack&logoColor=white"/>
 <img alt="Babel" src ="https://img.shields.io/badge/Babel-F9DC3E.svg?&style=for-the-badge&logo=Babel&logoColor=white"/>
 <img alt="ESLint" src ="https://img.shields.io/badge/ESLint-4B32C3.svg?&style=for-the-badge&logo=ESLint&logoColor=white"/>
