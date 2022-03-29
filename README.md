@@ -10,6 +10,7 @@
 
 ## :wrench: Skills
 <br>
+<br>
 Dependencies
 <br>
 <p align="center"><img alt="HTML5" src ="https://img.shields.io/badge/HTML5-E34F26.svg?&style=for-the-badge&logo=HTML5&logoColor=white"/>
@@ -19,10 +20,9 @@ Dependencies
 <img alt="React" src ="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=white"/>
 <img alt="Redux" src ="https://img.shields.io/badge/Redux-764ABC.svg?&style=for-the-badge&logo=Redux&logoColor=white"/>
 <img alt="Redux-Saga" src ="https://img.shields.io/badge/Redux-Saga-999999.svg?&style=for-the-badge&logo=Redux-Saga&logoColor=white"/>
-  
+<br>
 <br>  
 DevDependencies
-<br>
 <br>
 <img alt="Webpack" src ="https://img.shields.io/badge/Webpack-8DD6F9.svg?&style=for-the-badge&logo=Webpack&logoColor=white"/>
 <img alt="Babel" src ="https://img.shields.io/badge/Babel-F9DC3E.svg?&style=for-the-badge&logo=Babel&logoColor=white"/>
@@ -30,8 +30,8 @@ DevDependencies
 <img alt="Prettier" src ="https://img.shields.io/badge/Prettier-F7B93E.svg?&style=for-the-badge&logo=Prettier&logoColor=white"/>
 <img alt="Google Chrome" src ="https://img.shields.io/badge/Google Chrome-4285F4.svg?&style=for-the-badge&logo=Google Chrome&logoColor=white"/>
 <br>
-Tool
 <br>
+Tool
 <br>
 <img alt="Visual Studio Code" src ="https://img.shields.io/badge/Visual Studio Code-007ACC.svg?&style=for-the-badge&logo=Visual Studio Code&logoColor=white"/>
 </p>
