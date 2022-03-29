@@ -1,6 +1,6 @@
 # **COMO**
 
-![defaultcomologo.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2f71341e-a5d8-44c1-8632-c642dc818ead/defaultcomologo.png)
+![defaultcomologo.png](como/src/assets/img/defaultcomologo.png)
 
 **Coin Monitoring Chrome Extension**
 
