@@ -23,4 +23,4 @@ COMO-Chrome-Extension
 
 ## STACK
 <img alt="JavaScript" src ="https://img.shields.io/badge/JavaScript-JavaScript-%23F7DF1E"/>
-<img alt="JavaScript" src ="https://img.shields.io/badge/JavaScript-#F7DF1E.svg?&style=for-the-badge&logo=JavaScript&logoColor=white"/>
+<img alt="JavaScript" src ="https://img.shields.io/badge/JavaScript-F7DF1E.svg?&style=for-the-badge&logo=JavaScript&logoColor=white"/>
