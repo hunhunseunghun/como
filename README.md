@@ -5,7 +5,9 @@
 **Coin Monitoring Chrome Extension**
 
 가상화폐 시세조회 크롬 익스텐션
+
 ---
+
 ## :wrench: Stack
 
 <p align="center"><img alt="HTML5" src ="https://img.shields.io/badge/HTML5-E34F26.svg?&style=for-the-badge&logo=HTML5&logoColor=white"/>
@@ -22,8 +24,10 @@
 <img alt="Babel" src ="https://img.shields.io/badge/Babel-F9DC3E.svg?&style=for-the-badge&logo=Babel&logoColor=white"/>
 <img alt="Visual Studio Code" src ="https://img.shields.io/badge/Visual Studio Code-007ACC.svg?&style=for-the-badge&logo=Visual Studio Code&logoColor=white"/>
 </p>
+
 ---
-##
+
+## 
 
 ```jsx
 COMO-Chrome-Extension
