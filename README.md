@@ -3,10 +3,7 @@
 
 ![defaultcomologo.png](./src/assets/img/defaultcomologo.png)
 
-**Coin Monitoring Chrome Extension**
-
-가상화폐 시세조회 크롬 익스텐션
-
+**Coin Monitoring Chrome Extension** 가상화폐 시세조회 크롬 익스텐션
 
 ---
 
