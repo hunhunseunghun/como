@@ -1,11 +1,13 @@
 
-# <img src="./src/assets/img/defaultcomologo.png"  width="80" height="80"/>  **COMO** ***- Cryptocurrency Monitoring Chrome Extension*** 
+# <img src="./src/assets/img/defaultcomologo.png"  width="80" height="80"/>    **COMO** ***- Cryptocurrency Monitoring Chrome Extension*** 
 
 
-
+<p align="center">
 ![defaultcomologo.png](./src/assets/img/preview.png)
 
 가상화폐 시세조회 크롬 익스텐션
+</p>
+
 
 ---
 
