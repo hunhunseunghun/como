@@ -3,8 +3,8 @@
 
 
 <p align="center">
-![defaultcomologo.png](./src/assets/img/preview.png)
-
+<img src="./src/assets/img/preview.png"  width="80" height="80"/>
+<br>
 가상화폐 시세조회 크롬 익스텐션
 </p>
 
