@@ -23,7 +23,7 @@
 <img alt="Visual Studio Code" src ="https://img.shields.io/badge/Visual Studio Code-007ACC.svg?&style=for-the-badge&logo=Visual Studio Code&logoColor=white"/>
 </p>
 ---
-## 프로젝트 구조
+##
 
 ```jsx
 COMO-Chrome-Extension
