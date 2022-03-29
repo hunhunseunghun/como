@@ -30,5 +30,10 @@ COMO-Chrome-Extension
 <img alt="Redux" src ="https://img.shields.io/badge/Redux-764ABC.svg?&style=for-the-badge&logo=Redux&logoColor=white"/>
 <img alt="Webpack" src ="https://img.shields.io/badge/Webpack-8DD6F9.svg?&style=for-the-badge&logo=Webpack&logoColor=white"/>
 <img alt="ESLint" src ="https://img.shields.io/badge/ESLint-4B32C3.svg?&style=for-the-badge&logo=ESLint&logoColor=white"/>
-<img alt="Prettier" src ="https://img.shields.io/badge/Prettier-F7B93E.svg?&style=for-the-badge&logo=Prettier&logoColor=white"/></p>
+<img alt="Prettier" src ="https://img.shields.io/badge/Prettier-F7B93E.svg?&style=for-the-badge&logo=Prettier&logoColor=white"/>
+<img alt="Google Chrome" src ="https://img.shields.io/badge/Google Chrome-4285F4.svg?&style=for-the-badge&logo=Google Chrome&logoColor=white"/>
+<img alt="Babel" src ="https://img.shields.io/badge/Babel-F9DC3E.svg?&style=for-the-badge&logo=Babel&logoColor=white"/>
+
+  
+</p>
 
