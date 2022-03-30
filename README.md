@@ -51,7 +51,7 @@ DevDependencies
 
 ---
 
-##
+## 프로젝트 구조
 
 ```jsx
 COMO-Chrome-Extension
@@ -63,3 +63,11 @@ COMO-Chrome-Extension
       ├─ Reducer            # Redux Reducer를 모아놓고 관리합니다.
       ├─ Utils              # Redux Action의 함수들을 모아놓고 관리합니다.
 ```
+
+---
+
+## Architecture
+
+<p align="center">
+<img src="./como_gif/COMO_마켓선택.gif"/>|<img src="./como_gif/Web App Reference Architecture.gif"  />
+</p >
