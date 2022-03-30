@@ -41,13 +41,13 @@ DevDependencies
 
 ## Preview
 
-|<img src="./como_gif/COMO_마켓선택.gif"  />|<img src="./como_gif/COMO_검색기능.gif"  />|
+|<img src="./como_gif/COMO_마켓선택.gif"/>|<img src="./como_gif/COMO_거래소.gif"  />|
 |:---:|:---:|
-|업비트 / 빗썸 ( 현재가 , 변동률 , 거래대금)|코인 한글 / 영문 검색|
-|<img src="./como_gif/COMO_소팅기능.gif"/>|<img src="./como_gif/COMO_창확장축소.gif"/>|
-|항목별 내림 / 오름차순 소팅|창 확대 / 축소|
-|<img src="./como_gif/COMO_즐겨찾기.gif"/>|
-|코인 즐겨찾기|
+|KRW / BTC 마켓 지원|업비트 / 빗썸 지원|
+|<img src="./como_gif/COMO_즐겨찾기.gif"/>|<img src="./como_gif/COMO_창확장축소.gif"/>|
+|코인 즐겨찾기|창 확대 / 축소|
+|<img src="./como_gif/COMO_소팅기능.gif"/>|<img src="./como_gif/COMO_검색기능.gif"/>|
+|항목별 내림 / 오름차순 소팅|코인 한글 / 영문 검색|
 
 ---
 
