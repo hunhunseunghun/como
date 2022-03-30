@@ -41,6 +41,21 @@ DevDependencies
 </p>
 
 
+---
+
+## Preview
+
+업비트/빗썸 ( 현재가 , 변동률 , 거래대금)
+<img src="./src/assets/img/COMO_마켓선택.gif"  width="80" height="80"/> 
+
+코인 한글/영문 검색
+<img src="./src/assets/img/COMO_검색기능.gif"  width="80" height="80"/> 
+
+항목별 내림/오름차순 소팅
+<img src="./src/assets/img/COMO_소팅기능.gif"  width="80" height="80"/> 
+
+창 확대/축소
+<img src="./src/assets/img/COMO_창확장축소.gif"  width="80" height="80"/> 
 
 ---
 
