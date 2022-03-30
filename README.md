@@ -51,11 +51,11 @@ DevDependencies
 
 코인 한글/영문 검색
 
-<img src="./como_videos/COMO_소팅기능.gif"  width="80" height="80"/>
+<img src="./como_videos/COMO_소팅기능.gif"/>
 
 항목별 내림/오름차순 소팅
 
-<img src="./como_videos/COMO_창확장축소.gif"  width="80" height="80"/>
+<img src="./como_videos/COMO_창확장축소.gif"/>
 
 창 확대/축소
 
