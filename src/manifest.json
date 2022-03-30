@@ -33,6 +33,6 @@
       "matches": []
     }
   ],
-  "permissions": ["storage"],
+  "permissions": [],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; script-src-elem 'self' 'unsafe-eval' https://api.upbit.com/v1/market/all?isDetails=false https://api.upbit.com/v1/ticker https://api.bithumb.com/public/ticker/all_krw https://api.bithumb.com/public/ticker/all_btc https://api.bithumb.com/public/transaction_history/ object-src 'self'; "
 }
