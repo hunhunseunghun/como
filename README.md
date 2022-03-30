@@ -69,5 +69,5 @@ COMO-Chrome-Extension
 ## Architecture
 
 <p align="center">
-<img src="./como_gif/Architecture.gif"/>
+<img src="./como_gif/Architecture.png"/>
 </p >
