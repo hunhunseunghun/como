@@ -5,7 +5,7 @@
 <p align="center">
 <br>
 <br> 
-<img src="./src/assets/img/preview.png"/>
+<img src="./src/assets/img/como_preview.png"/>
 <br>
 <br>
 가상화폐 시세조회 크롬 익스텐션
