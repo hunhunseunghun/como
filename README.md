@@ -1,6 +1,4 @@
-
-# <img src="./src/assets/img/defaultcomologo.png"  width="80" height="80"/>    **COMO** ***- Cryptocurrency Monitoring Chrome Extension*** 
-
+# <img src="./src/assets/img/defaultcomologo.png"  width="80" height="80"/> **COMO** **_- Cryptocurrency Monitoring Chrome Extension_**
 
 <p align="center">
 <br>
@@ -10,7 +8,6 @@
 <br>
 가상화폐 시세조회 크롬 익스텐션
 </p>
-
 
 ---
 
@@ -40,26 +37,31 @@ DevDependencies
 <img alt="Google Chrome" src ="https://img.shields.io/badge/Google Chrome-4285F4.svg?&style=for-the-badge&logo=Google Chrome&logoColor=white"/>
 </p>
 
-
 ---
 
 ## Preview
 
+---
+
+<img src="./como_videos/COMO_마켓선택.gif"  />
+
+<img src="./como_videos/COMO_검색기능.gif"  />
+
 업비트/빗썸 ( 현재가 , 변동률 , 거래대금)
-<img src="./como_videos/COMO_마켓선택.gif"  width="80" height="80"/> 
 
 코인 한글/영문 검색
-<img src="./como_videos/COMO_검색기능.gif"  width="80" height="80"/> 
+
+<img src="./como_videos/COMO_소팅기능.gif"  width="80" height="80"/>
 
 항목별 내림/오름차순 소팅
-<img src="./como_videos/COMO_소팅기능.gif"  width="80" height="80"/> 
+
+<img src="./como_videos/COMO_창확장축소.gif"  width="80" height="80"/>
 
 창 확대/축소
-<img src="./como_videos/COMO_창확장축소.gif"  width="80" height="80"/> 
 
 ---
 
-## 
+##
 
 ```jsx
 COMO-Chrome-Extension
@@ -71,6 +73,3 @@ COMO-Chrome-Extension
       ├─ Reducer            # Redux Reducer를 모아놓고 관리합니다.
       ├─ Utils              # Redux Action의 함수들을 모아놓고 관리합니다.
 ```
-
-
-
