@@ -43,9 +43,9 @@ DevDependencies
 
 |<img src="./como_videos/COMO_마켓선택.gif"  />|<img src="./como_videos/COMO_검색기능.gif"  />|
 |:---:|:---:|
-|업비트/빗썸 ( 현재가 , 변동률 , 거래대금)|코인 한글/영문 검색|
+|업비트 / 빗썸 ( 현재가 , 변동률 , 거래대금)|코인 한글 / 영문 검색|
 |<img src="./como_videos/COMO_소팅기능.gif"/>|<img src="./como_videos/COMO_창확장축소.gif"/>|
-|항목별 내림/오름차순 소팅|창 확대/축소|
+|항목별 내림 / 오름차순 소팅|창 확대 / 축소|
 
 ---
 
