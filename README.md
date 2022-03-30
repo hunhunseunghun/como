@@ -69,5 +69,5 @@ COMO-Chrome-Extension
 ## Architecture
 
 <p align="center">
-<img src="./como_gif/COMO_마켓선택.gif"/>|<img src="./como_gif/Web App Reference Architecture.gif"  />
+<img src="./como_gif/Web App Reference Architecture.gif"/>
 </p >
