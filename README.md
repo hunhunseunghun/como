@@ -43,9 +43,9 @@ DevDependencies
 
 ---
 
-<img src="./como_videos/COMO_마켓선택.gif"  />
+|<img src="./como_videos/COMO_마켓선택.gif"  />|<img src="./como_videos/COMO_검색기능.gif"  />|
 
-<img src="./como_videos/COMO_검색기능.gif"  />
+
 
 업비트/빗썸 ( 현재가 , 변동률 , 거래대금)
 
