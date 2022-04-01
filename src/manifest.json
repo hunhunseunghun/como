@@ -2,7 +2,7 @@
   "version": "1.0",
   "manifest_version": 3,
   "name": "COMO",
-  "description": "Coin Monitoring",
+  "description": "가상화폐 시세조회 크롬 익스텐션 (업비트, 빗썸 시세 지원)",
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },
   "action": {
