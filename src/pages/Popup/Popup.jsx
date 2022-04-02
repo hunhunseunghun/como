@@ -188,6 +188,7 @@ const Popup = () => {
       </table>
       <footer>
         <div>como</div>
+        <div>contact : hununseunghun@gmail.com</div>
       </footer>
     </div>
   );
