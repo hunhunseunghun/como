@@ -52,6 +52,7 @@ const BithumbCoinItemKRW = ({
       }
     }
   };
+  // chagerate + 기호 추가 필요
 
   return (
     <tr key={ticker.market}>
