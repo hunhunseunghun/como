@@ -9,9 +9,6 @@
     "default_popup": "popup.html",
     "default_icon": "defaultcomologo.png"
   },
-  "chrome_url_overrides": {
-    "newtab": "newtab.html"
-  },
   "icons": {
     "128": "defaultcomologo.png"
   },
@@ -22,7 +19,6 @@
       "css": ["content.styles.css"]
     }
   ],
-  "devtools_page": "devtools.html",
   "web_accessible_resources": [
     {
       "resources": [
