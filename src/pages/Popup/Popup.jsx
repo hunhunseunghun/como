@@ -61,6 +61,8 @@ const Popup = () => {
       : setMakeSort('ascending');
   };
 
+  // 2022-04-05 chorme 배포 핸들링 위반 참조 ID: Yellow Magnesium 해결 필요
+
   return (
     <div className="App">
       <nav>
