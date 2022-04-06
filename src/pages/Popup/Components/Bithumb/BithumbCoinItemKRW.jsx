@@ -88,7 +88,11 @@ const BithumbCoinItemKRW = ({
               )
         }
       >
-        <div>{ticker.trade_price}</div>
+        <div>
+          {ticker.trade_price
+            .toString()
+            .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+        </div>
       </td>
       <td
         className={
