@@ -17,4 +17,10 @@ export const coinApi = {
       `https://api.bithumb.com/public/transaction_history/${param}`
     );
   },
+  getCoinoneTicker: () => {
+    return axios.get('https://api.coinone.co.kr/ticker/');
+  },
+  getCoinoneOrderBook: () => {
+    return axios.get('https://api.coinone.co.kr/orderbook/');
+  },
 };
