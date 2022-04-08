@@ -23,4 +23,10 @@ export const coinApi = {
   getCoinoneOrderBook: () => {
     return axios.get('https://api.coinone.co.kr/orderbook/');
   },
+  getCoinoneTickerUTC: () => {
+    return axios.get('https://api.coinone.co.kr/ticker_utc/');
+  },
+  getCoinoneRecentCompleteOrders: () => {
+    return axios.get('https://api.coinone.co.kr/trades/');
+  },
 };
