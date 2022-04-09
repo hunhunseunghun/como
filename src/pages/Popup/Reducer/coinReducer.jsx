@@ -59,6 +59,10 @@ const GET_BITHUMB_WEBSOCKET_DATA_SUCCESS =
   'coin/GET_BITHUMB_WEBSOCKET_DATA_SUCCESS';
 const GET_BITHUMB_WEBSOCKET_DATA_FAIL = 'coin/GET_BITHUMB_WEBSOCKET_DATA_FAIL';
 
+const GET_COINONE_TICKER_DATA = 'coin/GET_COINONE_TICKER_DATA';
+const GET_COINONE_TICKER_DATA_SUCCESS = 'GET_COINONE_TICKER_DATA_SUCCESS';
+const GET_COINONE_TICKER_DATA_FAIL = 'GET_COINONE_TICKER_DATA_FAIL';
+
 export const startInit = () => ({ type: START_INIT });
 
 export const startBithumb = () => ({ type: START_BITHUMB });
@@ -109,6 +113,8 @@ export const bithumbWebsocketACTION = createBithumbWebsocketBufferSaga(
   GET_BITHUMB_WEBSOCKET_DATA_SUCCESS,
   GET_BITHUMB_WEBSOCKET_DATA_FAIL
 );
+
+export const coninoneTickers = {};
 
 //sagas-------------------------------------------------------------------------
 
