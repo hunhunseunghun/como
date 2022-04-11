@@ -352,3 +352,29 @@ export const createBithumbWebsocketBufferSaga = (SUCCESS, FAIL) => {
     }
   };
 };
+
+export const createCoinoneTickerSaga = (SUCCESS, FAIL, API) => {
+  return function* () {
+    try {
+      const marketNames = yield select((state) => state.Coin.marketNames); // select  == useSelecotor
+      const tickersParam = yield marketNames.map((ele) => ele.market).join(','); // //upbit 등록 종목명 받은 후 -> 현재가 요청 API의 Params로 넘겨 현재가 정보 수신
+      // //tickers명세  markets : 반점으로 구분되는 마켓 코드 (ex. KRW-BTC, BTC-ETH)
+      const tickers = yield call(API, tickersParam); // API 함수에 넣어주고 싶은 인자는 call 함수의 두번째 인자부터 순서대로 넣어주면 됩니다.
+
+      const assignMarektNamesTickers = {}; // 업데이트되는 코인 정보, 탐색 성능 위해 객체 선택, marekNames, ticekrs 데이터 병합
+      marketNames.forEach((ele) => {
+        assignMarektNamesTickers[ele.market] = ele;
+      });
+      tickers.data.forEach((ele) => {
+        Object.assign(assignMarektNamesTickers[ele.market], ele);
+      });
+
+      yield put({ type: SUCCESS, payload: assignMarektNamesTickers });
+      yield put(apiLodingAction(false));
+    } catch (err) {
+      yield put({ type: FAIL, payload: err });
+
+      throw err;
+    }
+  };
+};
