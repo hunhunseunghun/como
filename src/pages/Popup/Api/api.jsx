@@ -29,7 +29,10 @@ export const coinApi = {
   getCoinoneRecentCompleteOrders: () => {
     return axios.get('https://api.coinone.co.kr/trades/');
   },
-  getCoinoneAccountBalacn: () => {
+  getCoinoneAccountBalance: () => {
     return axios.get('https://api.coinone.co.kr/v1/account/balance/');
+  },
+  getCoinoneLimitBuy: () => {
+    return axios.get('https://api.coinone.co.kr/v1/order/limit_buy/');
   },
 };
