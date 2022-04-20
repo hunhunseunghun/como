@@ -6,6 +6,9 @@ export const coinApi = {
     axios.get('https://api.upbit.com/v1/ticker', {
       params: { markets: tickersParam },
     }),
+  getUpbitCandle: () =>
+    axios.get(`https://api.upbit.com/v1/candles/minutes/${'BTC'}`),
+
   getBithumbTickersKRW: () => {
     return axios.get('https://api.bithumb.com/public/ticker/all_krw');
   },
@@ -36,3 +39,7 @@ export const coinApi = {
     return axios.get('https://api.coinone.co.kr/v1/order/limit_buy/');
   },
 };
+
+coinApi.getUpbitCandle().then((res) => {
+  console.log(res);
+});
