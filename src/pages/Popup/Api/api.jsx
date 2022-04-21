@@ -23,6 +23,23 @@ export const coinApi = {
   // candle_acc_trade_volume	누적 거래량	Double
   // unit	분 단위(유닛)	Integer
 
+  getUpbitTradeTicks: () => {
+    return axios.get('https://api.upbit.com/v1/trades/ticks');
+  },
+  //최근 체결 내역
+  // market	마켓 구분 코드	String
+  // trade_date_utc	체결 일자(UTC 기준)	String
+  // trade_time_utc	체결 시각(UTC 기준)	String
+  // timestamp	체결 타임스탬프	Long
+  // trade_price	체결 가격	Double
+  // trade_volume	체결량	Double
+  // prev_closing_price	전일 종가	Double
+  // change_price	변화량	Double
+  // ask_bid	매도/매수	String
+  // sequential_id	체결 번호(Unique)	Long
+  // ex :) curl --request GET \
+  //  --url 'https://api.upbit.com/v1/trades/ticks?count=1' \
+  //  --header 'Accept: application/json'
   getBithumbTickersKRW: () => {
     return axios.get('https://api.bithumb.com/public/ticker/all_krw');
   },
