@@ -51,13 +51,14 @@ export const createUpbitTickerSaga = (SUCCESS, FAIL, API) => {
 // 웹소켓 생성
 const createUpbitWebSocket = () => {
   const webSocket = new WebSocket('wss://api.upbit.com/websocket/v1');
-  webSocket.binaryType = 'arraybuffer';
+  webSocket.binaryType = 'arraybuffer'; // 버퍼타입
   return webSocket;
 };
 
 //웹 소켓 파라미터 전송 요청 및 리스폰스
 const createSocketChannel = (socket, websocketParam, buffer) => {
   return eventChannel((emit) => {
+    //이벤트 채널
     socket.onopen = () => {
       socket.send(
         JSON.stringify([
