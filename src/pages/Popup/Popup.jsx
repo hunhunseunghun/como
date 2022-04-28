@@ -23,10 +23,8 @@ const Popup = () => {
   const [marketDropDownSelected, setmarketDropDownSelected] = useState('KRW');
   const [searchCoinName, setSearchCoinName] = useState('');
   const [windowXaxisSize, setWindowXaxisSize] = useState(false);
+  const [windowYaxisSize, setWindowYaxisSize] = useState(false);
 
-  const apiLoading = useSelector((state) => state.Coin.apiLoading);
-
-  console.log(dropDownSelected);
   useEffect(() => {
     dispatch(startInit());
     dispatch(startBithumb());
@@ -96,7 +94,23 @@ const Popup = () => {
             }}
             data-tip
             data-for="windowXaxisSize_btn_tooltip"
-            title={`창 세로 ${windowXaxisSize ? '축소' : '확대'}`}
+            title={`창 세로 ${windowYaxisSize ? '축소' : '확대'}`}
+          >
+            {windowYaxisSize ? (
+              <CgArrowUpR size="20" />
+            ) : (
+              <CgArrowDownR size="20" />
+            )}
+          </div>
+          <div
+            className="windowXaxisSize_btn"
+            onClick={() => {
+              setWindowXaxisSize(!windowXaxisSize);
+              windowResize();
+            }}
+            data-tip
+            data-for="windowXaxisSize_btn_tooltip"
+            title={`창 가로 ${windowXaxisSize ? '축소' : '확대'}`}
           >
             {windowXaxisSize ? (
               <CgArrowUpR size="20" />
