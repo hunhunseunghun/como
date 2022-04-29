@@ -77,22 +77,6 @@ export const bithumbWebsocketUtil = (state, action) => {
   };
 };
 
-export const bithumbWebsocketUtils = (state, action) => {
-  const assignObj = { ...state.bithumbTickers };
-  for (let key in action.payload) {
-    // 초기 데이터와 websocket 데이터 병합
-    if (assignObj[key]) {
-      assignObj[key] = Object.assign(assignObj[key], action.payload[key]);
-    }
-  }
-  return {
-    ...state,
-    bithumbTickers: {
-      ...assignObj,
-    },
-  };
-};
-
 // axios(config)
 // 			.then((response) => {
 // 				const url = window.URL.createObjectURL(
