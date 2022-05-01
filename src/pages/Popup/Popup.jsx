@@ -31,7 +31,7 @@ const Popup = () => {
   }, [dispatch]);
 
   const windowResize = () => {
-    document.body.clientHeight(500);
+    // document.body.clientHeight(500);
   };
 
   const handleSortPrice = () => {
@@ -93,7 +93,7 @@ const Popup = () => {
               windowResize();
             }}
             data-tip
-            data-for="windowXaxisSize_btn_tooltip"
+            data-="windowXaxisSize_btn_tooltip"
             title={`창 세로 ${windowXaxisSize ? '축소' : '확대'}`}
           >
             {windowXaxisSize ? (
