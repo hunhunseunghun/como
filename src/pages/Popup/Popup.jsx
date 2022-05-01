@@ -31,7 +31,7 @@ const Popup = () => {
   }, [dispatch]);
 
   const windowResize = () => {
-    return document.body.clientHeight(1000);
+    document.body.clientHeight(500);
   };
 
   const handleSortPrice = () => {
@@ -94,15 +94,15 @@ const Popup = () => {
             }}
             data-tip
             data-for="windowXaxisSize_btn_tooltip"
-            title={`창 세로 ${windowYaxisSize ? '축소' : '확대'}`}
+            title={`창 세로 ${windowXaxisSize ? '축소' : '확대'}`}
           >
-            {windowYaxisSize ? (
+            {windowXaxisSize ? (
               <CgArrowUpR size="20" />
             ) : (
               <CgArrowDownR size="20" />
             )}
           </div>
-          <div
+          {/* <div
             className="windowXaxisSize_btn"
             onClick={() => {
               setWindowXaxisSize(!windowXaxisSize);
@@ -117,7 +117,7 @@ const Popup = () => {
             ) : (
               <CgArrowDownR size="20" />
             )}
-          </div>
+          </div> */}
         </section>
 
         <section className="nav_bottom_section">
