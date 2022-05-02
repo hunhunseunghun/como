@@ -224,6 +224,9 @@ table {
 .table_wide {
   height: 510px;
 }
+.table_Y_wide {
+  width: 510px;
+}
 
 table thead {
   display: block;

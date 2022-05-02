@@ -32,6 +32,10 @@ const Popup = () => {
 
   const windowResize = () => {
     // document.body.clientHeight(500);
+    switch (windowXaxisSize) {
+      case true:
+        return;
+    }
   };
 
   const handleSortPrice = () => {
@@ -153,7 +157,11 @@ const Popup = () => {
           </div>
         </section>
       </nav>
-      <table className={windowXaxisSize ? 'table_wide' : ''}>
+      <table
+        className={`${windowXaxisSize ? 'table_wide' : ''} ${
+          windowYaxisSize ? 'table_Y_wide' : ''
+        }`}
+      >
         <thead>
           <tr>
             <th>
