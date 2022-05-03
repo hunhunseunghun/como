@@ -158,7 +158,7 @@ const Popup = () => {
         </section>
       </nav>
       <table
-        className={`${windowXaxisSize ? 'table_wide' : ''} ${
+        className={`${windowXaxisSize ? 'table_X_wide' : ''} ${
           windowYaxisSize ? 'table_Y_wide' : ''
         }`}
       >
