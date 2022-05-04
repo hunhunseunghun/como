@@ -11,7 +11,12 @@ import MarketDropDown from './Components/Dropdown/marketDropDown';
 import BithumbCoinList from './Components/Bithumb/BithumbCoinList.jsx';
 
 import { FaSistrix } from 'react-icons/fa';
-import { CgArrowDownR, CgArrowUpR } from 'react-icons/cg';
+import {
+  CgArrowDownR,
+  CgArrowUpR,
+  CgArrowLeftR,
+  CgArrowRightR,
+} from 'react-icons/cg';
 import defaultcomologo from '../../assets/img/defaultcomologo.png';
 
 const Popup = () => {
@@ -91,13 +96,29 @@ const Popup = () => {
         <section className="nav_top_section">
           <img src={defaultcomologo}></img>
           <div
+            className="windowYaxisSize_btn"
+            onClick={() => {
+              setWindowYaxisSize(!windowYaxisSize);
+              windowResize();
+            }}
+            data-tip
+            data-="windowXaxisSize_btn_tooltip"
+            title={`창 가로 ${windowYaxisSize ? '축소' : '확대'}`}
+          >
+            {windowYaxisSize ? (
+              <CgArrowLeftR size="20" />
+            ) : (
+              <CgArrowRightR size="20" />
+            )}
+          </div>
+          <div
             className="windowXaxisSize_btn"
             onClick={() => {
               setWindowXaxisSize(!windowXaxisSize);
               windowResize();
             }}
             data-tip
-            data-="windowXaxisSize_btn_tooltip"
+            data-for="windowXaxisSize_btn_tooltip"
             title={`창 세로 ${windowXaxisSize ? '축소' : '확대'}`}
           >
             {windowXaxisSize ? (
@@ -106,22 +127,6 @@ const Popup = () => {
               <CgArrowDownR size="20" />
             )}
           </div>
-          {/* <div
-            className="windowXaxisSize_btn"
-            onClick={() => {
-              setWindowXaxisSize(!windowXaxisSize);
-              windowResize();
-            }}
-            data-tip
-            data-for="windowXaxisSize_btn_tooltip"
-            title={`창 가로 ${windowXaxisSize ? '축소' : '확대'}`}
-          >
-            {windowXaxisSize ? (
-              <CgArrowUpR size="20" />
-            ) : (
-              <CgArrowDownR size="20" />
-            )}
-          </div> */}
         </section>
 
         <section className="nav_bottom_section">
