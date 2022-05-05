@@ -95,38 +95,41 @@ const Popup = () => {
         </div>
         <section className="nav_top_section">
           <img src={defaultcomologo}></img>
-          <div
-            className="windowYaxisSize_btn"
-            onClick={() => {
-              setWindowYaxisSize(!windowYaxisSize);
-              windowResize();
-            }}
-            data-tip
-            data-="windowXaxisSize_btn_tooltip"
-            title={`창 가로 ${windowYaxisSize ? '축소' : '확대'}`}
-          >
-            {windowYaxisSize ? (
-              <CgArrowLeftR size="20" />
-            ) : (
-              <CgArrowRightR size="20" />
-            )}
-          </div>
-          <div
-            className="windowXaxisSize_btn"
-            onClick={() => {
-              setWindowXaxisSize(!windowXaxisSize);
-              windowResize();
-            }}
-            data-tip
-            data-for="windowXaxisSize_btn_tooltip"
-            title={`창 세로 ${windowXaxisSize ? '축소' : '확대'}`}
-          >
-            {windowXaxisSize ? (
-              <CgArrowUpR size="20" />
-            ) : (
-              <CgArrowDownR size="20" />
-            )}
-          </div>
+
+          <section>
+            <div
+              className="windowYaxisSize_btn"
+              onClick={() => {
+                setWindowYaxisSize(!windowYaxisSize);
+                windowResize();
+              }}
+              data-tip
+              data-="windowXaxisSize_btn_tooltip"
+              title={`창 가로 ${windowYaxisSize ? '축소' : '확대'}`}
+            >
+              {windowYaxisSize ? (
+                <CgArrowLeftR size="20" />
+              ) : (
+                <CgArrowRightR size="20" />
+              )}
+            </div>
+            <div
+              className="windowXaxisSize_btn"
+              onClick={() => {
+                setWindowXaxisSize(!windowXaxisSize);
+                windowResize();
+              }}
+              data-tip
+              data-for="windowXaxisSize_btn_tooltip"
+              title={`창 세로 ${windowXaxisSize ? '축소' : '확대'}`}
+            >
+              {windowXaxisSize ? (
+                <CgArrowUpR size="20" />
+              ) : (
+                <CgArrowDownR size="20" />
+              )}
+            </div>
+          </section>
         </section>
 
         <section className="nav_bottom_section">
