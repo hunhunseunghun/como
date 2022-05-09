@@ -13,6 +13,7 @@ import {
   createBithumbTickersBtc,
   createBithumbTransaction,
   createBithumbWebsocketBufferSaga,
+  createRequestSaga,
 } from '../Utils/asyncUtils.jsx';
 
 const START_INIT = 'coin/START_INIT';
@@ -121,6 +122,12 @@ export const bithumbWebsocketACTION = createBithumbWebsocketBufferSaga(
 
 export const coninoneTickers = {};
 
+const getInitCandleSaga = createRequestSaga(
+  GET_INIT_CANDLES,
+  coinApi.getInitCanldes,
+  candleDataUtils.init
+);
+
 //sagas-------------------------------------------------------------------------
 
 export function* coinSaga() {
@@ -138,6 +145,7 @@ export function* bithumbSaga() {
 }
 
 function* startInittSaga() {
+  // yield getInitCandleSaga()
   yield coinNameAction();
   yield upbitTickerAction();
   yield upbitWebSocketACTION();

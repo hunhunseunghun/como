@@ -379,3 +379,24 @@ export const createCoinoneTickerSaga = (SUCCESS, FAIL, API) => {
     }
   };
 };
+
+//캔들용 사가
+const createRequestSaga = (type, api, dataMaker) => {
+  const SUCCESS = `${type}_SUCCESS`;
+  const ERROR = `${type}_ERROR`;
+
+  return function* (action = {}) {
+    yield put(startLoading(type));
+    try {
+      const res = yield call(api, action.payload);
+      const state = yield select();
+
+      yield put({ type: SUCCESS, payload: dataMaker(res.data, state) });
+      yield put(finishLoading(type));
+    } catch (e) {
+      yield put({ type: ERROR, payload: e });
+      yield put(finishLoading(type));
+      throw e;
+    }
+  };
+};
