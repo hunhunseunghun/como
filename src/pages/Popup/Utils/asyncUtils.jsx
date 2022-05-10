@@ -381,7 +381,7 @@ export const createCoinoneTickerSaga = (SUCCESS, FAIL, API) => {
 };
 
 //캔들용 사가
-const createRequestSaga = (type, api, dataMaker) => {
+export const createRequestSaga = (type, api, dataMaker) => {
   const SUCCESS = `${type}_SUCCESS`;
   const ERROR = `${type}_ERROR`;
 
