@@ -387,7 +387,7 @@ export const createRequestSaga = (type, api, dataMaker) => {
       const res = yield call(api, action.payload);
       const state = yield select();
 
-      yield put({ type: SUCCESS, payload: dataMaker(res.data, state) });
+    
       yield put(finishLoading(type));
     } catch (e) {
       yield put({ type: ERROR, payload: e });
