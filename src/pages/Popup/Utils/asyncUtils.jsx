@@ -382,17 +382,6 @@ export const createCoinoneTickerSaga = (SUCCESS, FAIL, API) => {
 
 //캔들용 사가
 export const createRequestSaga = (type, api, dataMaker) => {
-  return function* (action = {}) {
-    try {
-      const res = yield call(api, action.payload);
-      const state = yield select();
-
-    
-      yield put(finishLoading(type));
-    } catch (e) {
-      yield put({ type: ERROR, payload: e });
-      yield put(finishLoading(type));
-      throw e;
-    }
-  };
+  return;
+  //캔들 리퀘스트 작성 요
 };
