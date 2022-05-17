@@ -383,6 +383,9 @@ export const createCoinoneTickerSaga = (SUCCESS, FAIL, API) => {
 //캔들용 사가
 export const createRequestSaga = (type, api, dataMaker) => {
   const SUCCESS = `${type} of SUCCESS`;
+  const FAIL = `${type} of FAIL`;
   return;
+  try {
+  } catch {}
   //캔들 리퀘스트 작성 요
 };
