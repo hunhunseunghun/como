@@ -386,6 +386,12 @@ export const createRequestSaga = (type, api, dataMaker) => {
   const FAIL = `${type} of FAIL`;
   return;
   try {
-  } catch {}
+    if (SUCCESS) {
+      return;
+    }
+  } catch {
+    if (FAIL) {
+    }
+  }
   //캔들 리퀘스트 작성 요
 };
