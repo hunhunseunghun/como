@@ -384,10 +384,12 @@ export const createCoinoneTickerSaga = (SUCCESS, FAIL, API) => {
 export const createRequestSaga = (type, api, dataMaker) => {
   const SUCCESS = `${type} of SUCCESS`;
   const FAIL = `${type} of FAIL`;
-  return;
+  
+  
   try {
     if (SUCCESS) {
-      return;
+      const marketNames = yield select((state) => state.Coin.marketNames); // select  == useSelecotor
+      const tickersParam = yield marketNames.map((ele) => ele.market).join(','); // //upbit 등록 종목명 받은 후 -> 현재가 요청 API의 Params로 넘겨 현재가 정보 수신
     }
   } catch {
     if (FAIL) {
