@@ -389,7 +389,7 @@ export const createRequestSaga = (type, api, dataMaker) => {
   try {
     if (SUCCESS) {
       const marketNames = yield select((state) => state.Coin.marketNames); // select  == useSelecotor
-     
+      const upbitTickers = yield select((state) => state.Coin.upbitTickers)
     }
   } catch {
     if (FAIL) {
