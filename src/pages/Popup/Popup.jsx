@@ -11,7 +11,12 @@ import MarketDropDown from './Components/Dropdown/marketDropDown';
 import BithumbCoinList from './Components/Bithumb/BithumbCoinList.jsx';
 
 import { FaSistrix } from 'react-icons/fa';
-import { CgArrowDownR, CgArrowUpR } from 'react-icons/cg';
+import {
+  CgArrowDownR,
+  CgArrowUpR,
+  CgArrowLeftR,
+  CgArrowRightR,
+} from 'react-icons/cg';
 import defaultcomologo from '../../assets/img/defaultcomologo.png';
 
 const Popup = () => {
@@ -23,18 +28,19 @@ const Popup = () => {
   const [marketDropDownSelected, setmarketDropDownSelected] = useState('KRW');
   const [searchCoinName, setSearchCoinName] = useState('');
   const [windowXaxisSize, setWindowXaxisSize] = useState(false);
+  const [windowYaxisSize, setWindowYaxisSize] = useState(false);
 
-  const apiLoading = useSelector((state) => state.Coin.apiLoading);
-
-  console.log(dropDownSelected);
   useEffect(() => {
     dispatch(startInit());
     dispatch(startBithumb());
   }, [dispatch]);
 
   const windowResize = () => {
-    console.log('window resize excuted');
-    return document.body.clientHeight(1000);
+    // document.body.clientHeight(500);
+    switch (windowXaxisSize) {
+      case true:
+        return;
+    }
   };
 
   const handleSortPrice = () => {
@@ -89,22 +95,41 @@ const Popup = () => {
         </div>
         <section className="nav_top_section">
           <img src={defaultcomologo}></img>
-          <div
-            className="windowXaxisSize_btn"
-            onClick={() => {
-              setWindowXaxisSize(!windowXaxisSize);
-              windowResize();
-            }}
-            data-tip
-            data-for="windowXaxisSize_btn_tooltip"
-            title={`창 세로 ${windowXaxisSize ? '축소' : '확대'}`}
-          >
-            {windowXaxisSize ? (
-              <CgArrowUpR size="20" />
-            ) : (
-              <CgArrowDownR size="20" />
-            )}
-          </div>
+
+          <section>
+            <div
+              className="windowYaxisSize_btn"
+              onClick={() => {
+                setWindowYaxisSize(!windowYaxisSize);
+                windowResize();
+              }}
+              data-tip
+              data-="windowXaxisSize_btn_tooltip"
+              title={`창 가로 ${windowYaxisSize ? '축소' : '확대'}`}
+            >
+              {windowYaxisSize ? (
+                <CgArrowLeftR size="20" />
+              ) : (
+                <CgArrowRightR size="20" />
+              )}
+            </div>
+            <div
+              className="windowXaxisSize_btn"
+              onClick={() => {
+                setWindowXaxisSize(!windowXaxisSize);
+                windowResize();
+              }}
+              data-tip
+              data-for="windowXaxisSize_btn_tooltip"
+              title={`창 세로 ${windowXaxisSize ? '축소' : '확대'}`}
+            >
+              {windowXaxisSize ? (
+                <CgArrowUpR size="20" />
+              ) : (
+                <CgArrowDownR size="20" />
+              )}
+            </div>
+          </section>
         </section>
 
         <section className="nav_bottom_section">
@@ -140,7 +165,11 @@ const Popup = () => {
           </div>
         </section>
       </nav>
-      <table className={windowXaxisSize ? 'table_wide' : ''}>
+      <table
+        className={`${windowXaxisSize ? 'table_X_wide' : ''} ${
+          windowYaxisSize ? 'table_Y_wide' : ''
+        }`}
+      >
         <thead>
           <tr>
             <th>

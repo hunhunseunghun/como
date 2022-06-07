@@ -52,6 +52,10 @@ nav section:first-child input {
   color: white;
 }
 
+.windowYaxisSize_btn {
+  color: white;
+}
+
 .windowXaxisSize_btn:hover {
   color: #dadada;
   cursor: pointer;
@@ -221,8 +225,11 @@ table {
   background-color: #ffffff;
 }
 
-.table_wide {
+.table_X_wide {
   height: 510px;
+}
+.table_Y_wide {
+  width: 750px;
 }
 
 table thead {

@@ -76,3 +76,20 @@ export const bithumbWebsocketUtil = (state, action) => {
     },
   };
 };
+
+// axios(config)
+// 			.then((response) => {
+// 				const url = window.URL.createObjectURL(
+// 					new Blob([response.data], { type: response.headers['content-type'] }),
+// 				);
+// 				const link = document.createElement('a');
+// 				link.href = url;
+// 				link.setAttribute('download', 'challengers.xlsx');
+// 				document.body.appendChild(link);
+// 				link.click();
+// 			})
+// 			.catch((err, b) => {
+// 				console.log('err: ', err);
+// 				console.log('b: ', b);
+// 			});
+// 다운로드 어트리뷰트

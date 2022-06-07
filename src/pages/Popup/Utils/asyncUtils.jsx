@@ -51,13 +51,14 @@ export const createUpbitTickerSaga = (SUCCESS, FAIL, API) => {
 // 웹소켓 생성
 const createUpbitWebSocket = () => {
   const webSocket = new WebSocket('wss://api.upbit.com/websocket/v1');
-  webSocket.binaryType = 'arraybuffer';
+  webSocket.binaryType = 'arraybuffer'; // 버퍼타입
   return webSocket;
 };
 
 //웹 소켓 파라미터 전송 요청 및 리스폰스
 const createSocketChannel = (socket, websocketParam, buffer) => {
   return eventChannel((emit) => {
+    //이벤트 채널
     socket.onopen = () => {
       socket.send(
         JSON.stringify([
@@ -351,4 +352,48 @@ export const createBithumbWebsocketBufferSaga = (SUCCESS, FAIL) => {
       websocketChannel.close(); // emit(END) 접근시 소켓 닫기
     }
   };
+};
+
+export const createCoinoneTickerSaga = (SUCCESS, FAIL, API) => {
+  return function* () {
+    try {
+      const marketNames = yield select((state) => state.Coin.marketNames); // select  == useSelecotor
+      const tickersParam = yield marketNames.map((ele) => ele.market).join(','); // //upbit 등록 종목명 받은 후 -> 현재가 요청 API의 Params로 넘겨 현재가 정보 수신
+      // //tickers명세  markets : 반점으로 구분되는 마켓 코드 (ex. KRW-BTC, BTC-ETH)
+      const tickers = yield call(API, tickersParam); // API 함수에 넣어주고 싶은 인자는 call 함수의 두번째 인자부터 순서대로 넣어주면 됩니다.
+
+      const assignMarektNamesTickers = {}; // 업데이트되는 코인 정보, 탐색 성능 위해 객체 선택, marekNames, ticekrs 데이터 병합
+      marketNames.forEach((ele) => {
+        assignMarektNamesTickers[ele.market] = ele;
+      });
+      tickers.data.forEach((ele) => {
+        Object.assign(assignMarektNamesTickers[ele.market], ele);
+      });
+
+      yield put({ type: SUCCESS, payload: assignMarektNamesTickers });
+      yield put(apiLodingAction(false));
+    } catch (err) {
+      yield put({ type: FAIL, payload: err });
+
+      throw err;
+    }
+  };
+};
+
+//캔들용 사가
+export const createRequestSaga = (type, api, dataMaker) => {
+  const SUCCESS = `${type} of SUCCESS`;
+  const FAIL = `${type} of FAIL`;
+  
+  
+  try {
+    if (SUCCESS) {
+      const marketNames = yield select((state) => state.Coin.marketNames); // select  == useSelecotor
+      const upbitTickers = yield select((state) => state.Coin.upbitTickers)
+    }
+  } catch {
+    if (FAIL) {
+    }
+  }
+  //캔들 리퀘스트 작성 요
 };

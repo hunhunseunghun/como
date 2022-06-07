@@ -13,6 +13,7 @@ import {
   createBithumbTickersBtc,
   createBithumbTransaction,
   createBithumbWebsocketBufferSaga,
+  createRequestSaga,
 } from '../Utils/asyncUtils.jsx';
 
 const START_INIT = 'coin/START_INIT';
@@ -59,11 +60,22 @@ const GET_BITHUMB_WEBSOCKET_DATA_SUCCESS =
   'coin/GET_BITHUMB_WEBSOCKET_DATA_SUCCESS';
 const GET_BITHUMB_WEBSOCKET_DATA_FAIL = 'coin/GET_BITHUMB_WEBSOCKET_DATA_FAIL';
 
+
 const GET_UPBIT_TICKERS_CANDLE = "coin/GET_UPBIT_TICKERS_CANDLE"
 const GET_UPBIT_TICKERS_CANDLE_SUCCESS = "coin/GET_UPBIT_TICKERS_CANDLE_SUCCESS"
 const GET_UPBIT_TICKERS_CANDLE_FAIL = "coin/GET_UPBIT_TICKERS_CANDLE_FAIL"
 
 export const startUpbitTickersCandle = () => ({ type : "START_UPBIT_TICKERS_CANDLE"})
+
+const GET_COINONE_TICKER_DATA = 'coin/GET_COINONE_TICKER_DATA';
+const GET_COINONE_TICKER_DATA_SUCCESS = 'GET_COINONE_TICKER_DATA_SUCCESS';
+const GET_COINONE_TICKER_DATA_FAIL = 'GET_COINONE_TICKER_DATA_FAIL';
+
+const GET_COINONE_ORDERBOOK_DATA = 'coin/GET_ORDERBOOK_DATA';
+const GET_COINONE_ORDERBOOK_DATA_SUCCESS =
+  'coin/GET_COINONE_ORDERBOOK_DATA_SUCCESS';
+const GET_COINONE_ORDERBOOK_DATA_FAIL = 'coin/GET_COINONE_ORDERBOOK_DATA_FAIL';
+
 
 export const startInit = () => ({ type: START_INIT });
 
@@ -116,6 +128,14 @@ export const bithumbWebsocketACTION = createBithumbWebsocketBufferSaga(
   GET_BITHUMB_WEBSOCKET_DATA_FAIL
 );
 
+export const coninoneTickers = {};
+
+// const getInitCandleSaga = createRequestSaga(
+//   GET_INIT_CANDLES,
+//   coinApi.getInitCanldes,
+//   candleDataUtils.init
+// );
+
 //sagas-------------------------------------------------------------------------
 
 export function* coinSaga() {
@@ -133,6 +153,7 @@ export function* bithumbSaga() {
 }
 
 function* startInittSaga() {
+  // yield getInitCandleSaga()
   yield coinNameAction();
   yield upbitTickerAction();
   yield upbitWebSocketACTION();

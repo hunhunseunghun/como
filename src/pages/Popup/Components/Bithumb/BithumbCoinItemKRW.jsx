@@ -52,6 +52,7 @@ const BithumbCoinItemKRW = ({
       }
     }
   };
+  // chagerate + 기호 추가 필요
 
   return (
     <tr key={ticker.market}>
@@ -87,7 +88,11 @@ const BithumbCoinItemKRW = ({
               )
         }
       >
-        <div>{ticker.trade_price}</div>
+        <div>
+          {ticker.trade_price
+            .toString()
+            .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+        </div>
       </td>
       <td
         className={
