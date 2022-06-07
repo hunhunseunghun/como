@@ -7,15 +7,15 @@ export const ExchangerDropdown = ({
   setDropDownSelected,
 }) => {
   const outsideRef = useRef(null);
-  const [isActive, setIsAcitve] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    // const handleClickOutside = (e) => {
-    //   outsideRef.current && !outsideRef.current.contains(e.target)
-    //     ? setIsAcitve(false)
-    //     : null;
-    // };
-    // document.addEventListener('click', handleClickOutside);
+    const handleClickOutside = (e) => {
+      return outsideRef.current && !outsideRef.current.contains(e.target)
+        ? setIsActive(false)
+        : null;
+    };
+    document.addEventListener('click', handleClickOutside);
   }, [outsideRef]);
 
   const handleExchangerLogo = () => {
@@ -30,7 +30,7 @@ export const ExchangerDropdown = ({
   };
   return (
     <div ref={outsideRef} className="dropdown">
-      <div className="dropdownBtn" onClick={() => setIsAcitve(!isActive)}>
+      <div className="dropdownBtn" onClick={() => setIsActive(!isActive)}>
         <div>
           <img className="exchangerLogo" src={handleExchangerLogo()}></img>
           {dropDownSelected}
@@ -47,7 +47,7 @@ export const ExchangerDropdown = ({
             className="dropdownItem"
             onClick={(e) => {
               setDropDownSelected(e.target.textContent);
-              setIsAcitve(false);
+              setIsActive(false);
             }}
           >
             <img src={upbitLogo} alt="" />
@@ -57,7 +57,7 @@ export const ExchangerDropdown = ({
             className="dropdownItem"
             onClick={(e) => {
               setDropDownSelected(e.target.textContent);
-              setIsAcitve(false);
+              setIsActive(false);
             }}
           >
             <img src={bithumblogo} alt="" />
