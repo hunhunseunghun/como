@@ -8,12 +8,12 @@ const MarketDropDown = ({
   const [isActive, setIsAcitve] = useState(false);
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      outsideRef.current && !outsideRef.current.contains(e.target)
-        ? setIsAcitve(false)
-        : null;
-    };
-    document.addEventListener('click', handleClickOutside);
+    // const handleClickOutside = (e) => {
+    //   outsideRef.current && !outsideRef.current.contains(e.target)
+    //     ? setIsAcitve(false)
+    //     : null;
+    // };
+    // document.addEventListener('click', handleClickOutside);
   }, [outsideRef]);
 
   return (
