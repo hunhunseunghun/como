@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 
 const Candles = () => {
-  useEffect();
+  useEffect(() => {
+    const handleCandles = () => {
+      return;
+    };
+  }, []);
   return <div>Candles</div>;
 };
 
