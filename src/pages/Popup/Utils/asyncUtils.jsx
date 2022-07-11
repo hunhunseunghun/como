@@ -147,12 +147,10 @@ export const createBithumbTickersKrw = (SUCCESS, FAIL, API) => {
         if (key !== 'date') {
           editkeyTickers[`${key}_KRW`] = { ...tickers.data.data[key] };
           editkeyTickers[`${key}_KRW`]['market'] = `${key}_KRW`;
-
           if (bithumbCoinInfo[`${key}`]) {
             editkeyTickers[`${key}_KRW`]['korean_name'] =
               bithumbCoinInfo[`${key}`]['korean_name'];
           }
-
           editkeyTickers[`${key}_KRW`]['initChgRate'] =
             ((tickers.data.data[key]['closing_price'] -
               tickers.data.data[key]['prev_closing_price']) /
