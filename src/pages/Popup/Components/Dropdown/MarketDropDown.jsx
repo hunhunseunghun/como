@@ -5,12 +5,12 @@ const MarketDropDown = ({
   setmarketDropDownSelected,
 }) => {
   const outsideRef = useRef(null);
-  const [isActive, setIsAcitve] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      outsideRef.current && !outsideRef.current.contains(e.target)
-        ? setIsAcitve(false)
+      return outsideRef.current && !outsideRef.current.contains(e.target)
+        ? setIsActive(false)
         : null;
     };
     document.addEventListener('click', handleClickOutside);
@@ -18,7 +18,7 @@ const MarketDropDown = ({
 
   return (
     <div ref={outsideRef} className="dropdown">
-      <div className="dropdownBtn" onClick={() => setIsAcitve(!isActive)}>
+      <div className="dropdownBtn" onClick={() => setIsActive(!isActive)}>
         <div>{marketDropDownSelected} 마켓</div>
 
         <img
@@ -32,7 +32,7 @@ const MarketDropDown = ({
             className="dropdownItem"
             onClick={() => {
               setmarketDropDownSelected('KRW');
-              setIsAcitve(false);
+              setIsActive(false);
             }}
           >
             <div>KRW 마켓</div>
@@ -41,7 +41,7 @@ const MarketDropDown = ({
             className="dropdownItem"
             onClick={(e) => {
               setmarketDropDownSelected('BTC');
-              setIsAcitve(false);
+              setIsActive(false);
             }}
           >
             <div>BTC 마켓</div>
