@@ -53,7 +53,6 @@ export const coinApi = {
   // orderbook_units	호가	List of Objects
   // ask_price	매도호가	Double
   // bid_price	매수호가	Double
-  // ask_size	매도 잔량	Double
 
   gitUpbitAllAccounts: () => {
     return axios.get(`
