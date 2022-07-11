@@ -54,7 +54,6 @@ export const coinApi = {
   // ask_price	매도호가	Double
   // bid_price	매수호가	Double
   // ask_size	매도 잔량	Double
-  // bid_size	매수 잔량	Double
 
   gitUpbitAllAccounts: () => {
     return axios.get(`
