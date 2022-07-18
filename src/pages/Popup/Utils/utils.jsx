@@ -92,4 +92,4 @@ export const bithumbWebsocketUtil = (state, action) => {
 // 				console.log('err: ', err);
 // 				console.log('b: ', b);
 // 			});
-// 다운로드 어트리뷰트
+
