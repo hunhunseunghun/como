@@ -35,7 +35,6 @@ export const setUpbitTickersArrUtil = () => {
 
     return {
       ...state,
-
       upbitTickersKRW: [...upbitTickersKRW],
       upbitTickersBTC: [...upbitTickersBTC],
     };

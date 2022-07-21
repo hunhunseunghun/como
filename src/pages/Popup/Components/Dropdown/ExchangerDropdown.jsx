@@ -62,6 +62,7 @@ export const ExchangerDropdown = ({
           >
             <img src={bithumblogo} alt="" />
             <div>빗썸</div>
+            <div>코인원</div>
           </div>
           {/* <div
             className="dropdownItem"
