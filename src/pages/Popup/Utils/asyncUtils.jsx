@@ -318,7 +318,7 @@ export const createBithumbWebsocketBufferSaga = (SUCCESS, FAIL) => {
     const socket = yield call(createBithumbWebSocket);
     const websocketChannel = yield call(
       createBithumbSocketChannel,
-      socket,
+      socket, 
       websocketParam,
       buffers.expanding(1)
     );
@@ -382,8 +382,7 @@ export const createCoinoneTickerSaga = (SUCCESS, FAIL, API) => {
 export const createRequestSaga = (type, api, dataMaker) => {
   const SUCCESS = `${type} of SUCCESS`;
   const FAIL = `${type} of FAIL`;
-  
-  
+    
   try {
     if (SUCCESS) {
       const marketNames = yield select((state) => state.Coin.marketNames); // select  == useSelecotor
@@ -393,5 +392,4 @@ export const createRequestSaga = (type, api, dataMaker) => {
     if (FAIL) {
     }
   }
-  //캔들 리퀘스트 작성 요
 };

@@ -60,12 +60,14 @@ const GET_BITHUMB_WEBSOCKET_DATA_SUCCESS =
   'coin/GET_BITHUMB_WEBSOCKET_DATA_SUCCESS';
 const GET_BITHUMB_WEBSOCKET_DATA_FAIL = 'coin/GET_BITHUMB_WEBSOCKET_DATA_FAIL';
 
+const GET_UPBIT_TICKERS_CANDLE = 'coin/GET_UPBIT_TICKERS_CANDLE';
+const GET_UPBIT_TICKERS_CANDLE_SUCCESS =
+  'coin/GET_UPBIT_TICKERS_CANDLE_SUCCESS';
+const GET_UPBIT_TICKERS_CANDLE_FAIL = 'coin/GET_UPBIT_TICKERS_CANDLE_FAIL';
 
-const GET_UPBIT_TICKERS_CANDLE = "coin/GET_UPBIT_TICKERS_CANDLE"
-const GET_UPBIT_TICKERS_CANDLE_SUCCESS = "coin/GET_UPBIT_TICKERS_CANDLE_SUCCESS"
-const GET_UPBIT_TICKERS_CANDLE_FAIL = "coin/GET_UPBIT_TICKERS_CANDLE_FAIL"
-
-export const startUpbitTickersCandle = () => ({ type : "START_UPBIT_TICKERS_CANDLE"})
+export const startUpbitTickersCandle = () => ({
+  type: 'START_UPBIT_TICKERS_CANDLE',
+});
 
 const GET_COINONE_TICKER_DATA = 'coin/GET_COINONE_TICKER_DATA';
 const GET_COINONE_TICKER_DATA_SUCCESS = 'GET_COINONE_TICKER_DATA_SUCCESS';
@@ -75,7 +77,6 @@ const GET_COINONE_ORDERBOOK_DATA = 'coin/GET_ORDERBOOK_DATA';
 const GET_COINONE_ORDERBOOK_DATA_SUCCESS =
   'coin/GET_COINONE_ORDERBOOK_DATA_SUCCESS';
 const GET_COINONE_ORDERBOOK_DATA_FAIL = 'coin/GET_COINONE_ORDERBOOK_DATA_FAIL';
-
 
 export const startInit = () => ({ type: START_INIT });
 
@@ -148,6 +149,7 @@ export function* coinSaga() {
 export function* bithumbSaga() {
   yield bithumbTickersKrwACTION();
   yield bithumbTickersBtcACTION();
+  // yield bithumbTransactionACTION();
   // yield bithumbTransactionACTION();
   yield bithumbWebsocketACTION();
 }
