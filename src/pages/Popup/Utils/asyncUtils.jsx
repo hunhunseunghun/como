@@ -393,3 +393,20 @@ export const createRequestSaga = (type, api, dataMaker) => {
     }
   }
 };
+
+
+//캔들용 사가
+export const createRequestUpbitickersSaga = (type, api, dataMaker) => {
+  const SUCCESS = `${type} of SUCCESS`;
+  const FAIL = `${type} of FAIL`;
+    
+  try {
+    if (SUCCESS) {
+      const marketNames = yield select((state) => state.Coin.marketNames); // select  == useSelecotor
+      const upbitTickers = yield select((state) => state.Coin.upbitTickers)
+    }
+  } catch {
+    if (FAIL) {
+    }
+  }
+};
