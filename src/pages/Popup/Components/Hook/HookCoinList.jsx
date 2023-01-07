@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import BithumbCoinItemBTC from './BithumbCoinItemBTC';
-import BithumbCoinItemKRW from './BithumbCoinItemKRW';
+import BithumbCoinItemKRW from './HookCoinItemKRW';
 
 import * as Hangul from 'hangul-js';
 
