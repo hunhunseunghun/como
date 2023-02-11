@@ -81,7 +81,7 @@ const createSocketChannel = (socket, websocketParam, buffer) => {
     };
 
     const unsubscribe = () => {
-      socket.close();
+      socket.close();state.Coin
     };
 
     return unsubscribe;
@@ -383,15 +383,15 @@ export const createRequestSaga = (type, api, dataMaker) => {
   const SUCCESS = `${type} of SUCCESS`;
   const FAIL = `${type} of FAIL`;
     
-  try {
-    if (SUCCESS) {
-      const marketNames = yield select((state) => state.Coin.marketNames); // select  == useSelecotor
-      const upbitTickers = yield select((state) => state.Coin.upbitTickers)
-    }
-  } catch {
-    if (FAIL) {
-    }
-  }
+  // try {
+  //   if (SUCCESS) {
+  //     const marketNames = yield select((state) => state.Coin.marketNames); // select  == useSelecotor
+  //     const upbitTickers = yield select((state) => state.Coin.upbitTickers)
+  //   }
+  // } catch {
+  //   if (FAIL) {
+  //   }
+  // }
 };
 
 
@@ -400,13 +400,13 @@ export const createRequestUpbitickersSaga = (type, api, dataMaker) => {
   const SUCCESS = `${type} of SUCCESS`;
   const FAIL = `${type} of FAIL`;
     
-  try {
-    if (SUCCESS) {
-      const marketNames = yield select((state) => state.Coin.marketNames); // select  == useSelecotor
-      const upbitTickers = yield select((state) => state.Coin.upbitTickers)
-    }
-  } catch {
-    if (FAIL) {
-    }
-  }
+  // try {
+  //   if (SUCCESS) {
+  //     const marketNames = yield select((state) => state.Coin.marketNames); // select  == useSelecotor
+  //     const upbitTickers = yield select((state) => state.Coin.upbitTickers)
+  //   }
+  // } catch {
+  //   if (FAIL) {
+  //   }
+  // }
 };

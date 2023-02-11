@@ -30,7 +30,7 @@ const BithumbCoinList = ({
   useEffect(() => {
     let bithumbTickersKrwArr = [];
     let bithumbTickersBtcArr = [];
-
+    console.log("Check")
     // tickers 객체 배열화
     for (let key in tickers) {
       //sorting, rendering 목적 기준 배열 추가 , ticker api, websocket 데이터 진위여부에 따라 기준 설정
